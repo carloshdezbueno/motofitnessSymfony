@@ -133,6 +133,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // moto_principal_homepage
+        if ($pathinfo === '/Inicio') {
+            return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\DefaultController::indexAction',  '_route' => 'moto_principal_homepage',);
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

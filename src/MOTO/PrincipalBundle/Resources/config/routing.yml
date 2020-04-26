@@ -1,0 +1,3 @@
+moto_principal_homepage:
+    pattern:  /Inicio
+    defaults: { _controller: MOTOPrincipalBundle:Default:index }
