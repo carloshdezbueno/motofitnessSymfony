@@ -17,7 +17,7 @@ class DefaultController extends Controller
         $botonAmpliarPlan = "-";
 
         // BOTONES EMPLEADO
-        $resumen = "";
+        $resumen = "-";
         $botonResumen = "-";
         $botonAdmin = "-";
 
