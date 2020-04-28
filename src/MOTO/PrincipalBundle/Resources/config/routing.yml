@@ -1,3 +1,11 @@
 moto_principal_homepage:
     pattern:  /Inicio
     defaults: { _controller: MOTOPrincipalBundle:Default:index }
+
+_login:
+    pattern: /Login
+    defaults: { _controller: MOTOPrincipalBundle:Login:Login }
+
+_logout:
+    pattern: /Logout
+    defaults: { _controller: MOTOPrincipalBundle:Login:Logout }

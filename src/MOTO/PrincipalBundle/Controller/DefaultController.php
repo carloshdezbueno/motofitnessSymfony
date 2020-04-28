@@ -22,12 +22,16 @@ class DefaultController extends Controller
         $botonAdmin = "-";
 
         // BOTONES DE LOGIN Y SIGNUP
-        $botonLogin = "<a class='navbar-brand' href='login.php'>LogIn</a>";
-        $botonSignUp = "<a class='navbar-brand' href='signupform.php'>SignUp</a>";
+        $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
+        $botonSignUp = "<a class='navbar-brand' href='#'>SignUp</a>";
 
         $botonTablas = "-";
         
-        $botonLogout = "<a class='navbar-brand' href='logout.php'>Logout</a>";
+        $botonLogout = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>";
+        
+        // Preparador y mail
+        $preparadorAsignado = "";
+        $mailRegistrado = "";
         
         //return $this->render('MOTOPrincipalBundle:Default:index.html.twig', array('a' => 'saludo'));
         
@@ -86,8 +90,14 @@ class DefaultController extends Controller
                     $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
                 }
             } else {
-                $botonLogin = "<a class='navbar-brand' href='login.php'>LogIn</a>";
-                $botonSignUp = "<a class='navbar-brand' href='signupform.php'>SignUp</a>";
+                $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
+                $botonSignUp = "<a class='navbar-brand' href='#'>SignUp</a>";
+            }
+        }
+        
+        if(isset($_SESSION['dni'])){
+            if($_SESSION['resLogin'] == "cliente"){
+                // Buscar preparador y devolverlo
             }
         }
         
@@ -104,9 +114,21 @@ class DefaultController extends Controller
             "botonLogout" => $botonLogout
         );
         
+        if($preparadorAsignado != "" && $mailRegistrado != ""){
+            $arrayPreparador = array(
+                "preparador" => $preparadorAsignado,
+                "mail" => $mailRegistrado
+            );
+        }
+        else{
+            $arrayPreparador = null;
+        }
+        
         // HACER PREPARADORES FÍSICOS
         
-        return $this->render('MOTOPrincipalBundle:Default:index.html.twig', array("botones" => $arrayBotones));
+        return $this->render('MOTOPrincipalBundle:Default:index.html.twig', array("botones" => $arrayBotones, "preparador" => $arrayPreparador));
        
     }
+   
+    
 }

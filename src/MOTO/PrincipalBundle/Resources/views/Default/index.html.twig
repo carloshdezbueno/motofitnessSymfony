@@ -6,9 +6,11 @@
     <div class="container">
       <nav class='navbar navbar-light bg-light row'>
            {% if botones.botonLogin != "-" %}
+               {# Si la sesión NO está iniciada #}
                {{ botones.botonLogin | raw }}
                {{ botones.botonSignUp | raw }}
            {% else %}
+               {# Si la sesión SI está iniciada #}
                 {{ botones.botonProgreso | raw }}
                 {{ botones.botonResumen | raw }}
                 {{ botones.botonDietas | raw }}
@@ -16,33 +18,13 @@
                 {{ botones.botonAmpliarPlan | raw}}
                 {{ botones.botonLogout | raw}}
            {% endif %}
-           {#
-           {% if botones.botonLogin != "-" %}
-               <a class='navbar-brand' href='login.php'>Login</a>
-           {% endif %}
-           {% if botones.botonSignUp != "-" %}
-               <a class='navbar-brand' href='signup.php'>Sign Up</a>
-           {% endif %}
-           {% if botones.botonProgreso != "-" %}
-               <a class='navbar-brand' href='progreso.php'>Progreso</a>
-           {% endif %}
-           {% if botones.botonResumen != "-" %}
-               <a class='navbar-brand' href='resumen.php'>Resumen</a>
-           {% endif %}
-           {% if botones.botonDietas != "-" %}
-               <a class='navbar-brand' href='dietas.php'>Dietas</a>
-           {% endif %}
-           {% if botones.botonTablas != "-" %}
-               <a class='navbar-brand' href='tablas.php'>Tablas</a>
-           {% endif %}
-           {% if botones.botonAmpliarPlan != "-" %}
-               <a class='navbar-brand' href='ampliarplan.php'>Ampliar plan</a>
-           {% endif %}
-           #}
-       </nav>
+       
        <br>
        <br>
        <div class="row">
+           {% if botones.botonLogin == "-" %}
+               {# Si la sesión SI está iniciada #}
+           {% endif %}
        </div>
        
        <img src="{{ asset('img/iconomoto.png') }}" alt="iconomoto">

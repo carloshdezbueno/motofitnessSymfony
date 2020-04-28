@@ -138,6 +138,19 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\DefaultController::indexAction',  '_route' => 'moto_principal_homepage',);
         }
 
+        if (0 === strpos($pathinfo, '/Log')) {
+            // _login
+            if ($pathinfo === '/Login') {
+                return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\LoginController::LoginAction',  '_route' => '_login',);
+            }
+
+            // _logout
+            if ($pathinfo === '/Logout') {
+                return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\LoginController::LogoutAction',  '_route' => '_logout',);
+            }
+
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
