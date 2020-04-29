@@ -10,7 +10,37 @@ class LoginController extends Controller {
 
     public function LoginAction() {
         // Ir a la página de login
-        return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array());
+        
+        $form = $this->createFormBuilder(null, array())
+                ->add('Login', 'text')
+                ->add('Clave', 'text')
+                ->getForm();
+        
+        $peticion = $this->getRequest();
+        
+        if($peticion->getMethod() == 'POST'){
+            $form->bind($peticion);
+            
+            // Comprobar usuario y contraseña
+            $usuario = $form->get("Login")->getData();
+            $contra = $form->get("Clave")->getData();
+            
+            $em=$this->getDoctrine()->getEntityManager();
+            $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c";
+            $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e";
+            $queryCliente = $em->createQuery($consultaCliente);
+            $queryEmpleado = $em->createQuery($consultaEmpleado);
+            $clientes = $queryCliente->getResult();
+            $empleados = $queryEmpleado->getResult();
+            
+            // COMRPOBAR SI EL USURIO Y CLAVE SON CORRECTOS Y SI ES EMPLEADO O CLIENTE
+            
+            // Si usuario o clave incorrectos
+            return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form'=>$form->createView(), 'nota'=>'Usuario o contraseña incorrectos'));
+            
+        }
+        
+        return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form'=>$form->createView(), 'nota'=>'-'));
     }
 
     public function LogoutAction() {

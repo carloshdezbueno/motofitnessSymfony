@@ -3,5 +3,15 @@
 {% block title %}MOTOPrincipalBundle:Login:Login{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Login:Login page</h1>
+    <div class="container">
+        <form action ="{{path('_login')}}" method="post">
+
+            {{form_widget(form)}}
+            <input type="submit"/>
+        </form>
+    </div>
+            
+            {% if nota != "-" %}
+                <p>{{ nota }}</p>
+            {% endif %}
 {% endblock %}
