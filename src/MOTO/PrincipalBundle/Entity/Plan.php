@@ -92,4 +92,9 @@ class Plan
     {
         return $this->descripcion;
     }
+    
+    public function __toString()
+    {
+        return $this->tipoplan . ': ' . $this->descripcion;
+    }
 }
