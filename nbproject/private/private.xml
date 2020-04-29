@@ -6,6 +6,7 @@
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/app/config/parameters.yml</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/config/routing.yml</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/daoMySQL.php</file>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/LoginController.php</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/views/Default/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/DefaultController.php</file>

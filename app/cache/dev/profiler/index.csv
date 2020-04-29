@@ -90,3 +90,8 @@ afc87e,192.168.0.25,GET,http://192.168.0.36/motofitnessSymfony/web/app_dev.php/I
 a218c0,192.168.0.25,GET,http://192.168.0.36/motofitnessSymfony/web/app_dev.php/Inicio,1588084112,
 89745c,192.168.0.25,GET,http://192.168.0.36/motofitnessSymfony/web/app_dev.php/Inicio,1588084178,
 8d0aef,192.168.0.25,GET,http://192.168.0.36/motofitnessSymfony/web/app_dev.php/Login,1588084181,
+8c2e61,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Inicio,1588167615,
+24aca3,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588167618,
+cca6e6,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588167625,
+df3a8f,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Inicio,1588167659,
+314332,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Inicio,1588167687,

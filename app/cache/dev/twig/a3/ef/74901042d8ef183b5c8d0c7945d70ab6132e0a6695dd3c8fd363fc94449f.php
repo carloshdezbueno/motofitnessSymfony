@@ -75,7 +75,7 @@ class __TwigTemplate_a3ef74901042d8ef183b5c8d0c7945d70ab6132e0a6695dd3c8fd363fc9
            ";
         }
         // line 21
-        echo "       
+        echo "      </nav>
        <br>
        <br>
        <div class=\"row\">
@@ -95,7 +95,7 @@ class __TwigTemplate_a3ef74901042d8ef183b5c8d0c7945d70ab6132e0a6695dd3c8fd363fc9
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("img/iconomoto.png"), "html", null, true);
         echo "\" alt=\"iconomoto\">
     </div>
-
+           
 ";
     }
 
