@@ -151,6 +151,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        // _signup
+        if ($pathinfo === '/Signup') {
+            return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\LoginController::SignUpAction',  '_route' => '_signup',);
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {

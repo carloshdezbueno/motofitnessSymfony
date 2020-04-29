@@ -23,7 +23,7 @@ class DefaultController extends Controller
 
         // BOTONES DE LOGIN Y SIGNUP
         $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
-        $botonSignUp = "<a class='navbar-brand' href='#'>SignUp</a>";
+        $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
 
         $botonTablas = "-";
         
@@ -91,7 +91,7 @@ class DefaultController extends Controller
                 }
             } else {
                 $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
-                $botonSignUp = "<a class='navbar-brand' href='#'>SignUp</a>";
+                $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
             }
         }
         

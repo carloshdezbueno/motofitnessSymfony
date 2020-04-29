@@ -9,3 +9,7 @@ _login:
 _logout:
     pattern: /Logout
     defaults: { _controller: MOTOPrincipalBundle:Login:Logout }
+    
+_signup:
+    pattern: /Signup
+    defaults: { _controller: MOTOPrincipalBundle:Login:SignUp }

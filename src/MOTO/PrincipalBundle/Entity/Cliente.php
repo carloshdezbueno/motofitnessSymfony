@@ -9,15 +9,23 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="cliente")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
-class Cliente
-{
+class Cliente {
+    /**
+     * @ORM\prePersist
+     */
+    public function setValorVencimiento() {
+
+        
+        $this->vencimiento = new \DateTime();
+    }
+
     /**
      * @var string
      *
      * @ORM\Column(name="dni", type="string", length=9, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $dni;
 
@@ -80,9 +88,11 @@ class Cliente
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="vencimiento", type="date", nullable=false)
+     * @ORM\Column(name="vencimiento", type="date", nullable=true)
      */
     private $vencimiento;
+
+    
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -124,19 +134,28 @@ class Cliente
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->numeroempleado = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
 
+    /**
+     * Set dni
+     *
+     * @param string $dni
+     * @return Cliente
+     */
+    public function setDni($dni) {
+        $this->dni = $dni;
+
+        return $this;
+    }
+    
     /**
      * Get dni
      *
      * @return string 
      */
-    public function getDni()
-    {
+    public function getDni() {
         return $this->dni;
     }
 
@@ -146,10 +165,9 @@ class Cliente
      * @param string $nombre
      * @return Cliente
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -158,8 +176,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -169,10 +186,9 @@ class Cliente
      * @param string $email
      * @return Cliente
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
-    
+
         return $this;
     }
 
@@ -181,8 +197,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -192,10 +207,9 @@ class Cliente
      * @param string $direccion
      * @return Cliente
      */
-    public function setDireccion($direccion)
-    {
+    public function setDireccion($direccion) {
         $this->direccion = $direccion;
-    
+
         return $this;
     }
 
@@ -204,8 +218,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getDireccion()
-    {
+    public function getDireccion() {
         return $this->direccion;
     }
 
@@ -215,10 +228,9 @@ class Cliente
      * @param string $telefono
      * @return Cliente
      */
-    public function setTelefono($telefono)
-    {
+    public function setTelefono($telefono) {
         $this->telefono = $telefono;
-    
+
         return $this;
     }
 
@@ -227,8 +239,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getTelefono()
-    {
+    public function getTelefono() {
         return $this->telefono;
     }
 
@@ -238,10 +249,9 @@ class Cliente
      * @param string $objetivo
      * @return Cliente
      */
-    public function setObjetivo($objetivo)
-    {
+    public function setObjetivo($objetivo) {
         $this->objetivo = $objetivo;
-    
+
         return $this;
     }
 
@@ -250,8 +260,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getObjetivo()
-    {
+    public function getObjetivo() {
         return $this->objetivo;
     }
 
@@ -261,10 +270,9 @@ class Cliente
      * @param string $clave
      * @return Cliente
      */
-    public function setClave($clave)
-    {
+    public function setClave($clave) {
         $this->clave = $clave;
-    
+
         return $this;
     }
 
@@ -273,8 +281,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getClave()
-    {
+    public function getClave() {
         return $this->clave;
     }
 
@@ -284,10 +291,9 @@ class Cliente
      * @param string $disponibilidad
      * @return Cliente
      */
-    public function setDisponibilidad($disponibilidad)
-    {
+    public function setDisponibilidad($disponibilidad) {
         $this->disponibilidad = $disponibilidad;
-    
+
         return $this;
     }
 
@@ -296,8 +302,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getDisponibilidad()
-    {
+    public function getDisponibilidad() {
         return $this->disponibilidad;
     }
 
@@ -307,10 +312,9 @@ class Cliente
      * @param string $observaciones
      * @return Cliente
      */
-    public function setObservaciones($observaciones)
-    {
+    public function setObservaciones($observaciones) {
         $this->observaciones = $observaciones;
-    
+
         return $this;
     }
 
@@ -319,8 +323,7 @@ class Cliente
      *
      * @return string 
      */
-    public function getObservaciones()
-    {
+    public function getObservaciones() {
         return $this->observaciones;
     }
 
@@ -330,10 +333,9 @@ class Cliente
      * @param \DateTime $vencimiento
      * @return Cliente
      */
-    public function setVencimiento($vencimiento)
-    {
+    public function setVencimiento($vencimiento) {
         $this->vencimiento = $vencimiento;
-    
+
         return $this;
     }
 
@@ -342,8 +344,7 @@ class Cliente
      *
      * @return \DateTime 
      */
-    public function getVencimiento()
-    {
+    public function getVencimiento() {
         return $this->vencimiento;
     }
 
@@ -353,10 +354,9 @@ class Cliente
      * @param \MOTO\PrincipalBundle\Entity\Empleado $numeroempleado
      * @return Cliente
      */
-    public function addNumeroempleado(\MOTO\PrincipalBundle\Entity\Empleado $numeroempleado)
-    {
+    public function addNumeroempleado(\MOTO\PrincipalBundle\Entity\Empleado $numeroempleado) {
         $this->numeroempleado[] = $numeroempleado;
-    
+
         return $this;
     }
 
@@ -365,8 +365,7 @@ class Cliente
      *
      * @param \MOTO\PrincipalBundle\Entity\Empleado $numeroempleado
      */
-    public function removeNumeroempleado(\MOTO\PrincipalBundle\Entity\Empleado $numeroempleado)
-    {
+    public function removeNumeroempleado(\MOTO\PrincipalBundle\Entity\Empleado $numeroempleado) {
         $this->numeroempleado->removeElement($numeroempleado);
     }
 
@@ -375,8 +374,7 @@ class Cliente
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getNumeroempleado()
-    {
+    public function getNumeroempleado() {
         return $this->numeroempleado;
     }
 
@@ -386,10 +384,9 @@ class Cliente
      * @param \MOTO\PrincipalBundle\Entity\Dieta $coddieta
      * @return Cliente
      */
-    public function setCoddieta(\MOTO\PrincipalBundle\Entity\Dieta $coddieta = null)
-    {
+    public function setCoddieta(\MOTO\PrincipalBundle\Entity\Dieta $coddieta = null) {
         $this->coddieta = $coddieta;
-    
+
         return $this;
     }
 
@@ -398,8 +395,7 @@ class Cliente
      *
      * @return \MOTO\PrincipalBundle\Entity\Dieta 
      */
-    public function getCoddieta()
-    {
+    public function getCoddieta() {
         return $this->coddieta;
     }
 
@@ -409,10 +405,9 @@ class Cliente
      * @param \MOTO\PrincipalBundle\Entity\Plan $codplan
      * @return Cliente
      */
-    public function setCodplan(\MOTO\PrincipalBundle\Entity\Plan $codplan = null)
-    {
+    public function setCodplan(\MOTO\PrincipalBundle\Entity\Plan $codplan = null) {
         $this->codplan = $codplan;
-    
+
         return $this;
     }
 
@@ -421,8 +416,7 @@ class Cliente
      *
      * @return \MOTO\PrincipalBundle\Entity\Plan 
      */
-    public function getCodplan()
-    {
+    public function getCodplan() {
         return $this->codplan;
     }
 
@@ -432,10 +426,9 @@ class Cliente
      * @param \MOTO\PrincipalBundle\Entity\Tablaejercicios $codtabla
      * @return Cliente
      */
-    public function setCodtabla(\MOTO\PrincipalBundle\Entity\Tablaejercicios $codtabla = null)
-    {
+    public function setCodtabla(\MOTO\PrincipalBundle\Entity\Tablaejercicios $codtabla = null) {
         $this->codtabla = $codtabla;
-    
+
         return $this;
     }
 
@@ -444,8 +437,8 @@ class Cliente
      *
      * @return \MOTO\PrincipalBundle\Entity\Tablaejercicios 
      */
-    public function getCodtabla()
-    {
+    public function getCodtabla() {
         return $this->codtabla;
     }
+
 }
