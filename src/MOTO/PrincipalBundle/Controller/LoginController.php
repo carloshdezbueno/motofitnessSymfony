@@ -11,6 +11,7 @@ class LoginController extends Controller {
     public function LoginAction() {
         // Ir a la página de login
 
+        
         $form = $this->createFormBuilder()
                 ->add('Login', 'text')
                 ->add('Clave', 'password')
@@ -57,10 +58,13 @@ class LoginController extends Controller {
             }
 
             // Si usuario o clave incorrectos
-            return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'errores' => 'Usuario o contraseña incorrectos'));
+            return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'error' => 'Usuario o contraseña incorrectos'));
         }
+        echo '<script>';
+  echo "console.log( 'LLEGA' )";
+  echo '</script>';
 
-        return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'errores' => '-'));
+        return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'error' => '-'));
     }
 
     public function LogoutAction() {

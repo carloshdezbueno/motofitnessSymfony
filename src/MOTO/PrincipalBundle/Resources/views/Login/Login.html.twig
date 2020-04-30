@@ -9,9 +9,9 @@
             {{form_widget(form)}}
             <input type="submit" value="Iniciar sesion"/>
         </form>
-        {% if errores != '-' %}
+        {% if error != '-' %}
             <div class="alert alert-danger" role="alert">
-                <p>{{ errores }}</p>
+                <p>{{ error }}</p>
             </div>
         {% endif %}
     </div>
