@@ -81,7 +81,7 @@ class LoginController extends Controller {
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-            
+
 
             if ($form->isValid()) {
 
@@ -113,15 +113,18 @@ class LoginController extends Controller {
                 }
 
                 try {
-                    
+
                     $em->persist($cliente);
                     $em->flush();
-                    
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     echo '<script>';
-            echo "console.log('Entra')";
-            echo '</script>';
-                    $error = $e->getMessage();
+                    echo "console.log('Entra')";
+                    echo '</script>';
+
+                    if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                        $error = "Error, el DNI ya existe";
+                    }
+                    
                     return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
 

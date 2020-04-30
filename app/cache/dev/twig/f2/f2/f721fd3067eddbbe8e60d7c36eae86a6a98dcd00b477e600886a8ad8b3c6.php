@@ -40,31 +40,30 @@ class __TwigTemplate_f2f2f721fd3067eddbbe8e60d7c36eae86a6a98dcd00b477e600886a8ad
         echo $this->env->getExtension('routing')->getPath("_signup");
         echo "\" method=\"post\">
 
-
             ";
-        // line 14
-        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'form_start');
-        echo "
-            <div class=\"my-custom-class-for-errors\">
-                ";
-        // line 16
-        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'errors');
-        echo "
-            </div>
-
-            ";
-        // line 19
+        // line 13
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'widget');
         echo "
             <button type=\"submit\" class=\"btn btn-primary\">Registrarse</button>
-            ";
-        // line 21
-        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'form_end');
-        echo "
-            
-            
+
+
+
         </form>
-    </div>
+        <br>
+        ";
+        // line 20
+        if (((isset($context["error"]) ? $context["error"] : $this->getContext($context, "error")) != "-")) {
+            // line 21
+            echo "            <div class=\"alert alert-danger\" role=\"alert\">
+                <p>";
+            // line 22
+            echo twig_escape_filter($this->env, (isset($context["error"]) ? $context["error"] : $this->getContext($context, "error")), "html", null, true);
+            echo "</p>
+            </div>
+        ";
+        }
+        // line 25
+        echo "    </div>
 ";
     }
 
@@ -80,6 +79,6 @@ class __TwigTemplate_f2f2f721fd3067eddbbe8e60d7c36eae86a6a98dcd00b477e600886a8ad
 
     public function getDebugInfo()
     {
-        return array (  62 => 21,  57 => 19,  51 => 16,  46 => 14,  40 => 11,  31 => 4,  28 => 3,);
+        return array (  66 => 25,  60 => 22,  57 => 21,  55 => 20,  45 => 13,  40 => 11,  31 => 4,  28 => 3,);
     }
 }
