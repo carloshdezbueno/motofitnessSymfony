@@ -3,13 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Entity/Plan.php</file>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Form/ClienteType.php</file>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/daoMySQL.php</file>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Entity/Diadieta.php</file>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/views/Default/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/app/config/parameters.yml</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/config/routing.yml</file>
-<<<<<<< Updated upstream
+
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/daoMySQL.php</file>
-=======
->>>>>>> Stashed changes
+
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Entity/Empleado.php</file>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/views/Login/SignUp.html.twig</file>
+
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/LoginController.php</file>
+            <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Entity/Cliente.php</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/app/Resources/views/base.html.twig</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/views/Login/Login.html.twig</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/views/Default/index.html.twig</file>
