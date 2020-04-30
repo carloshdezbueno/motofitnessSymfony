@@ -8,9 +8,12 @@ use MOTO\PrincipalBundle\Entity\Cliente;
 
 class LoginController extends Controller {
 
+    
+    
     public function LoginAction() {
         // Ir a la página de login
 
+        session_start();
         $form = $this->createFormBuilder()
                 ->add('Login', 'text')
                 ->add('Clave', 'password')
@@ -34,18 +37,34 @@ class LoginController extends Controller {
             $empleados = $queryEmpleado->getResult();
 
             // COMRPOBAR SI EL USURIO Y CLAVE SON CORRECTOS Y SI ES EMPLEADO O CLIENTE
-            
-            
-            foreach ($empleados as $empleado){
-                echo '<script>';
-            echo "console.log('". "1" ."')";
-            echo '</script>';
+
+
+            foreach ($empleados as $empleado) {
+                if ($empleado->getNumeroempleado() == $usuario) {
+                    if ($empleado->getClave() == $contra) {
+                        //Almacenar datos de que login correcto en la sesion
+                        
+                        
+                        return $this->redirect($this->generateUrl('moto_principal_homepage'));
+                    }
+                }
+            }
+
+            foreach ($clientes as $cliente) {
+                if ($cliente->getNumeroempleado() == $usuario) {
+                    if ($cliente->getClave() == $contra) {
+                        //Almacenar datos de que login correcto en la sesion
+                        
+                        
+                        return $this->redirect($this->generateUrl('moto_principal_homepage'));
+                    }
+                }
             }
 
             // Si usuario o clave incorrectos
             return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'errores' => 'Usuario o contraseña incorrectos'));
         }
-            
+
         return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'errores' => '-'));
     }
 
