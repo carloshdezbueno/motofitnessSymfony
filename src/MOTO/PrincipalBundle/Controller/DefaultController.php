@@ -4,17 +4,17 @@ namespace MOTO\PrincipalBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     // Página de inicio
-    public function indexAction()
-    {
+    public function indexAction() {
         session_start();
-        
-//        echo '<script>';
-//  echo 'console.log('. $_SESSION['dni'] .')';
-//  echo '</script>';
-        
+
+        if(isset($_SESSION['debug'])) {
+            echo '<script>';
+            echo "console.log('" . $_SESSION['debug'] . "')";
+            echo '</script>';
+        }
         // BOTONES CLIENTE
         $botonProgreso = "-";
         $botonDietas = "-";
@@ -29,82 +29,89 @@ class DefaultController extends Controller
         $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
         $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
 
-        $botonTablas = "-";
-        
+        $botonTablas = "";
+
         $botonLogout = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>";
-        
+
         // Preparador y mail
         $preparadorAsignado = "";
         $mailRegistrado = "";
-        
-        //return $this->render('MOTOPrincipalBundle:Default:index.html.twig', array('a' => 'saludo'));
-        
-        if(isset($_POST['user']) && isset($_POST['pwd'])){
+
+
+//        if(isset($_POST['user']) && isset($_POST['pwd'])){
+//            if($_SESSION['resLogin'] == "cliente" || $_SESSION['resLogin'] == "empleado"){
+//                $botonLogin = "-";
+//                
+//                // Coger el plan del usuario
+//                $plan = "pro"; // PARA PROBAR, cambiar con lo de verdad
+//
+//                if($plan != null && ($plan == "pro" || $plan == "entrenamiento")){
+//                    $linktabla = "<a class='navbar-brand' href='#'>Tabla de ejercicios</a>"; // PARA PROBAR, cambiar con lo de verdad
+//                }
+//                else{
+//                    $linktabla = "";
+//                }
+//
+//                if($_SESSION['resLogin'] == "cliente"){
+//                    $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
+//                    $botonDietas = "<a class='navbar-brand' href='dietas.php'>Dietas</a>";
+//                    $botonAmpliarPlan = "<a class='navbar-brand' href='ampliarplan.php'>Ampliar plan</a>";
+//                }
+//
+//                if($_SESSION['resLogin'] == "empleado"){
+//                    $resumen = "de mis clientes";
+//                    $botonAdmin = "<a class='navbar-brand' href='admin.php'>Administracion</a>";
+//                }
+//
+//                // Botón resumen está en empleado y cliente
+//                $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
+//            } else 
+        if (isset($_SESSION['dni'])) {
+
             $botonLogin = "-";
-            
-            // Hacer login con con POST[user] y POST[pwd]
-            $_SESSION['dni'] = $_POST['user'];
-            
-            if($_SESSION['resLogin'] == "cliente" || $_SESSION['resLogin'] == "empleado"){
+
+            if ($_SESSION['resLogin'] == "cliente" || $_SESSION['resLogin'] == "empleado") {
+
                 // Coger el plan del usuario
-                $plan = "pro"; // PARA PROBAR, cambiar con lo de verdad
+                $dni = $_SESSION['dni'];
+                $em = $this->getDoctrine()->getEntityManager();
+                $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $dni;
+                $queryCliente = $em->createQuery($consultaCliente);
+                $cliente = $queryCliente->getResult();
+                $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
 
-                if($plan != null && ($plan == "pro" || $plan == "entrenamiento")){
-                    $linktabla = "<a class='navbar-brand' href='#'>Tabla de ejercicios</a>"; // PARA PROBAR, cambiar con lo de verdad
-                }
-                else{
-                    $linktabla = "";
+                $resumen = ""; //Para evitar fallos
+
+                if ($plan != null && ($plan == "pro" || $plan == "entrenamiento")) {
+                    $botonTablas = "<a class='navbar-brand' href='tablas.php'>Tabla de ejercicios</a>";
                 }
 
-                if($_SESSION['resLogin'] == "cliente"){
+                if ($_SESSION['resLogin'] == "cliente") {
                     $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
                     $botonDietas = "<a class='navbar-brand' href='dietas.php'>Dietas</a>";
                     $botonAmpliarPlan = "<a class='navbar-brand' href='ampliarplan.php'>Ampliar plan</a>";
                 }
 
-                if($_SESSION['resLogin'] == "empleado"){
+                if ($_SESSION['resLogin'] == "empleado") {
                     $resumen = "de mis clientes";
                     $botonAdmin = "<a class='navbar-brand' href='admin.php'>Administracion</a>";
                 }
 
                 // Botón resumen está en empleado y cliente
                 $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
-            } else if(isset($_SESSION['dni'])){
-                if($_SESSION['resLogin'] == "cliente" || $_SESSION['resLogin'] == "empleado"){
-                    
-                    // Coger el plan del usuario
-                    $plan = "pro"; // PARA PROBAR, cambiar con lo de verdad
-                    
-                    if($plan != null && ($plan == "pro" || $plan == "entrenamiento")){
-                        $botonTablas = "<a class='navbar-brand' href='tablas.php'>Tabla de ejercicios</a>";
-                    }
-                    
-                    if($_SESSION['resLogin'] == "cliente"){
-                        $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
-                        $botonDietas = "<a class='navbar-brand' href='dietas.php'>Dietas</a>";
-                        $botonAmpliarPlan = "<a class='navbar-brand' href='ampliarplan.php'>Ampliar plan</a>";
-                    }
-                    
-                    if($_SESSION['resLogin'] == "empleado"){
-                        $resumen = "de mis clientes";
-                        $botonAdmin = "<a class='navbar-brand' href='admin.php'>Administracion</a>";
-                    }
-                    
-                    // Botón resumen está en empleado y cliente
-                    $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
-                }
-            } else {
-                $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
-                $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
             }
+        } else {
+            $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
+            $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
         }
-        
-        if(isset($_SESSION['dni'])){
-            if($_SESSION['resLogin'] == "cliente"){
+//        }
+
+        if (isset($_SESSION['dni'])) {
+            if ($_SESSION['resLogin'] == "cliente") {
                 // Buscar preparador y devolverlo
             }
         }
-        
+
         // Meter todos los botones no nulos en un array de strings
         $arrayBotones = array(
             "botonProgreso" => $botonProgreso,
@@ -117,22 +124,19 @@ class DefaultController extends Controller
             "botonResumen" => $botonResumen,
             "botonLogout" => $botonLogout
         );
-        
-        if($preparadorAsignado != "" && $mailRegistrado != ""){
+
+        if ($preparadorAsignado != "" && $mailRegistrado != "") {
             $arrayPreparador = array(
                 "preparador" => $preparadorAsignado,
                 "mail" => $mailRegistrado
             );
-        }
-        else{
+        } else {
             $arrayPreparador = null;
         }
-        
+
         // HACER PREPARADORES FÍSICOS
-        
+
         return $this->render('MOTOPrincipalBundle:Default:index.html.twig', array("botones" => $arrayBotones, "preparador" => $arrayPreparador));
-       
     }
-   
-    
+
 }

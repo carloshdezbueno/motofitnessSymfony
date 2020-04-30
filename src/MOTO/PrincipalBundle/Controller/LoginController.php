@@ -11,7 +11,7 @@ class LoginController extends Controller {
     public function LoginAction() {
         // Ir a la página de login
 
-        
+
         $form = $this->createFormBuilder()
                 ->add('Login', 'text')
                 ->add('Clave', 'password')
@@ -38,8 +38,8 @@ class LoginController extends Controller {
                 if ($empleado->getNumeroempleado() == $usuario) {
                     if ($empleado->getClave() == $contra) {
                         //Almacenar datos de que login correcto en la sesion
-//                        $_SESSION['dni'] = $usuario;
-//                        $_SESSION['resLogin'] = "empleado";
+                        $_SESSION['dni'] = $usuario;
+                        $_SESSION['resLogin'] = "empleado";
 
                         return $this->redirect($this->generateUrl('moto_principal_homepage'));
                     }
@@ -60,16 +60,15 @@ class LoginController extends Controller {
             // Si usuario o clave incorrectos
             return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'error' => 'Usuario o contraseña incorrectos'));
         }
-        echo '<script>';
-  echo "console.log( 'LLEGA' )";
-  echo '</script>';
 
         return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'error' => '-'));
     }
 
     public function LogoutAction() {
         // Deshacer login
-        return $this->render('MOTOPrincipalBundle:Login:Logout.html.twig', array());
+        session_start();
+        session_destroy();
+        return $this->redirect($this->generateUrl('moto_principal_homepage'));
     }
 
     public function SignUpAction() {
@@ -85,6 +84,27 @@ class LoginController extends Controller {
             if ($form->isValid()) {
 
                 $em = $this->getDoctrine()->getEntityManager();
+
+                //Recuperas todos los empleados
+//                $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e";
+//                $queryEmpleado = $em->createQuery($consultaEmpleado);
+//                $empleados = $queryEmpleado->getResult();
+//
+//                $numeroempleado = "";
+//                $antit = 99999999999999999999;
+//
+//                foreach ($empleados as $empleado) {
+//                    //Consultas la logitud de sus clientes asociados
+//                    $long = $empleado->getDni()->count(); //Provisional
+//                    
+//                    if ($long < $antit) {
+//
+//                        $numeroempleado = $empleado->getNumeroempleado();
+//                        $antit = $long;
+//                    }
+//                }
+
+
                 $em->persist($cliente);
                 $em->flush();
                 return $this->redirect($this->generateUrl('moto_principal_homepage'));

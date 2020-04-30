@@ -12,11 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\HasLifecycleCallbacks()
  */
 class Cliente {
+
     /**
      * @ORM\prePersist
      */
     public function setValorVencimiento() {
 
+
+        
         
         $this->vencimiento = new \DateTime();
     }
@@ -92,14 +95,14 @@ class Cliente {
      */
     private $vencimiento;
 
-    
-
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Empleado", mappedBy="dni")
      */
     private $numeroempleado;
+
+    
 
     /**
      * @var \Dieta
@@ -149,7 +152,7 @@ class Cliente {
 
         return $this;
     }
-    
+
     /**
      * Get dni
      *
