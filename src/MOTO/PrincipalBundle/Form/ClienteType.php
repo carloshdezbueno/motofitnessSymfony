@@ -22,7 +22,7 @@ class ClienteType extends AbstractType
             ->add('direccion')
             ->add('telefono')
             ->add('objetivo')
-            ->add('clave')
+            ->add('clave', "password")
             ->add('disponibilidad')
             ->add('observaciones')
             ->add('codplan', 'entity', array('class'=>'MOTOPrincipalBundle:Plan'))

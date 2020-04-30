@@ -45,20 +45,25 @@ class __TwigTemplate_6af551d0046535e94a5986ffe7dea81e4c9894c31e08bbd474273ef870a
         // line 9
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'widget');
         echo "
-            <input type=\"submit\"/>
+            <input type=\"submit\" value=\"Iniciar sesion\"/>
         </form>
-    </div>
-            
-            ";
-        // line 14
-        if (((isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")) != null)) {
-            // line 15
-            echo "                <p>";
-            echo twig_escape_filter($this->env, (isset($context["user"]) ? $context["user"] : $this->getContext($context, "user")), "html", null, true);
-            echo twig_escape_filter($this->env, (isset($context["contra"]) ? $context["contra"] : $this->getContext($context, "contra")), "html", null, true);
+        ";
+        // line 12
+        if (((isset($context["errores"]) ? $context["errores"] : $this->getContext($context, "errores")) != "-")) {
+            // line 13
+            echo "            <div class=\"alert alert-danger\" role=\"alert\">
+                <p>";
+            // line 14
+            echo twig_escape_filter($this->env, (isset($context["errores"]) ? $context["errores"] : $this->getContext($context, "errores")), "html", null, true);
             echo "</p>
-            ";
+            </div>
+        ";
         }
+        // line 17
+        echo "    </div>
+
+
+";
     }
 
     public function getTemplateName()
@@ -73,6 +78,6 @@ class __TwigTemplate_6af551d0046535e94a5986ffe7dea81e4c9894c31e08bbd474273ef870a
 
     public function getDebugInfo()
     {
-        return array (  56 => 15,  54 => 14,  46 => 9,  41 => 7,  38 => 6,  35 => 5,  29 => 3,);
+        return array (  63 => 17,  57 => 14,  54 => 13,  52 => 12,  46 => 9,  41 => 7,  38 => 6,  35 => 5,  29 => 3,);
     }
 }

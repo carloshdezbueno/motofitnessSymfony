@@ -38,7 +38,7 @@ class __TwigTemplate_f2f2f721fd3067eddbbe8e60d7c36eae86a6a98dcd00b477e600886a8ad
         // line 7
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'widget');
         echo "
-        <input type=\"submit\"/>
+        <input type=\"submit\" value=\"Registrarse\"/>
     </form>
     </div>
 ";

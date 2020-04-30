@@ -10,37 +10,43 @@ class LoginController extends Controller {
 
     public function LoginAction() {
         // Ir a la página de login
-        
-        $form = $this->createFormBuilder(null, array())
+
+        $form = $this->createFormBuilder()
                 ->add('Login', 'text')
-                ->add('Clave', 'text')
+                ->add('Clave', 'password')
                 ->getForm();
-        
+
         $peticion = $this->getRequest();
-        
-        if($peticion->getMethod() == 'POST'){
+
+        if ($peticion->getMethod() == 'POST') {
             $form->bind($peticion);
-            
+
             // Comprobar usuario y contraseña
             $usuario = $form->get("Login")->getData();
             $contra = $form->get("Clave")->getData();
-            
-            $em=$this->getDoctrine()->getEntityManager();
+
+            $em = $this->getDoctrine()->getEntityManager();
             $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c";
             $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e";
             $queryCliente = $em->createQuery($consultaCliente);
             $queryEmpleado = $em->createQuery($consultaEmpleado);
             $clientes = $queryCliente->getResult();
             $empleados = $queryEmpleado->getResult();
-            
+
             // COMRPOBAR SI EL USURIO Y CLAVE SON CORRECTOS Y SI ES EMPLEADO O CLIENTE
             
-            // Si usuario o clave incorrectos
-            return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form'=>$form->createView(), 'nota'=>'Usuario o contraseña incorrectos'));
             
+            foreach ($empleados as $empleado){
+                echo '<script>';
+            echo "console.log('". "1" ."')";
+            echo '</script>';
+            }
+
+            // Si usuario o clave incorrectos
+            return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'errores' => 'Usuario o contraseña incorrectos'));
         }
-        
-        return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form'=>$form->createView(), 'nota'=>'-'));
+            
+        return $this->render('MOTOPrincipalBundle:Login:Login.html.twig', array('form' => $form->createView(), 'errores' => '-'));
     }
 
     public function LogoutAction() {
@@ -59,18 +65,16 @@ class LoginController extends Controller {
             $form->bind($request);
 
             if ($form->isValid()) {
-                
-                $em=$this->getDoctrine()->getEntityManager();
-                 $em->persist($cliente);
-                 $em->flush();
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($cliente);
+                $em->flush();
                 return $this->redirect($this->generateUrl('moto_principal_homepage'));
             }
         }
 
-echo '<script>';
-                echo "console.log('Que ha entrao')";
-                echo '</script>';
-        return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form'=>$form->createView(),));
+
+        return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(),));
     }
 
 }

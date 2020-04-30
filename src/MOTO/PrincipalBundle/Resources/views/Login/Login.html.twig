@@ -7,11 +7,14 @@
         <form action ="{{path('_login')}}" method="post">
 
             {{form_widget(form)}}
-            <input type="submit"/>
+            <input type="submit" value="Iniciar sesion"/>
         </form>
+        {% if errores != '-' %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ errores }}</p>
+            </div>
+        {% endif %}
     </div>
-            
-            {% if nota != "-" %}
-                <p>{{ nota }}</p>
-            {% endif %}
+
+
 {% endblock %}
