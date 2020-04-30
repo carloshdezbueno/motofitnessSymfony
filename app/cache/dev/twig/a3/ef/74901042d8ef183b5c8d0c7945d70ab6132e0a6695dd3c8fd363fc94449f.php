@@ -70,42 +70,47 @@ class __TwigTemplate_a3ef74901042d8ef183b5c8d0c7945d70ab6132e0a6695dd3c8fd363fc9
             echo "
                 ";
             // line 19
+            echo $this->getAttribute((isset($context["botones"]) ? $context["botones"] : $this->getContext($context, "botones")), "botonAdmin");
+            echo "
+                ";
+            // line 20
             echo $this->getAttribute((isset($context["botones"]) ? $context["botones"] : $this->getContext($context, "botones")), "botonLogout");
             echo "
+                
             ";
         }
-        // line 21
+        // line 23
         echo "        </nav>
         <br>
         <br>
         <div class=\"row\">
             ";
-        // line 25
-        if (($this->getAttribute((isset($context["botones"]) ? $context["botones"] : $this->getContext($context, "botones")), "botonLogin") == "-")) {
-            // line 26
+        // line 27
+        if ((($this->getAttribute((isset($context["botones"]) ? $context["botones"] : $this->getContext($context, "botones")), "botonLogin") == "-") && ($this->getAttribute((isset($context["botones"]) ? $context["botones"] : $this->getContext($context, "botones")), "botonAdmin") == ""))) {
+            // line 28
             echo "                <h4 class=\"font-weight-light col-sm-12 col-12\">Preparador(es):</h4>
                 ";
-            // line 27
+            // line 29
             $context['_parent'] = (array) $context;
             $context['_seq'] = twig_ensure_traversable((isset($context["preparadores"]) ? $context["preparadores"] : $this->getContext($context, "preparadores")));
             foreach ($context['_seq'] as $context["_key"] => $context["preparador"]) {
-                // line 28
+                // line 30
                 echo "                    <div class=\"card\" style=\"width: 18rem; margin-left: 5px\">
                         <div class=\"card-body\">
                             <h5 class=\"card-title\">";
-                // line 30
+                // line 32
                 echo twig_escape_filter($this->env, $this->getAttribute((isset($context["preparador"]) ? $context["preparador"] : $this->getContext($context, "preparador")), "nombre"), "html", null, true);
                 echo "</h5>
                             <h6 class=\"card-subtitle mb-2 text-muted\">Empleado nº: ";
-                // line 31
+                // line 33
                 echo twig_escape_filter($this->env, $this->getAttribute((isset($context["preparador"]) ? $context["preparador"] : $this->getContext($context, "preparador")), "numeroempleado"), "html", null, true);
                 echo "</h6>
                             <p class=\"card-text\">Email: ";
-                // line 32
+                // line 34
                 echo twig_escape_filter($this->env, $this->getAttribute((isset($context["preparador"]) ? $context["preparador"] : $this->getContext($context, "preparador")), "email"), "html", null, true);
                 echo "</p>
                             <p class=\"card-text\">Telefono: ";
-                // line 33
+                // line 35
                 echo twig_escape_filter($this->env, $this->getAttribute((isset($context["preparador"]) ? $context["preparador"] : $this->getContext($context, "preparador")), "telefono"), "html", null, true);
                 echo "</p>
                         </div>
@@ -115,14 +120,14 @@ class __TwigTemplate_a3ef74901042d8ef183b5c8d0c7945d70ab6132e0a6695dd3c8fd363fc9
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['preparador'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 37
+            // line 39
             echo "            ";
         }
-        // line 38
+        // line 40
         echo "        </div>
 
         <img src=\"";
-        // line 40
+        // line 42
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("img/iconomoto.png"), "html", null, true);
         echo "\" alt=\"iconomoto\">
     </div>
@@ -142,6 +147,6 @@ class __TwigTemplate_a3ef74901042d8ef183b5c8d0c7945d70ab6132e0a6695dd3c8fd363fc9
 
     public function getDebugInfo()
     {
-        return array (  126 => 40,  122 => 38,  119 => 37,  109 => 33,  105 => 32,  101 => 31,  97 => 30,  93 => 28,  89 => 27,  86 => 26,  84 => 25,  78 => 21,  73 => 19,  69 => 18,  65 => 17,  61 => 16,  57 => 15,  52 => 14,  50 => 13,  45 => 11,  40 => 10,  38 => 9,  36 => 8,  31 => 5,  28 => 4,);
+        return array (  131 => 42,  127 => 40,  124 => 39,  114 => 35,  110 => 34,  106 => 33,  102 => 32,  98 => 30,  94 => 29,  91 => 28,  89 => 27,  83 => 23,  77 => 20,  73 => 19,  69 => 18,  65 => 17,  61 => 16,  57 => 15,  52 => 14,  50 => 13,  45 => 11,  40 => 10,  38 => 9,  36 => 8,  31 => 5,  28 => 4,);
     }
 }

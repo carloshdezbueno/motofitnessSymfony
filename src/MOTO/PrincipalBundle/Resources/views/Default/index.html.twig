@@ -16,13 +16,15 @@
                 {{ botones.botonDietas | raw }}
                 {{ botones.botonTablas | raw}}
                 {{ botones.botonAmpliarPlan | raw}}
+                {{ botones.botonAdmin | raw}}
                 {{ botones.botonLogout | raw}}
+                
             {% endif %}
         </nav>
         <br>
         <br>
         <div class="row">
-            {% if botones.botonLogin == "-" %}
+            {% if botones.botonLogin == "-" and botones.botonAdmin == ""%}
                 <h4 class="font-weight-light col-sm-12 col-12">Preparador(es):</h4>
                 {% for preparador in preparadores %}
                     <div class="card" style="width: 18rem; margin-left: 5px">

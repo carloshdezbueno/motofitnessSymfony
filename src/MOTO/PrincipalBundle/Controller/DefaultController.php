@@ -18,14 +18,14 @@ class DefaultController extends Controller {
             echo '</script>';
         }
         // BOTONES CLIENTE
-        $botonProgreso = "-";
-        $botonDietas = "-";
-        $botonAmpliarPlan = "-";
+        $botonProgreso = "";
+        $botonDietas = "";
+        $botonAmpliarPlan = "";
 
         // BOTONES EMPLEADO
         $resumen = "-";
         $botonResumen = "-";
-        $botonAdmin = "-";
+        $botonAdmin = "";
 
         // BOTONES DE LOGIN Y SIGNUP
         $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
