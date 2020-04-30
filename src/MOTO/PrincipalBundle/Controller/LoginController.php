@@ -73,6 +73,7 @@ class LoginController extends Controller {
 
     public function SignUpAction() {
 
+        $error = "-";
         $request = $this->getRequest();
 
         $cliente = new Cliente();
@@ -80,6 +81,7 @@ class LoginController extends Controller {
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
+            
 
             if ($form->isValid()) {
 
@@ -110,14 +112,25 @@ class LoginController extends Controller {
                     $cliente->addNumeroempleado($preparador2);
                 }
 
-                $em->persist($cliente);
-                $em->flush();
+                try {
+                    
+                    $em->persist($cliente);
+                    $em->flush();
+                    
+                } catch (Exception $e) {
+                    echo '<script>';
+            echo "console.log('Entra')";
+            echo '</script>';
+                    $error = $e->getMessage();
+                    return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
+                }
+
                 return $this->redirect($this->generateUrl('moto_principal_homepage'));
             }
         }
 
 
-        return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(),));
+        return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
     }
 
     private function selectpreparador($especialidad) {

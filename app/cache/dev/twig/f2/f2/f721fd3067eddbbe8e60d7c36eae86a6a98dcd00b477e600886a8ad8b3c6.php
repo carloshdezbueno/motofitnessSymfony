@@ -29,17 +29,41 @@ class __TwigTemplate_f2f2f721fd3067eddbbe8e60d7c36eae86a6a98dcd00b477e600886a8ad
     {
         // line 4
         echo "    <div class=\"container\">
-    <form action =\"";
-        // line 5
+        <nav class='navbar navbar-light bg-light row'>
+
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>
+        </nav>
+        <br>
+        <form action =\"";
+        // line 11
         echo $this->env->getExtension('routing')->getPath("_signup");
         echo "\" method=\"post\">
 
-        ";
-        // line 7
+
+            ";
+        // line 14
+        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'form_start');
+        echo "
+            <div class=\"my-custom-class-for-errors\">
+                ";
+        // line 16
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'errors');
+        echo "
+            </div>
+
+            ";
+        // line 19
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'widget');
         echo "
-        <input type=\"submit\" value=\"Registrarse\"/>
-    </form>
+            <button type=\"submit\" class=\"btn btn-primary\">Registrarse</button>
+            ";
+        // line 21
+        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'form_end');
+        echo "
+            
+            
+        </form>
     </div>
 ";
     }
@@ -56,6 +80,6 @@ class __TwigTemplate_f2f2f721fd3067eddbbe8e60d7c36eae86a6a98dcd00b477e600886a8ad
 
     public function getDebugInfo()
     {
-        return array (  39 => 7,  34 => 5,  31 => 4,  28 => 3,);
+        return array (  62 => 21,  57 => 19,  51 => 16,  46 => 14,  40 => 11,  31 => 4,  28 => 3,);
     }
 }

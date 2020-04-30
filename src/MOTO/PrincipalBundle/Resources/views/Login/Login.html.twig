@@ -4,6 +4,12 @@
 
 {% block body %}
     <div class="container">
+        <nav class='navbar navbar-light bg-light row'>
+            
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>
+        </nav>
+        <br>
         <form action ="{{path('_login')}}" method="post">
 
             {{form_widget(form)}}

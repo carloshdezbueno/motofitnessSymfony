@@ -36,12 +36,13 @@ class __TwigTemplate_ce144a5f81b4f9976ab697afa347db815a35507ad77e62c8b0c3d29a08e
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("favicon.ico"), "html", null, true);
         echo "\" />
         
+        <!-- jQuery -->
+        <script src=\"https://code.jquery.com/jquery-3.4.1.slim.min.js\" integrity=\"sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n\" crossorigin=\"anonymous\"></script>
+        
         <!-- Bootstrap -->
         <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css\" integrity=\"sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh\" crossorigin=\"anonymous\">
         <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js\" integrity=\"sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6\" crossorigin=\"anonymous\"></script>
 
-        <!-- jQuery -->
-        <script src=\"https://code.jquery.com/jquery-3.4.1.slim.min.js\" integrity=\"sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n\" crossorigin=\"anonymous\"></script>
         
         <!-- Popper -->
         <script src=\"https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js\" integrity=\"sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo\" crossorigin=\"anonymous\"></script>
@@ -49,12 +50,12 @@ class __TwigTemplate_ce144a5f81b4f9976ab697afa347db815a35507ad77e62c8b0c3d29a08e
     </head>
     <body>
         ";
-        // line 21
-        $this->displayBlock('body', $context, $blocks);
         // line 22
+        $this->displayBlock('body', $context, $blocks);
+        // line 23
         echo "        ";
         $this->displayBlock('javascripts', $context, $blocks);
-        // line 23
+        // line 24
         echo "    </body>
 </html>
 ";
@@ -71,12 +72,12 @@ class __TwigTemplate_ce144a5f81b4f9976ab697afa347db815a35507ad77e62c8b0c3d29a08e
     {
     }
 
-    // line 21
+    // line 22
     public function block_body($context, array $blocks = array())
     {
     }
 
-    // line 22
+    // line 23
     public function block_javascripts($context, array $blocks = array())
     {
     }
@@ -93,6 +94,6 @@ class __TwigTemplate_ce144a5f81b4f9976ab697afa347db815a35507ad77e62c8b0c3d29a08e
 
     public function getDebugInfo()
     {
-        return array (  80 => 22,  75 => 21,  70 => 6,  64 => 5,  58 => 23,  55 => 22,  53 => 21,  35 => 7,  33 => 6,  29 => 5,  23 => 1,  31 => 5,  28 => 4,);
+        return array (  81 => 23,  76 => 22,  71 => 6,  65 => 5,  59 => 24,  56 => 23,  54 => 22,  35 => 7,  33 => 6,  29 => 5,  23 => 1,);
     }
 }
