@@ -47,6 +47,7 @@ class __TwigTemplate_6af551d0046535e94a5986ffe7dea81e4c9894c31e08bbd474273ef870a
         echo "
             <input type=\"submit\" value=\"Iniciar sesion\"/>
         </form>
+<<<<<<< Updated upstream
         ";
         // line 12
         if (((isset($context["errores"]) ? $context["errores"] : $this->getContext($context, "errores")) != "-")) {
@@ -55,6 +56,16 @@ class __TwigTemplate_6af551d0046535e94a5986ffe7dea81e4c9894c31e08bbd474273ef870a
                 <p>";
             // line 14
             echo twig_escape_filter($this->env, (isset($context["errores"]) ? $context["errores"] : $this->getContext($context, "errores")), "html", null, true);
+=======
+    </div>
+            
+            ";
+        // line 14
+        if (((isset($context["nota"]) ? $context["nota"] : $this->getContext($context, "nota")) != "-")) {
+            // line 15
+            echo "                <p>";
+            echo twig_escape_filter($this->env, (isset($context["nota"]) ? $context["nota"] : $this->getContext($context, "nota")), "html", null, true);
+>>>>>>> Stashed changes
             echo "</p>
             </div>
         ";

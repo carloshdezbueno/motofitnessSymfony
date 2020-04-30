@@ -33,14 +33,12 @@ class LoginController extends Controller {
             $clientes = $queryCliente->getResult();
             $empleados = $queryEmpleado->getResult();
 
-            // COMRPOBAR SI EL USURIO Y CLAVE SON CORRECTOS Y SI ES EMPLEADO O CLIENTE
-
-
             foreach ($empleados as $empleado) {
                 if ($empleado->getNumeroempleado() == $usuario) {
                     if ($empleado->getClave() == $contra) {
                         //Almacenar datos de que login correcto en la sesion
-
+//                        $_SESSION['dni'] = $usuario;
+//                        $_SESSION['resLogin'] = "empleado";
 
                         return $this->redirect($this->generateUrl('moto_principal_homepage'));
                     }

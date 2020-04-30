@@ -10,12 +10,15 @@
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/views/Default/index.html.twig</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/app/config/parameters.yml</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/config/routing.yml</file>
+<<<<<<< Updated upstream
 
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/daoMySQL.php</file>
 
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Entity/Empleado.php</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Resources/views/Login/SignUp.html.twig</file>
 
+=======
+>>>>>>> Stashed changes
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Controller/LoginController.php</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/src/MOTO/PrincipalBundle/Entity/Cliente.php</file>
             <file>file:/C:/xampp/htdocs/motofitnessSymfony/app/Resources/views/base.html.twig</file>

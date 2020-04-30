@@ -11,9 +11,9 @@ class DefaultController extends Controller
     {
         session_start();
         
-        echo '<script>';
-  echo 'console.log('. $_SESSION['dni'] .')';
-  echo '</script>';
+//        echo '<script>';
+//  echo 'console.log('. $_SESSION['dni'] .')';
+//  echo '</script>';
         
         // BOTONES CLIENTE
         $botonProgreso = "-";
