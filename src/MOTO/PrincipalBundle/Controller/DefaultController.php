@@ -9,8 +9,10 @@ class DefaultController extends Controller {
     // Página de inicio
     public function indexAction() {
         session_start();
+        
+        $preparadores = array();
 
-        if(isset($_SESSION['debug'])) {
+        if (isset($_SESSION['debug'])) {
             echo '<script>';
             echo "console.log('" . $_SESSION['debug'] . "')";
             echo '</script>';
@@ -73,13 +75,19 @@ class DefaultController extends Controller {
             if ($_SESSION['resLogin'] == "cliente" || $_SESSION['resLogin'] == "empleado") {
 
                 // Coger el plan del usuario
-                $dni = $_SESSION['dni'];
-                $em = $this->getDoctrine()->getEntityManager();
-                $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $dni;
-                $queryCliente = $em->createQuery($consultaCliente);
-                $cliente = $queryCliente->getResult();
-                $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
 
+                if ($_SESSION['resLogin'] == "cliente") {
+                    $dni = $_SESSION['dni'];
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $dni;
+                    $queryCliente = $em->createQuery($consultaCliente);
+                    $cliente = $queryCliente->getResult();
+                    $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
+                    
+                    $preparadores = $cliente[0]->getNumeroempleado();
+                } else {
+                    $plan = null;
+                }
                 $resumen = ""; //Para evitar fallos
 
                 if ($plan != null && ($plan == "pro" || $plan == "entrenamiento")) {
@@ -125,18 +133,9 @@ class DefaultController extends Controller {
             "botonLogout" => $botonLogout
         );
 
-        if ($preparadorAsignado != "" && $mailRegistrado != "") {
-            $arrayPreparador = array(
-                "preparador" => $preparadorAsignado,
-                "mail" => $mailRegistrado
-            );
-        } else {
-            $arrayPreparador = null;
-        }
-
         // HACER PREPARADORES FÍSICOS
 
-        return $this->render('MOTOPrincipalBundle:Default:index.html.twig', array("botones" => $arrayBotones, "preparador" => $arrayPreparador));
+        return $this->render('MOTOPrincipalBundle:Default:index.html.twig', array("botones" => $arrayBotones, "preparadores" => $preparadores));
     }
 
 }
