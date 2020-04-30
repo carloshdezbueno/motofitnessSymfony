@@ -1,3 +1,2 @@
 *.log
-./nbproject/private/private.xml
-nbproject/
+nbproject/private/private.xml
