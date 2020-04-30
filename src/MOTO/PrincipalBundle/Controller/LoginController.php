@@ -85,25 +85,30 @@ class LoginController extends Controller {
 
                 $em = $this->getDoctrine()->getEntityManager();
 
-                //Recuperas todos los empleados
-//                $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e";
-//                $queryEmpleado = $em->createQuery($consultaEmpleado);
-//                $empleados = $queryEmpleado->getResult();
-//
-//                $numeroempleado = "";
-//                $antit = 99999999999999999999;
-//
-//                foreach ($empleados as $empleado) {
-//                    //Consultas la logitud de sus clientes asociados
-//                    $long = $empleado->getDni()->count(); //Provisional
-//                    
-//                    if ($long < $antit) {
-//
-//                        $numeroempleado = $empleado->getNumeroempleado();
-//                        $antit = $long;
-//                    }
-//                }
 
+                //Asignacion de empleados
+                if (strtolower($cliente->getCodplan()->getTipoplan()) === "nutricion") {
+                    $preparador1 = $this->selectpreparador(1);
+                }
+                if (strtolower($cliente->getCodplan()->getTipoplan()) === "entrenamiento" || strtolower($cliente->getCodplan()->getTipoplan()) === "pro") {
+                    $preparador1 = $this->selectpreparador(1);
+                    $preparador2 = $this->selectpreparador(2);
+
+                    if ($preparador1->getEspecialidad() == "3") {
+                        unset($preparador2);
+                    } else if ($preparador2->getEspecialidad() == "3" || $preparador2->getNumeroempleado() == $preparador1->getNumeroempleado()) {
+                        $preparador1 = $preparador2;
+                        unset($preparador2);
+                    }
+                }
+
+                if (isset($preparador1)) {
+                    $cliente->addNumeroempleado($preparador1);
+                }
+
+                if (isset($preparador2)) {
+                    $cliente->addNumeroempleado($preparador2);
+                }
 
                 $em->persist($cliente);
                 $em->flush();
@@ -113,6 +118,31 @@ class LoginController extends Controller {
 
 
         return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(),));
+    }
+
+    private function selectpreparador($especialidad) {
+        //Recuperas todos los empleados
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.especialidad=" . $especialidad . " OR e.especialidad = '3'";
+        $queryEmpleado = $em->createQuery($consultaEmpleado);
+        $empleados = $queryEmpleado->getResult();
+
+        $numeroempleado = "";
+        $antit = 99999999999999999999;
+
+        foreach ($empleados as $empleado) {
+            //Consultas la logitud de sus clientes asociados
+            $long = $empleado->getDni()->count(); //Provisional
+
+            if ($long < $antit) {
+
+                $numeroempleado = $empleado;
+                $antit = $long;
+            }
+        }
+
+        return $numeroempleado;
     }
 
 }

@@ -80,15 +80,9 @@ class Empleado
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Cliente", inversedBy="numeroempleado")
-     * @ORM\JoinTable(name="lineaempleado",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="numeroempleado", referencedColumnName="numeroempleado")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="dni", referencedColumnName="dni")
-     *   }
-     * )
+     * @ORM\ManyToMany(targetEntity="Cliente", mappedBy="numeroempleado")
+     *
+     * 
      */
     private $dni;
 
