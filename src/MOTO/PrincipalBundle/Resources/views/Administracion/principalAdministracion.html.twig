@@ -9,14 +9,14 @@
              <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Inicio'>Inicio</a>
              <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
          </nav>
-        {% if dietas is defined %}
+        {% if dietas is defined and tablas != "-" %}
             <h2>Gestión de dietas</h2>
             <p><a href="/motofitnessSymfony/web/app_dev.php/asignarDieta">Asignar dieta a cliente</a></p>
             <p><a href="/motofitnessSymfony/web/app_dev.php/crearDieta">Crear nueva dieta</a></p>
             <p><a href="/motofitnessSymfony/web/app_dev.php/verDieta">Ver una dieta</a></p>
         {% endif %}
 
-        {% if tablas is defined %}
+        {% if tablas is defined and tablas != "-" %}
             <h2>Gestión de tablas</h2>
             <p><a href="/motofitnessSymfony/web/app_dev.php/asignarTablaCliente">AAsignar tablas a cliente</a></p>
             <p><a href="/motofitnessSymfony/web/app_dev.php/nuevaTabla">Insertar nueva tabla</a></p>
@@ -24,7 +24,7 @@
             <p><a href="/motofitnessSymfony/web/app_dev.php/nuevoEjercicio">Nuevo ejercicio</a></p>
         {% endif %}
 
-        {% if empleados is defined %}
+        {% if empleados is defined and empleados != "-" %}
             <h2>Gestión de empleados</h2>
             <p><a href="/motofitnessSymfony/web/app_dev.php/nuevoEmpleado">Añadir nuevo empleado</a></p>
             <p><a href="/motofitnessSymfony/web/app_dev.php/gestionarEmpleados">Gestionar empleados existentes</a></p>

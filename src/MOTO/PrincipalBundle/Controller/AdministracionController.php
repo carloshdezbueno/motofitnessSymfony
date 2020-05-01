@@ -12,16 +12,38 @@ class AdministracionController extends Controller
         
         // Si es un empleado
         $_SESSION['resLogin'] = "empleado";
+        $_SESSION['dni'] = "33333333P";
         if($_SESSION['resLogin'] == "empleado"){
-            // Comporbar si gestiona dietas
-            // if gestiona dietas == true
-            $dietas = "true";
             
-            // Comprobar si gestiona tablas
-            $tablas = "true";
+            $em = $this->getDoctrine()->getEntityManager();
+            $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e";
+            $queryEmpleado = $em->createQuery($consultaEmpleado);
+            $empleados = $queryEmpleado->getResult();
             
-            // Comporbar si gestiona empleados
-            $empleados = "true";
+            $dietas = "-";
+            $tablas = "-";
+            $empleados = "-";
+            
+            foreach ($empleados as $empleado) {
+                if ($empleado->getDniempleado() == $_SESSION['dni']) {
+                    if($empleado->getPrivilegios() == 1){
+                        $empleados = "true";
+                    }
+                    if($empleado->getEspecialidad() == 1){
+                        // Nutricion
+                        $dietas = "true";
+                    }
+                    else if($empleado->getEspecialidad() == 2){
+                        // Entrenamiento
+                        $tablas = "true";
+                    }
+                    else if($empleado->getEspecialidad() == 3){
+                        // Ambas
+                        $tablas = "true";
+                        $dietas = "true";
+                    }
+                }
+            }
             
             // Buscador de clientes
             
@@ -50,6 +72,10 @@ class AdministracionController extends Controller
     }
 
     public function nuevaTablaAction()
+    {
+    }
+    
+    public function nuevaSesionAction()
     {
     }
 

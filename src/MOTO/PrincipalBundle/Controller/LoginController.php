@@ -9,8 +9,6 @@ use MOTO\PrincipalBundle\Entity\Cliente;
 class LoginController extends Controller {
 
     public function LoginAction() {
-        // Ir a la página de login
-
 
         $form = $this->createFormBuilder()
                 ->add('Login', 'text')

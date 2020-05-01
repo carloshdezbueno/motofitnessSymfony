@@ -53,3 +53,7 @@ gestionar_empleados:
 buscar_cliente:
     pattern: /buscarCliente
     defaults: { _controller: MOTOPrincipalBundle:Administracion:buscarCliente }
+    
+nueva_sesion:
+    pattern: /nuevaSesion
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:nuevaSesion }

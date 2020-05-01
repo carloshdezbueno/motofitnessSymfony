@@ -212,6 +212,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\AdministracionController::buscarClienteAction',  '_route' => 'buscar_cliente',);
         }
 
+        // nueva_sesion
+        if ($pathinfo === '/nuevaSesion') {
+            return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\AdministracionController::nuevaSesionAction',  '_route' => 'nueva_sesion',);
+        }
+
         // _welcome
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
