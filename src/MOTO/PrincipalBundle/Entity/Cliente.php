@@ -3,6 +3,7 @@
 namespace MOTO\PrincipalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Cliente
@@ -30,7 +31,7 @@ class Cliente {
      * @ORM\Column(name="dni", type="string", length=9, nullable=false)
      * @ORM\Id
      * 
-     * @Assert\NotNull
+     * @Assert\NotNull()
      * @Assert\MinLenght(9)
      * @Assert\MaxLenght(9)
      */

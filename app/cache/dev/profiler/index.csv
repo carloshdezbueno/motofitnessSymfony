@@ -487,3 +487,10 @@ bafbec,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588246
 >>>>>>> Stashed changes
 cf9908,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Inicio,1588321581,
 8fc516,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Inicio,1588342178,
+05e53c,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Login,1588343461,
+f64db5,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Login,1588343461,
+5f540a,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Login,1588343528,
+156687,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Login,1588343733,
+26d2f9,192.168.0.25,POST,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Login,1588343733,
+fa161e,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Login,1588343789,
+c5a4d8,192.168.0.25,POST,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Login,1588343789,
