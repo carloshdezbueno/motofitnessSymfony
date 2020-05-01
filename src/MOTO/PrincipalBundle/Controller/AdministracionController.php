@@ -23,6 +23,8 @@ class AdministracionController extends Controller
             // Comporbar si gestiona empleados
             $empleados = "true";
             
+            // Buscador de clientes
+            
             return $this->render('MOTOPrincipalBundle:Administracion:principalAdministracion.html.twig', array("login"=>"true", "dietas"=>$dietas, "tablas"=>$tablas, "empleados"=>$empleados));
         }
         
