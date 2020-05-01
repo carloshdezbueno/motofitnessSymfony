@@ -13,3 +13,43 @@ _logout:
 _signup:
     pattern: /Signup
     defaults: { _controller: MOTOPrincipalBundle:Login:SignUp }
+
+principal_administracion:
+    pattern: /principalAdministracion
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:principalAdministracion }
+
+asignar_dieta:
+    pattern: /asignarDieta
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:asignarDieta }
+
+crear_dieta:
+    pattern: /crearDieta
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:crearDieta }
+
+ver_dieta:
+    pattern: /verDieta
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:verDieta }
+
+asignar_tabla_cliente:
+    pattern: /asignarTablaCliente
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:asignarTablaCliente }
+
+nueva_tabla:
+    pattern: /nuevaTabla
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:nuevaTabla }
+
+nuevo_ejercicio:
+    pattern: /nuevoEjercicio
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:nuevoEjercicio }
+
+nuevo_empleado:
+    pattern: /nuevoEmpleado
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:nuevoEmpleado }
+
+gestionar_empleados:
+    pattern: /gestionarEmpleados
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:gestionarEmpleados }
+
+buscar_cliente:
+    pattern: /buscarCliente
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:buscarCliente }

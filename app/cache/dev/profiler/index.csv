@@ -486,3 +486,4 @@ c73d8d,::1,POST,http://localhost/motofitnessSymfony/web/app_dev.php/Login,158828
 bafbec,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588246963,
 >>>>>>> Stashed changes
 cf9908,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Inicio,1588321581,
+8fc516,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Inicio,1588342178,
