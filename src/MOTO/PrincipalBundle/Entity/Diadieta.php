@@ -18,6 +18,8 @@ class Diadieta
      * @ORM\Column(name="coddia", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Assert\Max(10)
      */
     private $coddia;
 
@@ -25,6 +27,8 @@ class Diadieta
      * @var integer
      *
      * @ORM\Column(name="calorias", type="integer", nullable=false)
+     * 
+     * @Assert\Max(4)
      */
     private $calorias;
 
@@ -32,6 +36,8 @@ class Diadieta
      * @var string
      *
      * @ORM\Column(name="macronutrientes", type="string", length=50, nullable=false)
+     * 
+     * @Assert\MaxLenght(50)
      */
     private $macronutrientes;
 
@@ -39,6 +45,8 @@ class Diadieta
      * @var string
      *
      * @ORM\Column(name="dia", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $dia;
 

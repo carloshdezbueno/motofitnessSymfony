@@ -18,6 +18,8 @@ class Dieta
      * @ORM\Column(name="coddieta", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Assert\Max(10)
      */
     private $coddieta;
 
@@ -25,6 +27,8 @@ class Dieta
      * @var string
      *
      * @ORM\Column(name="semana", type="string", length=100, nullable=false)
+     * 
+     * @Assert\MaxLenght(100)
      */
     private $semana;
 

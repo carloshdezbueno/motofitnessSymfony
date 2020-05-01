@@ -29,6 +29,10 @@ class Cliente {
      *
      * @ORM\Column(name="dni", type="string", length=9, nullable=false)
      * @ORM\Id
+     * 
+     * @Assert\NotNull
+     * @Assert\MinLenght(9)
+     * @Assert\MaxLenght(9)
      */
     private $dni;
 
@@ -36,6 +40,8 @@ class Cliente {
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $nombre;
 
@@ -43,6 +49,8 @@ class Cliente {
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $email;
 
@@ -50,6 +58,8 @@ class Cliente {
      * @var string
      *
      * @ORM\Column(name="direccion", type="string", length=50, nullable=false)
+     * 
+     * @Assert\MaxLenght(50)
      */
     private $direccion;
 
@@ -57,6 +67,8 @@ class Cliente {
      * @var string
      *
      * @ORM\Column(name="telefono", type="string", length=9, nullable=false)
+     * 
+     * @Assert\MaxLenght(9)
      */
     private $telefono;
 
@@ -71,6 +83,8 @@ class Cliente {
      * @var string
      *
      * @ORM\Column(name="clave", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $clave;
 
@@ -78,6 +92,8 @@ class Cliente {
      * @var string
      *
      * @ORM\Column(name="disponibilidad", type="string", length=30, nullable=false)
+     * 
+     * @Assert\MaxLenght(30)
      */
     private $disponibilidad;
 
@@ -122,6 +138,8 @@ class Cliente {
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="coddieta", referencedColumnName="coddieta")
      * })
+     * 
+     * @Assert\Max(10)
      */
     private $coddieta;
 
@@ -132,6 +150,8 @@ class Cliente {
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="codplan", referencedColumnName="codPlan")
      * })
+     * 
+     * @Assert\MaxLenght(10)
      */
     private $codplan;
 
@@ -142,6 +162,7 @@ class Cliente {
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="codtabla", referencedColumnName="codtabla")
      * })
+     * @Assert\Max(10)
      */
     private $codtabla;
 

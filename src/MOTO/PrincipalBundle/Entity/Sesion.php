@@ -18,6 +18,8 @@ class Sesion
      * @ORM\Column(name="codsesion", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Assert\Max(10)
      */
     private $codsesion;
 
@@ -25,6 +27,8 @@ class Sesion
      * @var string
      *
      * @ORM\Column(name="dia", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $dia;
 

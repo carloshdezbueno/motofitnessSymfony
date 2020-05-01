@@ -18,6 +18,8 @@ class Empleado
      * @ORM\Column(name="numeroempleado", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Assert\Max(10)
      */
     private $numeroempleado;
 
@@ -25,6 +27,8 @@ class Empleado
      * @var integer
      *
      * @ORM\Column(name="especialidad", type="integer", nullable=false)
+     * 
+     * @Assert\Max(1)
      */
     private $especialidad;
 
@@ -32,6 +36,8 @@ class Empleado
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $nombre;
 
@@ -39,6 +45,9 @@ class Empleado
      * @var string
      *
      * @ORM\Column(name="dniEmpleado", type="string", length=9, nullable=false)
+     * 
+     * @Assert\MaxLenght(9)
+     * @Assert\MinLenght(9)
      */
     private $dniempleado;
 
@@ -46,6 +55,8 @@ class Empleado
      * @var string
      *
      * @ORM\Column(name="telefono", type="string", length=9, nullable=false)
+     * 
+     * @Assert\Max(9)
      */
     private $telefono;
 
@@ -53,6 +64,8 @@ class Empleado
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $email;
 
@@ -60,6 +73,8 @@ class Empleado
      * @var string
      *
      * @ORM\Column(name="direccion", type="string", length=50, nullable=false)
+     * 
+     * @Assert\MaxLenght(50)
      */
     private $direccion;
 
@@ -67,6 +82,8 @@ class Empleado
      * @var string
      *
      * @ORM\Column(name="clave", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $clave;
 

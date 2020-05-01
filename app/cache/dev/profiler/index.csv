@@ -277,6 +277,7 @@ b28da3,::1,POST,http://localhost/motofitnessSymfony/web/app_dev.php/Login,158824
 8ffe80,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588246653,
 4ffdde,::1,POST,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588246653,
 b6d34e,::1,POST,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588246680,
+<<<<<<< Updated upstream
 6157da,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Inicio,1588265782,
 473115,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588265784,
 9e8753,::1,POST,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588265841,
@@ -480,3 +481,8 @@ c73d8d,::1,POST,http://localhost/motofitnessSymfony/web/app_dev.php/Login,158828
 5a0c3e,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Inicio,1588282386,
 157be9,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588282392,
 6b2a4a,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Inicio,1588282396,
+=======
+337333,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Inicio,1588246952,
+bafbec,::1,GET,http://localhost/motofitnessSymfony/web/app_dev.php/Login,1588246963,
+>>>>>>> Stashed changes
+cf9908,192.168.0.25,GET,http://192.168.0.26/motofitnessSymfony/web/app_dev.php/Inicio,1588321581,

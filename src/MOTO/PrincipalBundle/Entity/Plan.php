@@ -18,6 +18,8 @@ class Plan
      * @ORM\Column(name="codPlan", type="string", length=10, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Assert\MaxLenght(10)
      */
     private $codplan;
 
@@ -25,6 +27,8 @@ class Plan
      * @var string
      *
      * @ORM\Column(name="tipoplan", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $tipoplan;
 
@@ -32,6 +36,7 @@ class Plan
      * @var string
      *
      * @ORM\Column(name="descripcion", type="text", nullable=false)
+     * 
      */
     private $descripcion;
 

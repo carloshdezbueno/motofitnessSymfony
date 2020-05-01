@@ -18,6 +18,8 @@ class Tablaejercicios
      * @ORM\Column(name="codtabla", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * 
+     * @Assert\Max(10)
      */
     private $codtabla;
 
@@ -32,6 +34,8 @@ class Tablaejercicios
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=20, nullable=false)
+     * 
+     * @Assert\MaxLenght(20)
      */
     private $tipo;
 
