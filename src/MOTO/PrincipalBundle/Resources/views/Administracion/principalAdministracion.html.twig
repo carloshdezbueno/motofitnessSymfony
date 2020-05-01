@@ -1,5 +1,38 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
+    <div class="container">
+        
+    {% if login is defined %}
+         <nav class='navbar navbar-light bg-light row'>
+             <a class='navbar-brand' href='#'>Resumen de mis clientes</a>
+             <a class='navbar-brand' href='#'>Inicio</a>
+             <a class='navbar-brand' href='#'>Logout</a>
+         </nav>
+        {% if dietas is defined %}
+            <h2>Gestión de dietas</h2>
+            <p><a href="#">Asignar dieta a cliente</a></p>
+            <p><a href="#">Crear nueva dieta</a></p>
+            <p><a href="#">Ver una dieta</a></p>
+        {% endif %}
+
+        {% if tablas is defined %}
+            <h2>Gestión de tablas</h2>
+            <p><a href="#">AAsignar tablas a cliente</a></p>
+            <p><a href="#">Insertar nueva tabla</a></p>
+            <p><a href="#">Nueva sesión</a></p>
+            <p><a href="#">Nuevo ejercicio</a></p>
+        {% endif %}
+
+        {% if empleados is defined %}
+            <h2>Gestión de empleados</h2>
+            <p><a href="#">Añadir nuevo empleado</a></p>
+            <p><a href="#">Gestionar empleados existentes</a></p>
+        {% endif %}
+    {% endif %}
     
+    {% if nota is defined %}
+        {{ nota }}
+    {% endif %}
+    </div>
 {% endblock %}
