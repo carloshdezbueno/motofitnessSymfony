@@ -40,34 +40,6 @@ class DefaultController extends Controller {
         $mailRegistrado = "";
 
 
-//        if(isset($_POST['user']) && isset($_POST['pwd'])){
-//            if($_SESSION['resLogin'] == "cliente" || $_SESSION['resLogin'] == "empleado"){
-//                $botonLogin = "-";
-//                
-//                // Coger el plan del usuario
-//                $plan = "pro"; // PARA PROBAR, cambiar con lo de verdad
-//
-//                if($plan != null && ($plan == "pro" || $plan == "entrenamiento")){
-//                    $linktabla = "<a class='navbar-brand' href='#'>Tabla de ejercicios</a>"; // PARA PROBAR, cambiar con lo de verdad
-//                }
-//                else{
-//                    $linktabla = "";
-//                }
-//
-//                if($_SESSION['resLogin'] == "cliente"){
-//                    $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
-//                    $botonDietas = "<a class='navbar-brand' href='dietas.php'>Dietas</a>";
-//                    $botonAmpliarPlan = "<a class='navbar-brand' href='ampliarplan.php'>Ampliar plan</a>";
-//                }
-//
-//                if($_SESSION['resLogin'] == "empleado"){
-//                    $resumen = "de mis clientes";
-//                    $botonAdmin = "<a class='navbar-brand' href='admin.php'>Administracion</a>";
-//                }
-//
-//                // Botón resumen está en empleado y cliente
-//                $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
-//            } else 
         if (isset($_SESSION['dni'])) {
 
             $botonLogin = "-";
@@ -112,7 +84,6 @@ class DefaultController extends Controller {
             $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
             $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
         }
-//        }
 
         if (isset($_SESSION['dni'])) {
             if ($_SESSION['resLogin'] == "cliente") {
