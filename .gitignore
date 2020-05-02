@@ -1,3 +1,4 @@
 *.log
 nbproject/private/private.xml
 app/cache
+app/logs
