@@ -4,6 +4,14 @@ namespace MOTO\PrincipalBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormEvents;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 class AdministracionController extends Controller {
 
     public function principalAdministracionAction() {
@@ -49,16 +57,64 @@ class AdministracionController extends Controller {
         return $this->render('MOTOPrincipalBundle:Administracion:principalAdministracion.html.twig', array("nota" => $nota));
     }
 
+    // MIGUEL
     public function asignarDietaAction() {
+        // Buscar todos los clientes
+         $em = $this->getDoctrine()->getEntityManager();
+         $consultaClientes = "select c from MOTOPrincipalBundle:Cliente c";
+         $queryClientes = $em->createQuery($consultaClientes);
+         $clientes = $queryClientes->getResult();
+         
+         // Hacer un array con los DNI de los clientes
+         $arrayClientes = array();
+         foreach($clientes as $cliente){
+             array_push($arrayClientes, $cliente->getDni());
+         }
+        
+        // Buscar todas las dietas
+         //$consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
+         //$queryDietas = $em->createQuery($consultaDietas);
+         //$dietas = $queryClientes->getResult();
+        
+        // Hacer formulario con dos desplegables
+        $formClientes = $this->createFormBuilder()
+                ->add('cliente', EntityType::class, array(
+                    'placeholder' => 'Seleccionar cliente',
+                    'choices' => $arrayClientes
+                ))->getForm();
+        
+        return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array('form'=>$formClientes->createView()));
+        
+        // Asignar dieta
+        
         
     }
 
+    // MIGUEL
     public function crearDietaAction() {
         
     }
 
+    // MIGUEL
     public function verDietaAction() {
+        // Recuperar dietas
+        $em = $this->getDoctrine()->getEntityManager();
+        $consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
+        $queryDietas = $em->createQuery()($consultaDietas);
+        $dietas = $queryDietas->getResult();
         
+        // Mostrar desplegable con dietas
+        $formDietas = $this->createFormBuilder()
+                ->add('dieta', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Dieta',
+                    'property' => 'coddieta',
+                    'expanded' => false,
+                    'multiple' => false
+                ));
+        
+        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$formDietas.createView(),));
+        
+        // Mostrar la que el usuario elija
     }
 
     public function asignarTablaClienteAction() {
