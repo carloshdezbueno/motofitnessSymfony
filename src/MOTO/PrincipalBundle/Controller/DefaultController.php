@@ -102,7 +102,7 @@ class DefaultController extends Controller {
 
                 if ($_SESSION['resLogin'] == "empleado") {
                     $resumen = "de mis clientes";
-                    $botonAdmin = "<a class='navbar-brand' href='admin.php'>Administracion</a>";
+                    $botonAdmin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/principalAdministracion'>Administracion</a>";
                 }
 
                 // Botón resumen está en empleado y cliente

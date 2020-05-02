@@ -20,7 +20,6 @@ class Plato
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Assert\Max(10)
      */
     private $codplato;
 
@@ -29,7 +28,6 @@ class Plato
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
      * 
-     * @Assert\MaxLenght(50)
      */
     private $nombre;
 
@@ -38,7 +36,6 @@ class Plato
      *
      * @ORM\Column(name="link", type="string", length=50, nullable=false)
      * 
-     * @Assert\MaxLenght(50)
      */
     private $link;
 
@@ -47,7 +44,6 @@ class Plato
      *
      * @ORM\Column(name="calorias", type="integer", nullable=false)
      * 
-     * @Assert\Max(4)
      */
     private $calorias;
 
@@ -56,7 +52,6 @@ class Plato
      *
      * @ORM\Column(name="tipoComida", type="string", length=20, nullable=false)
      * 
-     * @Assert\MaxLenght(20)
      */
     private $tipocomida;
 

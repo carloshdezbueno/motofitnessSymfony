@@ -18,13 +18,14 @@ class AdministracionController extends Controller
             $em = $this->getDoctrine()->getEntityManager();
             $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e";
             $queryEmpleado = $em->createQuery($consultaEmpleado);
-            $empleados = $queryEmpleado->getResult();
+            $empleadosCons = $queryEmpleado->getResult();
             
             $dietas = "-";
             $tablas = "-";
             $empleados = "-";
             
-            foreach ($empleados as $empleado) {
+            
+            foreach ($empleadosCons as $empleado) {
                 if ($empleado->getDniempleado() == $_SESSION['dni']) {
                     if($empleado->getPrivilegios() == 1){
                         $empleados = "true";

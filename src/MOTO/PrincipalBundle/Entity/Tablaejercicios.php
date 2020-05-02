@@ -3,7 +3,6 @@
 namespace MOTO\PrincipalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tablaejercicios
@@ -20,7 +19,6 @@ class Tablaejercicios
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Assert\Max(10)
      */
     private $codtabla;
 
@@ -36,7 +34,6 @@ class Tablaejercicios
      *
      * @ORM\Column(name="tipo", type="string", length=20, nullable=false)
      * 
-     * @Assert\MaxLenght(20)
      */
     private $tipo;
 
