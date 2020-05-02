@@ -20,7 +20,6 @@ class Ejercicio
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Assert\Max(10)
      */
     private $codejercicio;
 
@@ -29,7 +28,6 @@ class Ejercicio
      *
      * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
      * 
-     * @Assert\MaxLenght(20)
      */
     private $nombre;
 
@@ -38,7 +36,6 @@ class Ejercicio
      *
      * @ORM\Column(name="series", type="integer", nullable=false)
      * 
-     * @Assert\Max(3)
      */
     private $series;
 
@@ -47,7 +44,6 @@ class Ejercicio
      *
      * @ORM\Column(name="repeticiones", type="integer", nullable=false)
      * 
-     * @Assert\Max(3)
      */
     private $repeticiones;
 
@@ -63,7 +59,6 @@ class Ejercicio
      *
      * @ORM\Column(name="link", type="string", length=50, nullable=false)
      * 
-     * @Assert\MaxLenght(50)
      */
     private $link;
 

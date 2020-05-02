@@ -3,7 +3,6 @@
 namespace MOTO\PrincipalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Dieta
@@ -20,7 +19,6 @@ class Dieta
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Assert\Max(10)
      */
     private $coddieta;
 
@@ -29,7 +27,6 @@ class Dieta
      *
      * @ORM\Column(name="semana", type="string", length=100, nullable=false)
      * 
-     * @Assert\MaxLenght(100)
      */
     private $semana;
 

@@ -15,7 +15,7 @@ _signup:
     defaults: { _controller: MOTOPrincipalBundle:Login:SignUp }
 
 principal_administracion:
-    pattern: /principalAdministracion
+    pattern: /Admin
     defaults: { _controller: MOTOPrincipalBundle:Administracion:principalAdministracion }
 
 asignar_dieta:

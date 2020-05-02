@@ -157,7 +157,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         // principal_administracion
-        if ($pathinfo === '/principalAdministracion') {
+        if ($pathinfo === '/Admin') {
             return array (  '_controller' => 'MOTO\\PrincipalBundle\\Controller\\AdministracionController::principalAdministracionAction',  '_route' => 'principal_administracion',);
         }
 

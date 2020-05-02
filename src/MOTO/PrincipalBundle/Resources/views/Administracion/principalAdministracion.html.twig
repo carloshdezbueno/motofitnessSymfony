@@ -3,13 +3,13 @@
 {% block body %}
     <div class="container">
         
-    {% if login is defined %}
+    {% if administrador is defined and administrador == "true"%}
          <nav class='navbar navbar-light bg-light row'>
              <a class='navbar-brand' href='#'>Resumen de mis clientes</a>
              <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Inicio'>Inicio</a>
              <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
          </nav>
-        {% if dietas is defined and tablas != "-" %}
+        {% if dietas is defined and dietas != "-" %}
             <h2>Gestión de dietas</h2>
             <p><a href="/motofitnessSymfony/web/app_dev.php/asignarDieta">Asignar dieta a cliente</a></p>
             <p><a href="/motofitnessSymfony/web/app_dev.php/crearDieta">Crear nueva dieta</a></p>

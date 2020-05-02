@@ -20,7 +20,6 @@ class Progreso
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * 
-     * @Assert\Max(10)
      */
     private $codprogreso;
 
@@ -29,7 +28,6 @@ class Progreso
      *
      * @ORM\Column(name="imagen", type="string", length=100, nullable=true)
      * 
-     * @Assert\MaxLenght(100)
      */
     private $imagen;
 
@@ -45,7 +43,6 @@ class Progreso
      *
      * @ORM\Column(name="medidas", type="string", length=20, nullable=false)
      * 
-     * @Assert\MaxLenght(20)
      */
     private $medidas;
 
@@ -64,8 +61,6 @@ class Progreso
      *   @ORM\JoinColumn(name="dni", referencedColumnName="dni")
      * })
      * 
-     * @Assert\MaxLenght(9)
-     * @Assert\MinLenght(9)
      */
     private $dni;
 
