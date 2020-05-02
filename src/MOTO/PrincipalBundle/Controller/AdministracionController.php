@@ -4,13 +4,7 @@ namespace MOTO\PrincipalBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormEvents;
-
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+//use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AdministracionController extends Controller {
 
@@ -60,16 +54,16 @@ class AdministracionController extends Controller {
     // MIGUEL
     public function asignarDietaAction() {
         // Buscar todos los clientes
-         $em = $this->getDoctrine()->getEntityManager();
-         $consultaClientes = "select c from MOTOPrincipalBundle:Cliente c";
-         $queryClientes = $em->createQuery($consultaClientes);
-         $clientes = $queryClientes->getResult();
-         
-         // Hacer un array con los DNI de los clientes
-         $arrayClientes = array();
-         foreach($clientes as $cliente){
-             array_push($arrayClientes, $cliente->getDni());
-         }
+//         $em = $this->getDoctrine()->getEntityManager();
+//         $consultaClientes = "select c from MOTOPrincipalBundle:Cliente c";
+//         $queryClientes = $em->createQuery($consultaClientes);
+//         $clientes = $queryClientes->getResult();
+//         
+//         // Hacer un array con los DNI de los clientes
+//         $arrayClientes = array();
+//         foreach($clientes as $cliente){
+//             array_push($arrayClientes, $cliente->getDni());
+//         }
         
         // Buscar todas las dietas
          //$consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
@@ -100,19 +94,19 @@ class AdministracionController extends Controller {
         // Recuperar dietas
         $em = $this->getDoctrine()->getEntityManager();
         $consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
-        $queryDietas = $em->createQuery()($consultaDietas);
+        $queryDietas = $em->createQuery($consultaDietas);
         $dietas = $queryDietas->getResult();
         
         // Mostrar desplegable con dietas
         $formDietas = $this->createFormBuilder()
-                ->add('dieta', 'entity', array(
-                    'class' => 'MOTOPrincipalBundle:Dieta',
-                    'property' => 'coddieta',
-                    'expanded' => false,
-                    'multiple' => false
-                ));
+                ->add('opciones', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
+                    'choices' => array(
+                        'si' => true,
+                        'no' => false,
+                    ),
+                ))->getForm();
         
-        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$formDietas.createView(),));
+        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$formDietas));
         
         // Mostrar la que el usuario elija
     }
