@@ -85,7 +85,7 @@ class AdministracionController extends Controller {
             }
         }
 
-        return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array('form' => $formClientes->createView(), 'error' => '-'));
+        return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array("administrador" => "true",'form' => $formClientes->createView(), 'error' => '-'));
     }
 
     // MIGUEL
@@ -105,20 +105,20 @@ class AdministracionController extends Controller {
                 ))
                 ->getForm();
 
-        $peticion = $this->getRequest();
+        $request = $this->getRequest();
 
-        if ($peticion->getMethod() == 'POST') {
-            $form->bind($peticion);
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
 
             if ($form->isValid()) {
 
                 $dietaSelec = $form->get("dieta")->getData();
 
-                return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar' => $dietaSelec));
+                return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array("administrador" => "true",'dietaMostrar' => $dietaSelec));
             }
         }
 
-        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form' => $form->createView()));
+        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array("administrador" => "true",'form' => $form->createView()));
     }
 
     public function asignarTablaClienteAction() {
