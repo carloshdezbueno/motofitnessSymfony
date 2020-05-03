@@ -3,5 +3,17 @@
 {% block title %}MOTOPrincipalBundle:Administracion:asignarDieta{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Administracion:asignarDieta page</h1>
+    <h1>Welcome to the Administracion:asignarDieta page</h1>
+
+    <form action ="{{path('principal_administracion')}}" method="post">
+
+        {{form_widget(form)}}
+        <input type="submit" value="Iniciar sesion"/>
+    </form>
+    {% if error != '-' %}
+        <div class="alert alert-danger" role="alert">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
 {% endblock %}

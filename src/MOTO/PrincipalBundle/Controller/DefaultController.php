@@ -28,12 +28,12 @@ class DefaultController extends Controller {
         $botonAdmin = "";
 
         // BOTONES DE LOGIN Y SIGNUP
-        $botonLogin = "<a class='navbar-brand' href='{{path('_login')}}'>LogIn</a>";
-        $botonSignUp = "<a class='navbar-brand' href='{{path('_signup')}}'>SignUp</a>";
+        $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
+        $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
 
         $botonTablas = "";
 
-        $botonLogout = "<a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>";
+        $botonLogout = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>";
 
         // Preparador y mail
         $preparadorAsignado = "";
@@ -74,15 +74,15 @@ class DefaultController extends Controller {
 
                 if ($_SESSION['resLogin'] == "empleado") {
                     $resumen = "de mis clientes";
-                    $botonAdmin = "<a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>";
+                    $botonAdmin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>";
                 }
 
                 // Botón resumen está en empleado y cliente
                 $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
             }
         } else {
-            $botonLogin = "<a class='navbar-brand' href='{{path('_login')}}'>LogIn</a>";
-            $botonSignUp = "<a class='navbar-brand' href='{{path('_signup')}}'>SignUp</a>";
+            $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
+            $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
         }
 
         if (isset($_SESSION['dni'])) {
