@@ -72,12 +72,11 @@ class AdministracionController extends Controller {
         
         // Hacer formulario con dos desplegables
         $formClientes = $this->createFormBuilder()
-                ->add('cliente', EntityType::class, array(
-                    'placeholder' => 'Seleccionar cliente',
-                    'choices' => $arrayClientes
+                ->add('cliente', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Cliente'
                 ))->getForm();
         
-        return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array('form'=>$formClientes->createView()));
+        return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array('form'=>$formClientes->createView(), 'error'=>'-'));
         
         // Asignar dieta
         

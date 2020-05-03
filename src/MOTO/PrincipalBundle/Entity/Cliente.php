@@ -463,5 +463,9 @@ class Cliente {
     public function getCodtabla() {
         return $this->codtabla;
     }
+    
+    public function __toString() {
+        return "Nombre: " . $this->nombre . "-Dni:" . $this->dni;
+    }
 
 }
