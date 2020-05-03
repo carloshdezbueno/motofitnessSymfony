@@ -70,9 +70,9 @@ class AdministracionController extends Controller {
 
 
             if ($formClientes->isValid()) {
-                
+
                 $em = $this->getDoctrine()->getEntityManager();
-                
+
                 $cliSelect = $formClientes->get("cliente")->getData();
                 $dietSelect = $formClientes->get("dieta")->getData();
 
@@ -81,7 +81,7 @@ class AdministracionController extends Controller {
                 $em->persist($cliSelect);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+                return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
 
@@ -100,30 +100,22 @@ class AdministracionController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createFormBuilder()
-                ->add('Codigo', 'text')
+                ->add('dieta', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Dieta'
+                ))
                 ->getForm();
 
         $peticion = $this->getRequest();
 
         if ($peticion->getMethod() == 'POST') {
             $form->bind($peticion);
-            $dietaSelec = $form->get("Codigo")->getData();
 
-            // Comprobar si existe y sacar los datos
-            $consultaDietaBuscada = "select d from MOTOPrincipalBundle:Dieta d where d.coddieta=" . $dietaSelec;
-            $queryDietaBuscada = $em->createQuery($consultaDietaBuscada);
-            $dietaBuscada = $queryDietaBuscada->getResult();
+            if ($form->isValid()) {
 
-            $diaDietaBuscada = "-";
+                $dietaSelec = $form->get("dieta")->getData();
 
-            if ($dietaBuscada[0] != null) {
-                $diaDietaBuscada = $dietaBuscada[0]->getCoddia();
-            } else {
-                return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar' => 'Dieta no encontrada'));
+                return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar' => $dietaSelec));
             }
-
-
-            return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar' => $diaDietaBuscada[0]));
         }
 
         return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form' => $form->createView()));

@@ -3,17 +3,19 @@
 {% block title %}MOTOPrincipalBundle:Administracion:verDieta{% endblock %}
 
 {% block body %}
-    
-    {% if form is defined %}
-        <form action ="{{path('ver_dieta')}}" method="post">
 
-            {{form_widget(form)}}
-            <input type="submit" value="Ver dieta"/>
-        </form>
-    {% endif %}
-        
-    
-    {% if dietaMostrar is defined and dietaMostrar != "-"%}
-        {{ dietaMostrar }}
-    {% endif %}
+    <div class="container">
+        {% if form is defined %}
+            <form action ="{{path('ver_dieta')}}" method="post">
+
+                {{form_widget(form)}}
+                <input type="submit" value="Ver dieta"/>
+            </form>
+        {% endif %}
+
+
+        {% if dietaMostrar is defined and dietaMostrar != "-"%}
+            {{ dietaMostrar }}
+        {% endif %}
+    </div>
 {% endblock %}
