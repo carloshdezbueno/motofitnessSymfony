@@ -53,38 +53,24 @@ class AdministracionController extends Controller {
 
     // MIGUEL
     public function asignarDietaAction() {
-        // Buscar todos los clientes
-//         $em = $this->getDoctrine()->getEntityManager();
-//         $consultaClientes = "select c from MOTOPrincipalBundle:Cliente c";
-//         $queryClientes = $em->createQuery($consultaClientes);
-//         $clientes = $queryClientes->getResult();
-//         
-//         // Hacer un array con los DNI de los clientes
-//         $arrayClientes = array();
-//         foreach($clientes as $cliente){
-//             array_push($arrayClientes, $cliente->getDni());
-//         }
-        
-        // Buscar todas las dietas
-         //$consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
-         //$queryDietas = $em->createQuery($consultaDietas);
-         //$dietas = $queryClientes->getResult();
-        
         // Hacer formulario con dos desplegables
         $formClientes = $this->createFormBuilder()
                 ->add('cliente', 'entity', array(
                     'class' => 'MOTOPrincipalBundle:Cliente'
-                ))->getForm();
+                ))
+                ->add('dieta', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Dieta'
+                ))
+                ->getForm();
+        
         
         return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array('form'=>$formClientes->createView(), 'error'=>'-'));
-        
-        // Asignar dieta
-        
-        
     }
 
     // MIGUEL
     public function crearDietaAction() {
+        
+        // La nueva dieta tiene nombre, codigo,
         
     }
 
@@ -92,20 +78,6 @@ class AdministracionController extends Controller {
     public function verDietaAction() {
         // Recuperar dietas
         $em = $this->getDoctrine()->getManager();
-//        $consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
-//        $queryDietas = $em->createQuery($consultaDietas);
-//        $dietas = $queryDietas->getResult(Query::HYDRATE_ARRAY);
-        
-        // Mostrar desplegable con dietas
-        /*$formDietas = $this->createFormBuilder()
-                ->add('opciones', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
-                    'choices' => array(
-                        'si' => true,
-                        'no' => false,
-                    ),
-                ))->getForm();
-        
-        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$formDietas));*/
         
         $form = $this->createFormBuilder()
                 ->add('Codigo', 'text')
@@ -118,33 +90,24 @@ class AdministracionController extends Controller {
             $dietaSelec = $form->get("Codigo")->getData();
             
             // Comprobar si existe y sacar los datos
-            $consultaDietaBuscada = "select d from MOTOPrincipalBundle:Dieta d";
+            $consultaDietaBuscada = "select d from MOTOPrincipalBundle:Dieta d where d.coddieta=" . $dietaSelec;
             $queryDietaBuscada = $em->createQuery($consultaDietaBuscada);
             $dietaBuscada = $queryDietaBuscada->getResult();
             
             $diaDietaBuscada = "-";
             
-            foreach($dietaBuscada as $dietaB){
-                if($dietaB->getCoddieta() == $dietaSelec){
-                    $diaDietaBuscada = $dietaB->getCoddia();
-                }
+            if($dietaBuscada[0] != null){
+                $diaDietaBuscada = $dietaBuscada[0]->getCoddia();
+            }
+            else{
+                return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar'=>'Dieta no encontrada'));
             }
             
             
-            
-//            if($dietaBuscada != null){
-//                $diaDietaBuscada = $dietaBuscada->getCoddia();
-//                
-//            }
-            
-            return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar'=>$diaDietaBuscada));
-            
-            // Mostrar los datos por pantalla
+            return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar'=>$diaDietaBuscada[0]));
         }
         
          return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$form->createView()));
-        
-        // Mostrar la que el usuario elija
     }
 
     public function asignarTablaClienteAction() {

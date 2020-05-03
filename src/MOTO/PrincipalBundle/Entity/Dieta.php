@@ -119,4 +119,8 @@ class Dieta
     {
         return $this->coddia;
     }
+    
+    public function __toString(){
+        return "Codigo: " . $this->getCoddieta() . "Cosa: " . $this->getSemana();
+    }
 }
