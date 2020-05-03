@@ -121,6 +121,6 @@ class Dieta
     }
     
     public function __toString(){
-        return "Codigo: " . $this->getCoddieta() . "Cosa: " . $this->getSemana();
+        return "Codigo: " . $this->getCoddieta() . " Nombre de la dieta: " . $this->getSemana();
     }
 }

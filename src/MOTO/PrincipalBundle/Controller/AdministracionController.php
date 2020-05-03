@@ -16,7 +16,7 @@ class AdministracionController extends Controller {
             $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.numeroempleado=" . $_SESSION['dni'];
             $queryEmpleado = $em->createQuery($consultaEmpleado);
             $empleados = $queryEmpleado->getResult();
-            
+
             $dietas = "-";
             $tablas = "-";
             $empleadosAdmin = "-";
@@ -62,52 +62,71 @@ class AdministracionController extends Controller {
                     'class' => 'MOTOPrincipalBundle:Dieta'
                 ))
                 ->getForm();
-        
-        
-        return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array('form'=>$formClientes->createView(), 'error'=>'-'));
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST') {
+
+            $formClientes->bind($request);
+
+
+            if ($formClientes->isValid()) {
+                
+                $em = $this->getDoctrine()->getEntityManager();
+                
+                $cliSelect = $formClientes->get("cliente")->getData();
+                $dietSelect = $formClientes->get("dieta")->getData();
+
+                $cliSelect->setCoddieta($dietSelect);
+
+                $em->persist($cliSelect);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+            }
+        }
+
+        return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array('form' => $formClientes->createView(), 'error' => '-'));
     }
 
     // MIGUEL
     public function crearDietaAction() {
-        
+
         // La nueva dieta tiene nombre, codigo,
-        
     }
 
     // MIGUEL
     public function verDietaAction() {
         // Recuperar dietas
         $em = $this->getDoctrine()->getManager();
-        
+
         $form = $this->createFormBuilder()
                 ->add('Codigo', 'text')
                 ->getForm();
-        
+
         $peticion = $this->getRequest();
 
-        if ($peticion->getMethod() == 'POST'){
+        if ($peticion->getMethod() == 'POST') {
             $form->bind($peticion);
             $dietaSelec = $form->get("Codigo")->getData();
-            
+
             // Comprobar si existe y sacar los datos
             $consultaDietaBuscada = "select d from MOTOPrincipalBundle:Dieta d where d.coddieta=" . $dietaSelec;
             $queryDietaBuscada = $em->createQuery($consultaDietaBuscada);
             $dietaBuscada = $queryDietaBuscada->getResult();
-            
+
             $diaDietaBuscada = "-";
-            
-            if($dietaBuscada[0] != null){
+
+            if ($dietaBuscada[0] != null) {
                 $diaDietaBuscada = $dietaBuscada[0]->getCoddia();
+            } else {
+                return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar' => 'Dieta no encontrada'));
             }
-            else{
-                return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar'=>'Dieta no encontrada'));
-            }
-            
-            
-            return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar'=>$diaDietaBuscada[0]));
+
+
+            return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar' => $diaDietaBuscada[0]));
         }
-        
-         return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$form->createView()));
+
+        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form' => $form->createView()));
     }
 
     public function asignarTablaClienteAction() {
