@@ -4,5 +4,17 @@
 
 {% block body %}
 <h1>Welcome to the Administracion:verDieta page</h1>
-    {{form_widget(form)}}
+    
+    {% if form is defined %}
+        <form action ="{{path('ver_dieta')}}" method="post">
+
+            {{form_widget(form)}}
+            <input type="submit" value="Ver dieta"/>
+        </form>
+    {% endif %}
+        
+    
+    {% if dietaMostrar is defined and dietaMostrar != "-"%}
+        {{ dietaMostrar }}
+    {% endif %}
 {% endblock %}

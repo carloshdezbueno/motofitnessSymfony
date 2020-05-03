@@ -92,13 +92,13 @@ class AdministracionController extends Controller {
     // MIGUEL
     public function verDietaAction() {
         // Recuperar dietas
-        $em = $this->getDoctrine()->getEntityManager();
-        $consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
-        $queryDietas = $em->createQuery($consultaDietas);
-        $dietas = $queryDietas->getResult();
+        $em = $this->getDoctrine()->getManager();
+//        $consultaDietas = "select d from MOTOPrincipalBundle:Dieta d";
+//        $queryDietas = $em->createQuery($consultaDietas);
+//        $dietas = $queryDietas->getResult(Query::HYDRATE_ARRAY);
         
         // Mostrar desplegable con dietas
-        $formDietas = $this->createFormBuilder()
+        /*$formDietas = $this->createFormBuilder()
                 ->add('opciones', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
                     'choices' => array(
                         'si' => true,
@@ -106,7 +106,44 @@ class AdministracionController extends Controller {
                     ),
                 ))->getForm();
         
-        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$formDietas));
+        return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$formDietas));*/
+        
+        $form = $this->createFormBuilder()
+                ->add('Codigo', 'text')
+                ->getForm();
+        
+        $peticion = $this->getRequest();
+
+        if ($peticion->getMethod() == 'POST'){
+            $form->bind($peticion);
+            $dietaSelec = $form->get("Codigo")->getData();
+            
+            // Comprobar si existe y sacar los datos
+            $consultaDietaBuscada = "select d from MOTOPrincipalBundle:Dieta d";
+            $queryDietaBuscada = $em->createQuery($consultaDietaBuscada);
+            $dietaBuscada = $queryDietaBuscada->getResult();
+            
+            $diaDietaBuscada = "-";
+            
+            foreach($dietaBuscada as $dietaB){
+                if($dietaB->getCoddieta() == $dietaSelec){
+                    $diaDietaBuscada = $dietaB->getCoddia();
+                }
+            }
+            
+            
+            
+//            if($dietaBuscada != null){
+//                $diaDietaBuscada = $dietaBuscada->getCoddia();
+//                
+//            }
+            
+            return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('dietaMostrar'=>$diaDietaBuscada));
+            
+            // Mostrar los datos por pantalla
+        }
+        
+         return $this->render('MOTOPrincipalBundle:Administracion:verDieta.html.twig', array('form'=>$form->createView()));
         
         // Mostrar la que el usuario elija
     }
