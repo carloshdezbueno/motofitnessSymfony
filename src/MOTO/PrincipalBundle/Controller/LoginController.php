@@ -5,11 +5,15 @@ namespace MOTO\PrincipalBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use MOTO\PrincipalBundle\Form\ClienteType;
 use MOTO\PrincipalBundle\Entity\Cliente;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class LoginController extends Controller {
 
     public function LoginAction() {
 
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        
         $form = $this->createFormBuilder()
                 ->add('Login', 'text')
                 ->add('Clave', 'password')
@@ -38,6 +42,8 @@ class LoginController extends Controller {
                         //Almacenar datos de que login correcto en la sesion
                         $_SESSION['dni'] = $usuario;
                         $_SESSION['resLogin'] = "empleado";
+                        
+                        $session->set('dni', $usuario);
 
                         return $this->redirect($this->generateUrl('moto_principal_homepage'));
                     }
@@ -49,6 +55,8 @@ class LoginController extends Controller {
                         //Almacenar datos de que login correcto en la sesion
                         $_SESSION['dni'] = $usuario;
                         $_SESSION['resLogin'] = "cliente";
+                        
+                        $session->set('dni', $usuario);
 
                         return $this->redirect($this->generateUrl('moto_principal_homepage'));
                     }
@@ -144,49 +152,51 @@ class LoginController extends Controller {
                     'class' => 'MOTOPrincipalBundle:Plan'
                 ))
                 ->getForm();
+        $session = $request->getSession();
+        echo '<script>';
+        echo "console.log('" . $session->get('dni') . "')";
+        echo '</script>';
+        // BOTONES CLIENTE
+        $botonProgreso = "";
+        $botonDietas = "";
+        $botonAmpliarPlan = "";
+        $botonResumen = "-";
 
-//        // BOTONES CLIENTE
-//        $botonProgreso = "";
-//        $botonDietas = "";
-//        $botonAmpliarPlan = "";
-//        $botonResumen = "-";
-//
-//        $botonTablas = "";
-//
-//        $botonLogout = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>";
-//
-//        $botonLogin = "-";
-//
-//        $em = $this->getDoctrine()->getEntityManager();
-//        $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $_SESSION['dni'];
-//        $queryCliente = $em->createQuery($consultaCliente);
-//        $cliente = $queryCliente->getResult();
-//        $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
-//
-//
-//        if ($plan != null && ($plan == "pro" || $plan == "entrenamiento")) {
-//            $botonTablas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verTabla'>Tabla de ejercicios</a>";
-//        }
-//
-//        $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
-//        $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
-//        $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
-//        // Botón resumen está en empleado y cliente
-//        $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen</a>";
-//
-//
-//
-//        $arrayBotones = array(
-//            "botonProgreso" => $botonProgreso,
-//            "botonLogin" => $botonLogin,
-//            "botonDietas" => $botonDietas,
-//            "botonAmpliarPlan" => $botonAmpliarPlan,
-//            "botonSignUp" => $botonSignUp,
-//            "botonTablas" => $botonTablas,
-//            "botonResumen" => $botonResumen,
-//            "botonLogout" => $botonLogout
-//        );
-        
+        $botonTablas = "";
+
+        $botonLogout = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>";
+
+        $botonLogin = "-";
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $session->get('dni');
+        $queryCliente = $em->createQuery($consultaCliente);
+        $cliente = $queryCliente->getResult();
+        $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
+
+
+        if ($plan != null && ($plan == "pro" || $plan == "entrenamiento")) {
+            $botonTablas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verTabla'>Tabla de ejercicios</a>";
+        }
+
+        $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
+        $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
+        $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
+        // Botón resumen está en empleado y cliente
+        $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen</a>";
+
+
+
+        $arrayBotones = array(
+            "botonProgreso" => $botonProgreso,
+            "botonLogin" => $botonLogin,
+            "botonDietas" => $botonDietas,
+            "botonAmpliarPlan" => $botonAmpliarPlan,
+            "botonTablas" => $botonTablas,
+            "botonResumen" => $botonResumen,
+            "botonLogout" => $botonLogout
+        );
+
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
 
@@ -254,7 +264,7 @@ class LoginController extends Controller {
                 return $this->redirect($this->generateUrl('moto_principal_homepage'));
             }
         }
-        return $this->render('MOTOPrincipalBundle:Login:ampliarPlan.html.twig', array("botones" => array(), 'form' => $form->createView(), 'error' => $error));
+        return $this->render('MOTOPrincipalBundle:Login:ampliarPlan.html.twig', array("botones" => $arrayBotones, 'form' => $form->createView(), 'error' => $error));
     }
 
     private function selectpreparador($especialidad) {
