@@ -146,6 +146,48 @@ class AdministracionController extends Controller {
     }
 
     public function buscarClienteAction() {
+        // Desplegable de clientes
+        $formClientes = $this->createFormBuilder()
+                ->add('cliente', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Cliente'
+                ))
+                ->getForm();
+        
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST') {
+            $formClientes->bind($request);
+            
+            if ($formClientes->isValid()) {
+                $cliSelect = $formClientes->get("cliente")->getData();
+                
+//                $em = $this->getDoctrine()->getEntityManager();
+//                
+//
+//                
+//                $clienteObtenido = array(
+//                    'dni' => $cliSelect->getDni(),
+//                    'nombre' => $cliSelect->getNombre(),
+//                    'email' => $cliSelect->getEmail(),
+//                    'direccion' => $cliSelect->getDireccion(),
+//                    'telefono' => $cliSelect->getTelefono(),
+//                    'objetivo' => $cliSelect->getObjetivo(),
+//                    'coddieta' => $cliSelect->getCoddieta(),
+//                    'codtabla' => $cliSelect->getCodtabla(),
+//                    'codplan' => $cliSelect->getCodplan(),
+//                    'disponibilidad' => $cliSelect->getDisponibilidad(),
+//                    'observaciones' => $cliSelect->getObservaciones(),
+//                    'vencimiento' => $cliSelect->getVencimiento()
+//                );
+
+                return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador'=>'true', 'cliente'=>$cliSelect));
+            }
+            
+            // Si el cliente no se encuentra mensaje
+            return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador'=>'true', 'error'=>'Cliente no encontrado'));
+        }
+        
+        return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador'=>'true', 'form' => $formClientes->createView(), 'error' => '-'));
         
     }
 
