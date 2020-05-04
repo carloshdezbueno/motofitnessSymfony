@@ -161,26 +161,22 @@ class AdministracionController extends Controller {
             if ($formClientes->isValid()) {
                 $cliSelect = $formClientes->get("cliente")->getData();
                 
-//                $em = $this->getDoctrine()->getEntityManager();
-//                
-//
-//                
-//                $clienteObtenido = array(
-//                    'dni' => $cliSelect->getDni(),
-//                    'nombre' => $cliSelect->getNombre(),
-//                    'email' => $cliSelect->getEmail(),
-//                    'direccion' => $cliSelect->getDireccion(),
-//                    'telefono' => $cliSelect->getTelefono(),
-//                    'objetivo' => $cliSelect->getObjetivo(),
-//                    'coddieta' => $cliSelect->getCoddieta(),
-//                    'codtabla' => $cliSelect->getCodtabla(),
-//                    'codplan' => $cliSelect->getCodplan(),
-//                    'disponibilidad' => $cliSelect->getDisponibilidad(),
-//                    'observaciones' => $cliSelect->getObservaciones(),
-//                    'vencimiento' => $cliSelect->getVencimiento()
-//                );
+                $clienteObtenido = array(
+                    'dni' => $cliSelect->getDni(),
+                    'nombre' => $cliSelect->getNombre(),
+                    'email' => $cliSelect->getEmail(),
+                    'direccion' => $cliSelect->getDireccion(),
+                    'telefono' => $cliSelect->getTelefono(),
+                    'objetivo' => $cliSelect->getObjetivo(),
+                    'coddieta' => $cliSelect->getCoddieta(),
+                    'codtabla' => $cliSelect->getCodtabla(),
+                    'codplan' => $cliSelect->getCodplan(),
+                    'disponibilidad' => $cliSelect->getDisponibilidad(),
+                    'observaciones' => $cliSelect->getObservaciones(),
+                    'vencimiento' => $cliSelect->getVencimiento() // NO -> Convertir Date a String
+                );
 
-                return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador'=>'true', 'cliente'=>$cliSelect));
+                return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador'=>'true', 'cliente'=>$cliSelect, 'clienteobtenido'=>$clienteObtenido));
             }
             
             // Si el cliente no se encuentra mensaje

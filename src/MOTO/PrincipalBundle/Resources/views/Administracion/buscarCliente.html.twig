@@ -18,6 +18,39 @@
     </form>
     {% endif %}
     
+    {% if clienteobtenido is defined %}
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">DNI</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Email</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Objetivo</th>
+                <th scope="col">Dieta</th>
+                <th scope="col">Tabla</th>
+                <th scope="col">Plan</th>
+                <th scope="col">Disponibilidad</th>
+                <th scope="col">Observaciones</th>
+            </tr>
+            </thead>
+            <tr>
+                <td>{{ clienteobtenido.dni }}</td>
+                <td>{{ clienteobtenido.nombre }}</td>
+                <td>{{ clienteobtenido.email }}</td>
+                <td>{{ clienteobtenido.direccion }}</td>
+                <td>{{ clienteobtenido.telefono }}</td>
+                <td>{{ clienteobtenido.objetivo }}</td>
+                <td>{{ clienteobtenido.coddieta }}</td>
+                <td>{{ clienteobtenido.codtabla }}</td>
+                <td>{{ clienteobtenido.codplan }}</td>
+                <td>{{ clienteobtenido.disponibilidad }}</td>
+                <td>{{ clienteobtenido.observaciones }}</td>
+            <tr>
+        </table>
+    {% endif %}
+    
     {% if cliente is defined %}
         {{ cliente }}
     {% endif %}
