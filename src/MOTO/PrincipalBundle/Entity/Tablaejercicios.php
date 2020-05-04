@@ -149,4 +149,8 @@ class Tablaejercicios
     {
         return $this->codsesion;
     }
+    
+    public function __toString() {
+        return "Codigo: " . $this->getCodtabla() . " Tipo de tabla: " . $this->getTipo();
+    }
 }

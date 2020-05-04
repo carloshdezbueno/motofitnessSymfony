@@ -122,7 +122,7 @@ class LoginController extends Controller {
                     if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
                         $error = "Error, el DNI ya existe";
                     }
-                    
+
                     return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
 
@@ -132,6 +132,88 @@ class LoginController extends Controller {
 
 
         return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
+    }
+
+    public function ampliarPlanAction() {
+        $error = "-";
+        $request = $this->getRequest();
+
+        $form = $this->createFormBuilder()
+                ->add('plan', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Plan'
+                ))
+                ->getForm();
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+
+            if ($form->isValid()) {
+
+                $em = $this->getDoctrine()->getEntityManager();
+                $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $_SESSION['dni'];
+                $queryCliente = $em->createQuery($consultaCliente);
+                $clientes = $queryCliente->getResult();
+
+                $cliente = $clientes[0];
+
+                $planAnt = $cliente->getCodplan();
+
+                $planNuevo = $form->get("plan")->getData();
+
+                $cliente->setCodplan($form->get("plan")->getData());
+
+                if ($planAnt->getCodplan() == "1" && $planNuevo->getCodplan() != "1") {
+                    $preparador2 = $this->selectpreparador(2);
+
+
+
+                    if ($cliente->getNumeroempleado()[0]->getEspecialidad() == "3") {
+                        unset($preparador2);
+                    } else if ($cliente->getNumeroempleado()[0]->getEspecialidad() == "3" || $preparador2->getNumeroempleado() == $cliente->getNumeroempleado()[0]->getNumeroempleado()) {
+                        unset($preparador2);
+                    }
+                }
+
+                if (isset($preparador2)) {
+                    $cliente->addNumeroempleado($preparador2);
+                }
+
+                if ($planAnt->getCodplan() != "1" && $planNuevo->getCodplan() == "1") {
+                    foreach ($cliente->getNumeroempleado() as $empleado) {
+                        if ($empleado->getEspecialidad() != "1" && $empleado->getEspecialidad() != "3") {
+                            $cliente->removeNumeroempleado($empleado);
+                        }
+                        if ($empleado->getEspecialidad() == "3") {
+                            $hayEsp3 = true;
+                        }
+                    }
+
+                    if (isset($hayEsp3) && $hayEsp3) {
+                        foreach ($cliente->getNumeroempleado() as $empleado) {
+                            if ($empleado->getEspecialidad() != "3") {
+                                $cliente->removeNumeroempleado($empleado);
+                            }
+                        }
+                    }
+                }
+
+                try {
+
+                    $em->persist($cliente);
+                    $em->flush();
+                } catch (\Exception $e) {
+                    $error = "Error, el plan no se actualizo con exito";
+
+                    return $this->render('MOTOPrincipalBundle:Login:ampliarPlan.html.twig', array('form' => $form->createView(), 'error' => $e->getMessage()));
+                }
+
+                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+            }
+        }
+
+
+        return $this->render('MOTOPrincipalBundle:Login:ampliarPlan.html.twig', array('form' => $form->createView(), 'error' => $error));
     }
 
     private function selectpreparador($especialidad) {
