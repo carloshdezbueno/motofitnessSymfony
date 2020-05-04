@@ -66,6 +66,6 @@ verTablas:
     pattern: /verTabla
     defaults: { _controller: MOTOPrincipalBundle:Default:verTabla }   
 
-ampliarPlan:
-    pattern: /ampliarPlan
-    defaults: { _controller: MOTOPrincipalBundle:Login:ampliarPlan }   
+modificarPlan:
+    pattern: /modificarPlan
+    defaults: { _controller: MOTOPrincipalBundle:Login:modificarPlan }   

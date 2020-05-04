@@ -69,7 +69,7 @@ class DefaultController extends Controller {
                 if ($_SESSION['resLogin'] == "cliente") {
                     $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
                     $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
-                    $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/ampliarPlan'>Ampliar plan</a>";
+                    $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
                 }
 
                 if ($_SESSION['resLogin'] == "empleado") {
@@ -103,6 +103,8 @@ class DefaultController extends Controller {
             "botonResumen" => $botonResumen,
             "botonLogout" => $botonLogout
         );
+        
+        $_SESSION['arrayBotones'] = $arrayBotones;
 
         // HACER PREPARADORES FÍSICOS
 
@@ -164,7 +166,7 @@ class DefaultController extends Controller {
                 if ($_SESSION['resLogin'] == "cliente") {
                     $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
                     $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
-                    $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/ampliarPlan'>Ampliar plan</a>";
+                    $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
                 }
 
                 if ($_SESSION['resLogin'] == "empleado") {
@@ -266,7 +268,7 @@ class DefaultController extends Controller {
                 if ($_SESSION['resLogin'] == "cliente") {
                     $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
                     $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
-                    $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/ampliarPlan'>Ampliar plan</a>";
+                    $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
                 }
 
                 if ($_SESSION['resLogin'] == "empleado") {

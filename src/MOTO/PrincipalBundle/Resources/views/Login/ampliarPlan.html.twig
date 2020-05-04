@@ -2,13 +2,9 @@
 
 {%  block body %}
     <div class="container">
-        <nav class='navbar navbar-light bg-light row'>
-
-            <a class='navbar-brand' href='{{path('_login')}}'>LogIn</a>
-            <a class='navbar-brand' href='{{path('_signup')}}'>SignUp</a>
-        </nav>
+        
         <br>
-        <form action ="{{path('ampliarPlan')}}" method="post">
+        <form action ="{{path('modificarPlan')}}" method="post">
 
             {{form_widget(form)}}
             <button type="submit" class="btn btn-primary">Actualizar plan</button>
