@@ -1,0 +1,33 @@
+{# empty Twig template #}
+{% extends "::base.html.twig" %}
+
+{% block title %}MOTOPrincipalBundle:Administracion:verDieta{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+        <nav class='navbar navbar-light bg-light row'>
+            {% if botones.botonLogin != "-" %}
+                {# Si la sesión NO está iniciada #}
+                {{ botones.botonLogin | raw }}
+                {{ botones.botonSignUp | raw }}
+            {% else %}
+                {# Si la sesión SI está iniciada #}
+                {{ botones.botonProgreso | raw }}
+                {{ botones.botonResumen | raw }}
+                {{ botones.botonDietas | raw }}
+                {{ botones.botonTablas | raw}}
+                {{ botones.botonAmpliarPlan | raw}}
+                {{ botones.botonAdmin | raw}}
+                {{ botones.botonLogout | raw}}
+                
+            {% endif %}
+        </nav>
+
+
+        {% if dietaMostrar is defined and dietaMostrar != "-"%}
+            {{ dietaMostrar }}
+        {% endif %}
+    </div>
+{% endblock %}

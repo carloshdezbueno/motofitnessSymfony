@@ -27,7 +27,7 @@ crear_dieta:
     defaults: { _controller: MOTOPrincipalBundle:Administracion:crearDieta }
 
 ver_dieta:
-    pattern: /verDieta
+    pattern: /verDietaAdmin
     defaults: { _controller: MOTOPrincipalBundle:Administracion:verDieta }
 
 asignar_tabla_cliente:
@@ -57,3 +57,11 @@ buscar_cliente:
 nueva_sesion:
     pattern: /nuevaSesion
     defaults: { _controller: MOTOPrincipalBundle:Administracion:nuevaSesion }
+
+verDietas:
+    pattern: /verDieta
+    defaults: { _controller: MOTOPrincipalBundle:Default:verDieta }
+    
+verTablas:
+    pattern: /verTabla
+    defaults: { _controller: MOTOPrincipalBundle:Default:verTabla }    
