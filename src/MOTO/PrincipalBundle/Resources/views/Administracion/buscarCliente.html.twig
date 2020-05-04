@@ -29,7 +29,6 @@
                 <th scope="col">Teléfono</th>
                 <th scope="col">Objetivo</th>
                 <th scope="col">Dieta</th>
-                <th scope="col">Tabla</th>
                 <th scope="col">Plan</th>
                 <th scope="col">Disponibilidad</th>
                 <th scope="col">Observaciones</th>
@@ -43,7 +42,6 @@
                 <td>{{ clienteobtenido.telefono }}</td>
                 <td>{{ clienteobtenido.objetivo }}</td>
                 <td>{{ clienteobtenido.coddieta }}</td>
-                <td>{{ clienteobtenido.codtabla }}</td>
                 <td>{{ clienteobtenido.codplan }}</td>
                 <td>{{ clienteobtenido.disponibilidad }}</td>
                 <td>{{ clienteobtenido.observaciones }}</td>
@@ -51,9 +49,11 @@
         </table>
     {% endif %}
     
+    {#
     {% if cliente is defined %}
         {{ cliente }}
     {% endif %}
+    #}
     
     {% if error is defined and error != "-" %}
         {{ error }}

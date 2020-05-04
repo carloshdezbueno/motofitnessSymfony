@@ -169,7 +169,6 @@ class AdministracionController extends Controller {
                     'telefono' => $cliSelect->getTelefono(),
                     'objetivo' => $cliSelect->getObjetivo(),
                     'coddieta' => $cliSelect->getCoddieta(),
-                    'codtabla' => $cliSelect->getCodtabla(),
                     'codplan' => $cliSelect->getCodplan(),
                     'disponibilidad' => $cliSelect->getDisponibilidad(),
                     'observaciones' => $cliSelect->getObservaciones(),
