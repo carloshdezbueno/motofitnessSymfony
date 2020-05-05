@@ -139,6 +139,43 @@ class AdministracionController extends Controller {
 
     public function nuevoEmpleadoAction() {
         
+        $error = "-";
+        $request = $this->getRequest();
+        
+        $empleado = new Empleado();
+        $form = $this->createForm(new EmpleadoType(), $empleado);
+        
+        if($request->getMethod() == 'POST'){
+            $form->bind($request);
+            
+            if($form->isValid()){
+                $em = $this->getDoctrine()->getEntityManager();
+                
+                // Especialidad del empleado
+//                if(strtolower($empleado->getEspecialidad()) == "1"){
+//                    
+//                }
+//                if(strtolower($empleado->getEspecialidad()) == "2"){
+//                    
+//                }
+//                if(strtolower($empleado->getEspecialidad()) == "3"){
+//                    
+//                }
+                
+                try{
+                    $em->persist($empleado);
+                    $em->flush();
+                } catch (Exception $ex) {
+                    $error = "Ha habido un problema. ¿El DNI introducido ya existe?";
+                    // Mostrar error
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('form'=>$form->createView(), 'error'=>$error));
+                }
+                // Página principal
+                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+            }
+        }
+        // Renderizar formulario
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('form'=>$form->createView(), 'error'=>$error));
     }
 
     public function gestionarEmpleadosAction() {
