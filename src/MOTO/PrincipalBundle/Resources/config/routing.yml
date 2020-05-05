@@ -73,3 +73,6 @@ modificarPlan:
 insertProgreso:
     pattern: /insertProgreso
     defaults: { _controller: MOTOPrincipalBundle:Default:progreso }   
+verResumenCliente:
+    pattern: /verResumenCliente
+    defaults: { _controller: MOTOPrincipalBundle:Default:verResumen } 

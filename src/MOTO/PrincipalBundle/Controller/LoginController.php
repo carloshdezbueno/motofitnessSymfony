@@ -44,6 +44,7 @@ class LoginController extends Controller {
                         $_SESSION['resLogin'] = "empleado";
                         
                         $session->set('dni', $usuario);
+                        $session->set('resLogin', "empleado");
 
                         return $this->redirect($this->generateUrl('moto_principal_homepage'));
                     }
@@ -57,6 +58,7 @@ class LoginController extends Controller {
                         $_SESSION['resLogin'] = "cliente";
                         
                         $session->set('dni', $usuario);
+                        $session->set('resLogin', "cliente");
 
                         return $this->redirect($this->generateUrl('moto_principal_homepage'));
                     }
@@ -123,9 +125,6 @@ class LoginController extends Controller {
                     $em->persist($cliente);
                     $em->flush();
                 } catch (\Exception $e) {
-                    echo '<script>';
-                    echo "console.log('Entra')";
-                    echo '</script>';
 
                     if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
                         $error = "Error, el DNI ya existe";
@@ -176,7 +175,7 @@ class LoginController extends Controller {
             $botonTablas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verTabla'>Tabla de ejercicios</a>";
         }
 
-        $botonProgreso = "<a class='navbar-brand' href='progreso.php'>Progreso</a>";
+        $botonProgreso = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/insertProgreso'>Progreso</a>";
         $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
         $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
         // Botón resumen está en empleado y cliente

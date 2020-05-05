@@ -1,0 +1,57 @@
+{# empty Twig template #}
+{% extends "::base.html.twig" %}
+
+{% block title %}MOTOPrincipalBundle:Administracion:verDieta{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+        <nav class='navbar navbar-light bg-light row'>
+            {% if botones.botonLogin != "-" %}
+                {# Si la sesión NO está iniciada #}
+                {{ botones.botonLogin | raw }}
+                {{ botones.botonSignUp | raw }}
+            {% else %}
+                {# Si la sesión SI está iniciada #}
+                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Inicio'>Inicio</a>
+                {{ botones.botonProgreso | raw }}
+                {{ botones.botonDietas | raw }}
+                {{ botones.botonTablas | raw}}
+                {{ botones.botonAmpliarPlan | raw}}
+                {{ botones.botonAdmin | raw}}
+                {{ botones.botonLogout | raw}}
+
+            {% endif %}
+        </nav>
+
+
+        {% if resumen is defined%}
+            <br>
+            {% for key, resumenCli in resumen %}
+                <h5><u>{{ key }}</u>:</h5> 
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>Fecha</th>
+                            <th scope='col'>Peso</th>
+                            <th scope='col'>Medidas</th>
+                            <th scope='col'>Foto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for valorRes in resumenCli|reverse %}
+                            <tr>
+                                <th>{{ valorRes.fecha | date("m/d/Y")}}</th>
+                                <td>{{ valorRes.peso }}</td>
+                                <td>{{ valorRes.medidas }}</td>
+                                <td><img src='{{ asset(valorRes.imagen) }}' width='256' height='200' alt='{{ asset(valorRes.imagen) }}'/></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endfor %}
+
+            {% endif %}
+    </div>
+{% endblock %}

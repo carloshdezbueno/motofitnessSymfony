@@ -29,13 +29,12 @@ if (!defined('ENT_SUBSTITUTE')) {
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ExceptionHandler
-{
+class ExceptionHandler {
+
     private $debug;
     private $charset;
 
-    public function __construct($debug = true, $charset = 'UTF-8')
-    {
+    public function __construct($debug = true, $charset = 'UTF-8') {
         $this->debug = $debug;
         $this->charset = $charset;
     }
@@ -47,8 +46,7 @@ class ExceptionHandler
      *
      * @return ExceptionHandler The registered exception handler
      */
-    public static function register($debug = true)
-    {
+    public static function register($debug = true) {
         $handler = new static($debug);
 
         set_exception_handler(array($handler, 'handle'));
@@ -68,14 +66,16 @@ class ExceptionHandler
      * @see sendPhpResponse
      * @see createResponse
      */
-    public function handle(\Exception $exception)
-    {
+    public function handle(\Exception $exception) {
         if (class_exists('Symfony\Component\HttpFoundation\Response')) {
             $this->createResponse($exception)->send();
         } else {
             $this->sendPhpResponse($exception);
         }
-        
+
+        echo '<script>';
+        echo "console.log('" . $exception->getMessage() . "')";
+        echo '</script>';
     }
 
     /**
@@ -86,15 +86,14 @@ class ExceptionHandler
      *
      * @param \Exception|FlattenException $exception An \Exception instance
      */
-    public function sendPhpResponse($exception)
-    {
+    public function sendPhpResponse($exception) {
         if (!$exception instanceof FlattenException) {
             $exception = FlattenException::create($exception);
         }
 
         header(sprintf('HTTP/1.0 %s', $exception->getStatusCode()));
         foreach ($exception->getHeaders() as $name => $value) {
-            header($name.': '.$value, false);
+            header($name . ': ' . $value, false);
         }
 
         echo $this->decorate($this->getContent($exception), $this->getStylesheet($exception));
@@ -107,8 +106,7 @@ class ExceptionHandler
      *
      * @return Response A Response instance
      */
-    public function createResponse($exception)
-    {
+    public function createResponse($exception) {
         if (!$exception instanceof FlattenException) {
             $exception = FlattenException::create($exception);
         }
@@ -123,8 +121,7 @@ class ExceptionHandler
      *
      * @return string The content as a string
      */
-    public function getContent(FlattenException $exception)
-    {
+    public function getContent(FlattenException $exception) {
         switch ($exception->getStatusCode()) {
             case 404:
                 $title = 'Sorry, the page you are looking for could not be found.';
@@ -150,7 +147,7 @@ class ExceptionHandler
                             <ol class="traces list_exception">
 
 EOF
-                        , $ind, $total, $class, $message);
+                            , $ind, $total, $class, $message);
                     foreach ($e['trace'] as $trace) {
                         $content .= '       <li>';
                         if ($trace['function']) {
@@ -194,8 +191,7 @@ EOF;
      *
      * @return string The stylesheet as a string
      */
-    public function getStylesheet(FlattenException $exception)
-    {
+    public function getStylesheet(FlattenException $exception) {
         return <<<EOF
             .sf-reset { font: 11px Verdana, Arial, sans-serif; color: #333 }
             .sf-reset .clear { clear:both; height:0; font-size:0; line-height:0; }
@@ -250,8 +246,7 @@ EOF;
 EOF;
     }
 
-    private function decorate($content, $css)
-    {
+    private function decorate($content, $css) {
         return <<<EOF
 <!DOCTYPE html>
 <html>
@@ -275,8 +270,7 @@ EOF;
 EOF;
     }
 
-    private function abbrClass($class)
-    {
+    private function abbrClass($class) {
         $parts = explode('\\', $class);
 
         return sprintf("<abbr title=\"%s\">%s</abbr>", $class, array_pop($parts));
@@ -289,20 +283,19 @@ EOF;
      *
      * @return string
      */
-    private function formatArgs(array $args)
-    {
+    private function formatArgs(array $args) {
         $result = array();
         foreach ($args as $key => $item) {
             if ('object' === $item[0]) {
                 $formattedValue = sprintf("<em>object</em>(%s)", $this->abbrClass($item[1]));
             } elseif ('array' === $item[0]) {
                 $formattedValue = sprintf("<em>array</em>(%s)", is_array($item[1]) ? $this->formatArgs($item[1]) : $item[1]);
-            } elseif ('string'  === $item[0]) {
+            } elseif ('string' === $item[0]) {
                 $formattedValue = sprintf("'%s'", htmlspecialchars($item[1], ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
             } elseif ('null' === $item[0]) {
                 $formattedValue = '<em>null</em>';
             } elseif ('boolean' === $item[0]) {
-                $formattedValue = '<em>'.strtolower(var_export($item[1], true)).'</em>';
+                $formattedValue = '<em>' . strtolower(var_export($item[1], true)) . '</em>';
             } elseif ('resource' === $item[0]) {
                 $formattedValue = '<em>resource</em>';
             } else {
@@ -314,4 +307,5 @@ EOF;
 
         return implode(', ', $result);
     }
+
 }
