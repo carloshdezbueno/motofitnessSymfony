@@ -69,3 +69,7 @@ verTablas:
 modificarPlan:
     pattern: /modificarPlan
     defaults: { _controller: MOTOPrincipalBundle:Login:modificarPlan }   
+    
+insertProgreso:
+    pattern: /insertProgreso
+    defaults: { _controller: MOTOPrincipalBundle:Default:progreso }   

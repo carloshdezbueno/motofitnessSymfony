@@ -1,0 +1,53 @@
+{# empty Twig template #}
+{% extends "::base.html.twig" %}
+
+{% block title %}MOTOPrincipalBundle:Administracion:progreso{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+        <nav class='navbar navbar-light bg-light row'>
+            {% if botones.botonLogin != "-" %}
+                {# Si la sesión NO está iniciada #}
+                {{ botones.botonLogin | raw }}
+                {{ botones.botonSignUp | raw }}
+            {% else %}
+                {# Si la sesión SI está iniciada #}
+                {{ botones.botonProgreso | raw }}
+                {{ botones.botonResumen | raw }}
+                {{ botones.botonDietas | raw }}
+                {{ botones.botonTablas | raw}}
+                {{ botones.botonAmpliarPlan | raw}}
+                {{ botones.botonLogout | raw}}
+
+            {% endif %}
+        </nav>
+        <br>
+        <form action ="{{path('insertProgreso')}}" method="post" enctype="multipart/form-data">
+
+            {{form_widget(form)}}
+            <br>
+            <button type="submit" class="btn btn-primary">Registrar progreso</button>
+
+        </form>
+        <br>
+
+        {% if not form.vars.valid %}
+            <ul>
+                {# Loop through every form item #}
+                {% for child in form.children %}
+                    {# Display the errors of the form item #}
+                    {%for error in child.vars.errors%}
+                        <li>{{error.message}}</li>
+                        {%endfor%}
+                    {%endfor%}
+            </ul>
+        {%endif%}
+        {% if error != '-' %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

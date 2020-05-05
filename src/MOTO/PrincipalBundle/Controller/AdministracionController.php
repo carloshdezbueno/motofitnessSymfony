@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use MOTO\PrincipalBundle\Form\EmpleadoType;
 use MOTO\PrincipalBundle\Entity\Empleado;
 
+use MOTO\PrincipalBundle\Form\EjercicioType;
+use MOTO\PrincipalBundle\Entity\Ejercicio;
+
 //use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AdministracionController extends Controller {

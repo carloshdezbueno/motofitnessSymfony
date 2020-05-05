@@ -6,7 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EjercicioType extends AbstractType
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
+class ProgresoType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,12 +17,10 @@ class EjercicioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('series')
-            ->add('repeticiones')
+            ->add('imagen', 'file')
             ->add('peso')
-            ->add('link')
-        ;
+            ->add('medidas')
+            ->add('fecha');
     }
     
     /**
@@ -29,7 +29,7 @@ class EjercicioType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MOTO\PrincipalBundle\Entity\Ejercicio'
+            'data_class' => 'MOTO\PrincipalBundle\Entity\Progreso'
         ));
     }
 
@@ -38,6 +38,6 @@ class EjercicioType extends AbstractType
      */
     public function getName()
     {
-        return 'moto_principalbundle_ejercicio';
+        return 'moto_principalbundle_progreso';
     }
 }

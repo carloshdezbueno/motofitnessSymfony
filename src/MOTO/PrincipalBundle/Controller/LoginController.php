@@ -153,9 +153,6 @@ class LoginController extends Controller {
                 ))
                 ->getForm();
         $session = $request->getSession();
-        echo '<script>';
-        echo "console.log('" . $session->get('dni') . "')";
-        echo '</script>';
         // BOTONES CLIENTE
         $botonProgreso = "";
         $botonDietas = "";

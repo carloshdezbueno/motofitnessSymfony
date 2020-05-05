@@ -12,6 +12,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Progreso
 {
+    
+    /**
+     * @ORM\prePersist
+     */
+    public function setValorFecha() {
+
+
+        
+        
+        $this->fecha = new \DateTime();
+    }
+    
     /**
      * @var integer
      *
@@ -188,5 +200,9 @@ class Progreso
     public function getDni()
     {
         return $this->dni;
+    }
+    
+    public function __toString() {
+        return $this->dni . "-" . $this->imagen . "-" . $this->fecha;
     }
 }

@@ -75,6 +75,7 @@ class ExceptionHandler
         } else {
             $this->sendPhpResponse($exception);
         }
+        
     }
 
     /**
