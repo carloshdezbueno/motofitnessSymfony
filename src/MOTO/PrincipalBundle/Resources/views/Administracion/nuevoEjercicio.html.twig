@@ -3,5 +3,23 @@
 {% block title %}MOTOPrincipalBundle:Administracion:nuevoEjercicio{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Administracion:nuevoEjercicio page</h1>
+    <div class="container">
+        <nav class='navbar navbar-light bg-light row'>
+            <a class='navbar-brand' href='#'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='{{ path('principal_administracion') }}'>Administracion</a>
+            <a class='navbar-brand' href='{{ path('_logout') }}'>Logout</a>
+        
+        </nav>
+        <br>
+        <form action = "{{ path('nuevo_ejercicio') }}" method="POST">
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">Guardar ejercicio</button>
+        </form>
+        <br>
+        {% if error != "-" %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

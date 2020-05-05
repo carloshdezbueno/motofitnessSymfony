@@ -43,9 +43,6 @@ class AdministracionController extends Controller {
                 }
             }
 
-
-            // Buscador de clientes
-
             return $this->render('MOTOPrincipalBundle:Administracion:principalAdministracion.html.twig', array("administrador" => "true", "dietas" => $dietas, "tablas" => $tablas, "empleados" => $empleadosAdmin));
         }
 
@@ -54,7 +51,6 @@ class AdministracionController extends Controller {
         return $this->render('MOTOPrincipalBundle:Administracion:principalAdministracion.html.twig', array("nota" => $nota));
     }
 
-    // MIGUEL
     public function asignarDietaAction() {
         // Hacer formulario con dos desplegables
         $formClientes = $this->createFormBuilder()
@@ -91,13 +87,11 @@ class AdministracionController extends Controller {
         return $this->render('MOTOPrincipalBundle:Administracion:asignarDieta.html.twig', array("administrador" => "true",'form' => $formClientes->createView(), 'error' => '-'));
     }
 
-    // MIGUEL
     public function crearDietaAction() {
 
         // La nueva dieta tiene nombre, codigo,
     }
 
-    // MIGUEL
     public function verDietaAction() {
         // Recuperar dietas
         $em = $this->getDoctrine()->getManager();
@@ -138,6 +132,30 @@ class AdministracionController extends Controller {
 
     public function nuevoEjercicioAction() {
         
+        $error = "-";
+        $request = $this->getRequest();
+        
+        $ejercicio = new Ejercicio();
+        $form = $this->createForm(new EjercicioType(), $ejercicio);
+        
+        if($request->getMethod() == 'POST'){
+            $form->bind($request);
+            
+            if($form->isValid()){
+                $em = $this->getDoctrine()->getEntityManager();
+                
+                try{
+                    $em->persist($ejercicio);
+                    $em->flush();
+                } catch (Exception $ex) {
+                    $error = "Error al guardar en base de datos";
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevoEjercicio.html.twig', array('form' => $form->createView(), 'error'=>$error));
+                }
+                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+            }
+        }
+        
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevoEjercicio.html.twig', array('form' => $form->createView(), 'error'=>$error));
     }
 
     public function nuevoEmpleadoAction() {
@@ -153,17 +171,6 @@ class AdministracionController extends Controller {
             
             if($form->isValid()){
                 $em = $this->getDoctrine()->getEntityManager();
-                
-                // Especialidad del empleado
-//                if(strtolower($empleado->getEspecialidad()) == "1"){
-//                    
-//                }
-//                if(strtolower($empleado->getEspecialidad()) == "2"){
-//                    
-//                }
-//                if(strtolower($empleado->getEspecialidad()) == "3"){
-//                    
-//                }
                 
                 try{
                     $em->persist($empleado);
