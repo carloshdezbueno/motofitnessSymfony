@@ -407,23 +407,12 @@ class DefaultController extends Controller {
 
 
                         if ($extension != "png" && $extension != "jpg" && $extension != "jpeg") {
-                            echo '<script>';
-                            echo "console.log('excepcion')";
-                            echo '</script>';
                             $error = "Extension del archivo no valida";
                         } else {
 
                             $fileName = time() . '.' . $extension;
-                            echo '<script>';
-                            echo "console.log('" . $fileName . "')";
-                            echo '</script>';
                             
-                            
-                            $resultado = $file->move($directory, $fileName);
-                            
-                            echo '<script>';
-                            echo "console.log('Movido----" . $resultado . "----')";
-                            echo '</script>';
+                            //Mover el fichero a $directorio, no funciona
                             
                             $progreso->setImagen($directory . $fileName);
                         }
@@ -448,6 +437,9 @@ class DefaultController extends Controller {
                 if ($error != "-") {
 
                     return $this->render('MOTOPrincipalBundle:Default:progreso.html.twig', array("botones" => $arrayBotones, 'form' => $form->createView(), 'error' => $error));
+                }else{
+                    $em->persist($progreso);
+                    $em->flush();
                 }
             }
 

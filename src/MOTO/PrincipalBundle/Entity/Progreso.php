@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="progreso")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class Progreso
 {
@@ -18,9 +19,6 @@ class Progreso
      */
     public function setValorFecha() {
 
-
-        
-        
         $this->fecha = new \DateTime();
     }
     
