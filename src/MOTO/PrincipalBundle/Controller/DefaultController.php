@@ -179,7 +179,7 @@ class DefaultController extends Controller {
                 }
 
                 // Botón resumen está en empleado y cliente
-                $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
+                $botonResumen = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen $resumen</a>";
             }
         } else {
             $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
@@ -281,7 +281,7 @@ class DefaultController extends Controller {
                 }
 
                 // Botón resumen está en empleado y cliente
-                $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen $resumen</a>";
+                $botonResumen = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen $resumen</a>";
             }
         } else {
             $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
@@ -478,7 +478,7 @@ class DefaultController extends Controller {
         $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
         $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
         // Botón resumen está en empleado y cliente
-        $botonResumen = "<a class='navbar-brand' href='resumen.php'>Resumen</a>";
+        $botonResumen = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen</a>";
 
 
 

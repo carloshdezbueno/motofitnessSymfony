@@ -5,10 +5,10 @@
 {% block body %}
     <div class="container">
         <nav class='navbar navbar-light bg-light row'>
-            <a class='navbar-brand' href='#'>Resumen de mis clientes</a>
-            <a class='navbar-brand' href='{{ path('principal_administracion') }}'>Administracion</a>
-            <a class='navbar-brand' href='{{ path('_logout') }}'>Logout</a>
-        </nav>
+                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
+                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
+                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+            </nav>
         <br>
         <form action = "{{ path('nuevo_empleado') }}" method="POST">
             {{ form_widget(form) }}
