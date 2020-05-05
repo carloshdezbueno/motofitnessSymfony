@@ -400,7 +400,7 @@ class DefaultController extends Controller {
                     $progreso->setImagen($default);
                 } else {
 
-                    $directory = "/motofitnessSymfony/web/img//";
+                    $directory = "img/";
                     $fileName = "prueba";
                     $extension = $file->guessExtension();
                     if ($extension != null) {
@@ -411,9 +411,13 @@ class DefaultController extends Controller {
                         } else {
 
                             $fileName = time() . '.' . $extension;
-                            
                             //Mover el fichero a $directorio, no funciona
-                            
+                            try {
+                                $file->move($directory, $fileName);
+                            } catch (FileException $e) {
+                                // ... handle exception if something happens during file upload
+                            }
+
                             $progreso->setImagen($directory . $fileName);
                         }
                     } else {
@@ -437,7 +441,7 @@ class DefaultController extends Controller {
                 if ($error != "-") {
 
                     return $this->render('MOTOPrincipalBundle:Default:progreso.html.twig', array("botones" => $arrayBotones, 'form' => $form->createView(), 'error' => $error));
-                }else{
+                } else {
                     $em->persist($progreso);
                     $em->flush();
                 }
