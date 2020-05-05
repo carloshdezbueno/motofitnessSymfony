@@ -23,7 +23,6 @@ class EmpleadoType extends AbstractType
             ->add('direccion')
             ->add('clave')
             ->add('privilegios')
-            ->add('dni')
         ;
     }
     
