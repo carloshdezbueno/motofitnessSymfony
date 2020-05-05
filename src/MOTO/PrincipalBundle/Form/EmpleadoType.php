@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 class EmpleadoType extends AbstractType
 {
         /**
@@ -15,14 +17,25 @@ class EmpleadoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('especialidad')
+            ->add('especialidad','choice', array(
+                'choices' => array(
+                    "1" => "Nutricionista",
+                    "2" => "Entrenador",
+                    "3" => "Ambos"
+                )
+            ))
             ->add('nombre')
             ->add('dniempleado')
             ->add('telefono')
             ->add('email')
             ->add('direccion')
-            ->add('clave')
-            ->add('privilegios')
+            ->add('clave', 'password')
+            ->add('privilegios', 'choice', array(
+                'choices' => array(
+                    "1" => "Administrador",
+                    "0" => "Regular"
+                )
+            ))
         ;
     }
     
