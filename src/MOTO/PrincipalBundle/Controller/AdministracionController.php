@@ -10,6 +10,9 @@ use MOTO\PrincipalBundle\Entity\Empleado;
 use MOTO\PrincipalBundle\Form\EjercicioType;
 use MOTO\PrincipalBundle\Entity\Ejercicio;
 
+use MOTO\PrincipalBundle\Form\DietaType;
+use MOTO\PrincipalBundle\Entity\Dieta;
+
 //use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AdministracionController extends Controller {
