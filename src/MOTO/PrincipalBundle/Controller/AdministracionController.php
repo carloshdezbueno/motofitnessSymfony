@@ -91,8 +91,31 @@ class AdministracionController extends Controller {
     }
 
     public function crearDietaAction() {
-
-        // La nueva dieta tiene nombre, codigo,
+        
+        $error = "-";
+        $request = $this->getRequest();
+        
+        $dieta = new Dieta();
+        $form = $this->createForm(new DietaType(), $dieta);
+        
+        if($request->getMethod() == 'POST'){
+            $form->bind($request);
+            
+            if($form->isValid()){
+                $em = $this->getDoctrine()->getEntityManager();
+                
+                try{
+                    $em->persist($dieta);
+                    $em->flush();
+                } catch (Exception $ex) {
+                    $error = "Error al crear dieta";
+                    return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error'=>$error));
+                }
+                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+            }
+        }
+        
+        return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error'=>$error));
     }
 
     public function verDietaAction() {
