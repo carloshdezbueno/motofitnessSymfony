@@ -10,7 +10,7 @@ class DefaultController extends Controller {
     // Página de inicio
     public function indexAction() {
         session_start();
-
+        
         $preparadores = array();
 
         $request = $this->getRequest();
