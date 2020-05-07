@@ -148,6 +148,38 @@ class AdministracionController extends Controller {
     }
 
     public function asignarTablaClienteAction() {
+        $formClientes = $this->createFormBuilder()
+                ->add('cliente', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Cliente'
+                ))
+                ->add('tablaejercicios', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Tablaejercicios'
+                ))
+                ->getForm();
+        $request = $this->getRequest();
+
+        if ($request->getMethod() == 'POST') {
+
+            $formClientes->bind($request);
+
+
+            if ($formClientes->isValid()) {
+
+                $em = $this->getDoctrine()->getEntityManager();
+
+                $cliSelect = $formClientes->get("cliente")->getData();
+                $tabSelect = $formClientes->get("tablaejercicios")->getData();
+
+                $cliSelect->setCodtabla($tabSelect);
+
+                $em->persist($cliSelect);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('principal_administracion'));
+            }
+        }
+
+        return $this->render('MOTOPrincipalBundle:Administracion:asignarTablaCliente.html.twig', array("administrador" => "true",'form' => $formClientes->createView(), 'error' => '-'));
         
     }
 
