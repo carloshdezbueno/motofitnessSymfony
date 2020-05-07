@@ -55,10 +55,27 @@ class AdministracionController extends Controller {
     }
 
     public function asignarDietaAction() {
+        
+        
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.numeroempleado=" . $session->get('dni');
+        $queryEmpleado = $em->createQuery($consultaEmpleado);
+        $empleados = $queryEmpleado->getResult();
+
+        $clientesEmpleado = array();
+
+
+        foreach ($empleados[0]->getDni() as $cli) {
+            $clientesEmpleado[$cli->getDni()] = $cli;
+        }
+        
         // Hacer formulario con dos desplegables
         $formClientes = $this->createFormBuilder()
-                ->add('cliente', 'entity', array(
-                    'class' => 'MOTOPrincipalBundle:Cliente'
+               ->add('cliente', 'choice', array(
+                    'choices' => $clientesEmpleado
                 ))
                 ->add('dieta', 'entity', array(
                     'class' => 'MOTOPrincipalBundle:Dieta'
@@ -77,10 +94,15 @@ class AdministracionController extends Controller {
 
                 $cliSelect = $formClientes->get("cliente")->getData();
                 $dietSelect = $formClientes->get("dieta")->getData();
+                
+                $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $cliSelect;
+                $queryCliente = $em->createQuery($consultaCliente);
+                $clienteMod = $queryCliente->getResult();
 
-                $cliSelect->setCoddieta($dietSelect);
+                $clienteAModificar = $clienteMod[0];
+                $clienteAModificar->setCoddieta($dietSelect);
 
-                $em->persist($cliSelect);
+                $em->persist($clienteAModificar);
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('principal_administracion'));
