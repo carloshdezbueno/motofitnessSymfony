@@ -152,4 +152,8 @@ class Sesion
     {
         return $this->codtabla;
     }
+    
+    public function __tostring(){
+        return "Sesión número: " . $this->codsesion . " - Dia: " . $this->dia;
+    }
 }

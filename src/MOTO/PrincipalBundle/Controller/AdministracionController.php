@@ -9,6 +9,8 @@ use MOTO\PrincipalBundle\Form\EjercicioType;
 use MOTO\PrincipalBundle\Entity\Ejercicio;
 use MOTO\PrincipalBundle\Form\DietaType;
 use MOTO\PrincipalBundle\Entity\Dieta;
+use MOTO\PrincipalBundle\Form\TablaType;
+use MOTO\PrincipalBundle\Entity\Tablaejercicios;
 
 //use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -55,8 +57,8 @@ class AdministracionController extends Controller {
     }
 
     public function asignarDietaAction() {
-        
-        
+
+
         $request = $this->getRequest();
         $session = $request->getSession();
 
@@ -71,10 +73,10 @@ class AdministracionController extends Controller {
         foreach ($empleados[0]->getDni() as $cli) {
             $clientesEmpleado[$cli->getDni()] = $cli;
         }
-        
+
         // Hacer formulario con dos desplegables
         $formClientes = $this->createFormBuilder()
-               ->add('cliente', 'choice', array(
+                ->add('cliente', 'choice', array(
                     'choices' => $clientesEmpleado
                 ))
                 ->add('dieta', 'entity', array(
@@ -94,7 +96,7 @@ class AdministracionController extends Controller {
 
                 $cliSelect = $formClientes->get("cliente")->getData();
                 $dietSelect = $formClientes->get("dieta")->getData();
-                
+
                 $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $cliSelect;
                 $queryCliente = $em->createQuery($consultaCliente);
                 $clienteMod = $queryCliente->getResult();
@@ -222,7 +224,30 @@ class AdministracionController extends Controller {
     }
 
     public function nuevaTablaAction() {
-        
+        $error = "-";
+        $request = $this->getRequest();
+
+        $tabla = new Tablaejercicios();
+        $form = $this->createForm(new TablaType(), $tabla);
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+
+                try {
+                    $em->persist($tabla);
+                    $em->flush();
+                } catch (Exception $ex) {
+                    $error = "Error al crear tabla de ejercicios";
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevaTabla.html.twig', array('form' => $form->createView(), 'error' => $error));
+                }
+                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+            }
+        }
+
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevaTabla.html.twig', array('form' => $form->createView(), 'error' => $error));
     }
 
     public function nuevaSesionAction() {

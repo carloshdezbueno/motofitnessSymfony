@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DietaType extends AbstractType
+class TablaType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,10 +15,15 @@ class DietaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('semana', 'text', array(
-                'label' => 'Nombre de la dieta:'
+            ->add('fecha', null, array(
+                'label' => 'Fecha de inicio de la tabla:'
             ))
-            ->add('coddia')
+            ->add('tipo', null, array(
+                'label' => 'Nombre de la tabla:'
+            ))
+            ->add('codsesion', null, array(
+                'label' => 'Sesiones disponibles:'
+            ))
         ;
     }
     
@@ -28,7 +33,7 @@ class DietaType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MOTO\PrincipalBundle\Entity\Dieta'
+            'data_class' => 'MOTO\PrincipalBundle\Entity\Tablaejercicios'
         ));
     }
 
@@ -37,6 +42,6 @@ class DietaType extends AbstractType
      */
     public function getName()
     {
-        return 'moto_principalbundle_dieta';
+        return 'moto_principalbundle_tabla';
     }
 }
