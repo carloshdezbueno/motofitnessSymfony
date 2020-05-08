@@ -28,6 +28,8 @@ class Plato
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
      * 
+     * @Assert\Length(max=50)
+     * @Assert\Type("string")
      */
     private $nombre;
 
@@ -36,6 +38,8 @@ class Plato
      *
      * @ORM\Column(name="link", type="string", length=50, nullable=false)
      * 
+     * @Assert\Length(max=50)
+     * @Assert\Type("string")
      */
     private $link;
 
@@ -52,6 +56,8 @@ class Plato
      *
      * @ORM\Column(name="tipoComida", type="string", length=20, nullable=false)
      * 
+     * @Assert\Length(max=20)
+     * @Assert\Type("string")
      */
     private $tipocomida;
 

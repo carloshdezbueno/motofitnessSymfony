@@ -27,6 +27,8 @@ class Plan
      *
      * @ORM\Column(name="tipoplan", type="string", length=20, nullable=false)
      * 
+     * @Assert\Length(max=20)
+     * @Assert\Type("string")
      */
     private $tipoplan;
 
@@ -35,6 +37,7 @@ class Plan
      *
      * @ORM\Column(name="descripcion", type="text", nullable=false)
      * 
+     * @Assert\Type("string")
      */
     private $descripcion;
 
