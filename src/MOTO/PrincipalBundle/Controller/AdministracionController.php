@@ -27,10 +27,10 @@ class AdministracionController extends Controller {
         
         $session->remove("dias");
         $session->remove("platos");
-        if ($_SESSION['resLogin'] == "empleado") {
+        if ($session->get('resLogin') == "empleado") {
 
             $em = $this->getDoctrine()->getEntityManager();
-            $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.numeroempleado=" . $_SESSION['dni'];
+            $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.numeroempleado=" . $session->get('dni');
             $queryEmpleado = $em->createQuery($consultaEmpleado);
             $empleados = $queryEmpleado->getResult();
 
@@ -127,7 +127,6 @@ class AdministracionController extends Controller {
 
         $error = "-";
         $request = $this->getRequest();
-
         $session = $request->getSession();
 
         if (!$session->has("dias")) {
@@ -186,7 +185,6 @@ class AdministracionController extends Controller {
 
         $error = "-";
         $request = $this->getRequest();
-
         $session = $request->getSession();
 
         if (!$session->has("platos")) {
@@ -258,7 +256,6 @@ class AdministracionController extends Controller {
     public function crearPlatoAction() {
         $error = "-";
         $request = $this->getRequest();
-
         $session = $request->getSession();
 
         $caloriasTotales = $session->get("calorias", 0);
@@ -342,6 +339,7 @@ class AdministracionController extends Controller {
                 ->getForm();
 
         $request = $this->getRequest();
+        $session = $request->getSession();
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
@@ -447,6 +445,7 @@ class AdministracionController extends Controller {
 
         $error = "-";
         $request = $this->getRequest();
+        $session = $request->getSession();
 
         $ejercicio = new Ejercicio();
         $form = $this->createForm(new EjercicioType(), $ejercicio);
@@ -475,6 +474,7 @@ class AdministracionController extends Controller {
 
         $error = "-";
         $request = $this->getRequest();
+        $session = $request->getSession();
 
         $empleado = new Empleado();
         $form = $this->createForm(new EmpleadoType(), $empleado);
@@ -514,6 +514,7 @@ class AdministracionController extends Controller {
                 ->getForm();
 
         $request = $this->getRequest();
+        $session = $request->getSession();
 
         if ($request->getMethod() == 'POST') {
             $formClientes->bind($request);

@@ -95,7 +95,8 @@ class LoginController extends Controller {
 
                 $em = $this->getDoctrine()->getEntityManager();
 
-
+                $passrep = $_POST['recpass'];
+                
                 //Asignacion de empleados
                 if (strtolower($cliente->getCodplan()->getTipoplan()) === "nutricion") {
                     $preparador1 = $this->selectpreparador(1);
@@ -120,6 +121,9 @@ class LoginController extends Controller {
                     $cliente->addNumeroempleado($preparador2);
                 }
 
+                if($error != "-"){
+                    return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
+                }
                 try {
 
                     $em->persist($cliente);
@@ -128,8 +132,14 @@ class LoginController extends Controller {
 
                     if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
                         $error = "Error, el DNI ya existe";
+                    }else{
+                        $error = $e->getMessage();
                     }
 
+                    return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
+                }
+                
+                if($error != "-"){
                     return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
 

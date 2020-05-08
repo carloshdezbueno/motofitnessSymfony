@@ -26,13 +26,29 @@
         <br>
         <form action ="{{path('insertProgreso')}}" method="post" enctype="multipart/form-data">
 
-            {{form_widget(form)}}
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Imagen</label>
+                {{form_widget(form.imagen, {'attr': {'class': 'form-control-file',
+                                                    'placeholder': 'Contraseña'}})}}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Peso actual</label>
+                {{form_widget(form.peso, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Peso actual'}})}}
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Medidas actuales</label>
+                {{form_widget(form.medidas, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Medidas actuales'}})}}
+            </div>
+{{ form_rest(form) }}
             <br>
             <button type="submit" class="btn btn-primary">Registrar progreso</button>
 
         </form>
         <br>
 
+        {{ form_errors(form) }}
         {% if not form.vars.valid %}
             <ul>
                 {# Loop through every form item #}

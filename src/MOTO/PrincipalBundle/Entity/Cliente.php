@@ -3,7 +3,6 @@
 namespace MOTO\PrincipalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -32,9 +31,6 @@ class Cliente {
      * @ORM\Column(name="dni", type="string", length=9, nullable=false)
      * @ORM\Id
      * 
-     * @Assert\NotNull
-     * @Assert\Length(max=9)
-     * @Assert\Type("string")
      */
     private $dni;
 
@@ -43,18 +39,14 @@ class Cliente {
      *
      * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
      */
     private $nombre;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=20, nullable=false)
+     * @ORM\Column(name="email", type="string", length=50, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
      */
     private $email;
 
@@ -63,8 +55,6 @@ class Cliente {
      *
      * @ORM\Column(name="direccion", type="string", length=50, nullable=false)
      * 
-     * @Assert\Length(max=50)
-     * @Assert\Type("string")
      */
     private $direccion;
 
@@ -73,7 +63,6 @@ class Cliente {
      *
      * @ORM\Column(name="telefono", type="string", length=9, nullable=false)
      * 
-     * @Assert\Length(max=9)
      */
     private $telefono;
 
@@ -89,8 +78,6 @@ class Cliente {
      *
      * @ORM\Column(name="clave", type="string", length=20, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
      */
     private $clave;
 
@@ -99,8 +86,6 @@ class Cliente {
      *
      * @ORM\Column(name="disponibilidad", type="string", length=30, nullable=false)
      * 
-     * @Assert\Length(max=30)
-     * @Assert\Type("string")
      */
     private $disponibilidad;
 
@@ -109,7 +94,6 @@ class Cliente {
      *
      * @ORM\Column(name="observaciones", type="text", nullable=false)
      * 
-     * @Assert\Type("string")
      */
     private $observaciones;
 

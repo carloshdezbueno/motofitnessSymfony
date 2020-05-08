@@ -3,6 +3,7 @@
 namespace MOTO\PrincipalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tablaejercicios
@@ -34,8 +35,6 @@ class Tablaejercicios
      *
      * @ORM\Column(name="tipo", type="string", length=20, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
      */
     private $tipo;
 

@@ -36,8 +36,6 @@ class Empleado
      *
      * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
      */
     private $nombre;
 
@@ -46,8 +44,6 @@ class Empleado
      *
      * @ORM\Column(name="dniEmpleado", type="string", length=9, nullable=false)
      * 
-     * @Assert\Length(max=9)
-     * @Assert\Type("string")
      */
     private $dniempleado;
 
@@ -56,8 +52,6 @@ class Empleado
      *
      * @ORM\Column(name="telefono", type="string", length=9, nullable=false)
      * 
-     * @Assert\Length(max=9)
-     * @Assert\Type("string")
      */
     private $telefono;
 
@@ -66,8 +60,6 @@ class Empleado
      *
      * @ORM\Column(name="email", type="string", length=20, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
      */
     private $email;
 
@@ -76,8 +68,6 @@ class Empleado
      *
      * @ORM\Column(name="direccion", type="string", length=50, nullable=false)
      * 
-     * @Assert\Length(max=50)
-     * @Assert\Type("string")
      */
     private $direccion;
 
@@ -86,8 +76,6 @@ class Empleado
      *
      * @ORM\Column(name="clave", type="string", length=20, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
      */
     private $clave;
 
