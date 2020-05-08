@@ -222,4 +222,8 @@ class Diadieta
     {
         return $this->coddieta;
     }
+    
+    public function __toString() {
+        return "Hola";
+    }
 }
