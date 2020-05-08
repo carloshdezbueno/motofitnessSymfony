@@ -13,22 +13,30 @@
         <form action = "{{ path('crear_dieta') }}" method="POST">
             {{ form_widget(form) }}
             <br>
-            
-            {% if diasInsertados >= 7 %}
-                <button type="button" class="btn btn-primary" style="margin-right: 20px" disabled>Crear dia de la dieta</button>
-                <small class="alert alert-info" role="alert">Dias creados: {{ diasInsertados }}</small>
-            {% else %}
-                <a href="{{ path('crear_dia_dieta') }}"><button type="button" class="btn btn-primary" style="margin-right: 20px">Crear dia de la dieta</button></a>
-            {% endif %}
-            
+
             {% if diasInsertados < 7 %}
                 <button type="submit" class="btn btn-secondary" disabled>Guardar dieta</button>&nbsp;
-                <small class="alert alert-info" role="alert">Debes crear los 7 dias de la dieta, dias creados: {{ diasInsertados }}</small>
+
             {% else %}
                 <button type="submit" class="btn btn-primary">Guardar dieta</button>
             {% endif %}
 
+            {% if diasInsertados >= 7 %}
+                <button type="button" class="btn btn-primary" style="margin-right: 20px" disabled>Crear dia de la dieta</button>
+
+            {% else %}
+                <a href="{{ path('crear_dia_dieta') }}"><button type="button" class="btn btn-primary" style="margin-right: 20px">Crear dia de la dieta</button></a>
+            {% endif %}
+
+
+
         </form>
+        <br>
+        {% if diasInsertados < 7 %}
+            <small class="alert alert-info" role="alert">Debes crear los 7 dias de la dieta, dias creados: {{ diasInsertados }}</small>
+        {% else %}
+            <small class="alert alert-info" role="alert">Dias creados: {{ diasInsertados }}</small>
+        {% endif %}
         <br>
         {% if error != "-" %}
             <div class="alert alert-danger" role="alert">

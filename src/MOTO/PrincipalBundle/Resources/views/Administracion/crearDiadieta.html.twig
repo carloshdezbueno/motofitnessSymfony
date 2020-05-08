@@ -13,15 +13,20 @@
         <form action = "{{ path('crear_dia_dieta') }}" method="POST">
             {{ form_widget(form) }}
             <br>
-            <a href="{{ path('crear_plato') }}"><button type="button" class="btn btn-primary" style="margin-right: 20px">Crear un plato</button></a>
+
             {% if platosInsertados < 2 %}
                 <button type="submit" class="btn btn-secondary" disabled>Guardar dia de la dieta</button>&nbsp;
-                <small class="alert alert-info" role="alert">Debes crear al menos 2 platos por dia, platos creados: {{ platosInsertados }}</small>
             {% else %}
                 <button type="submit" class="btn btn-primary">Guardar dia de la dieta</button>
             {% endif %}
-
+            <a href="{{ path('crear_plato') }}"><button type="button" class="btn btn-primary" style="margin-right: 20px">Crear un plato</button></a>
         </form>
+        <br>
+        {% if platosInsertados < 2 %}
+            <small class="alert alert-info" role="alert">Debes crear al menos 2 platos por dia, platos creados: {{ platosInsertados }}</small>
+        {% else %}
+            <small class="alert alert-info" role="alert">Platos creados: {{ platosInsertados }}</small>
+        {% endif %}
         <br>
         {% if error != "-" %}
             <div class="alert alert-danger" role="alert">
