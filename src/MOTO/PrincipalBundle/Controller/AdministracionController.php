@@ -118,6 +118,12 @@ class AdministracionController extends Controller {
 
         $error = "-";
         $request = $this->getRequest();
+        
+        $session = $request->getSession();
+        
+        if(!$session->has("dias")){
+            $session->set("dias", array());
+        }
 
         $dieta = new Dieta();
         $form = $this->createForm(new DietaType(), $dieta);
@@ -135,11 +141,19 @@ class AdministracionController extends Controller {
                     $error = "Error al crear dieta";
                     return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
+                
+                
+                //Acaba la insercion
+                $session->remove("dias");
                 return $this->redirect($this->generateUrl('moto_principal_homepage'));
             }
         }
 
         return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error));
+    }
+    
+    public function crearPlatoAction(){
+        
     }
 
     public function verDietaAction() {
