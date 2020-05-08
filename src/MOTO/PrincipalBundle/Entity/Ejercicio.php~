@@ -1,0 +1,82 @@
+<?php
+
+namespace MOTO\PrincipalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ejercicio
+ *
+ * @ORM\Table(name="ejercicio")
+ * @ORM\Entity
+ */
+class Ejercicio
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="codejercicio", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $codejercicio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
+     */
+    private $nombre;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="series", type="integer", nullable=false)
+     */
+    private $series;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="repeticiones", type="integer", nullable=false)
+     */
+    private $repeticiones;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="peso", type="float", nullable=false)
+     */
+    private $peso;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=50, nullable=false)
+     */
+    private $link;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Sesion", inversedBy="codigoejercicio")
+     * @ORM\JoinTable(name="entrenamiento",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="codigoejercicio", referencedColumnName="codejercicio")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="codigosesion", referencedColumnName="codsesion")
+     *   }
+     * )
+     */
+    private $codigosesion;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->codigosesion = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+}

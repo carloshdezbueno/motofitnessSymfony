@@ -1,0 +1,54 @@
+<?php
+
+namespace MOTO\PrincipalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Dieta
+ *
+ * @ORM\Table(name="dieta")
+ * @ORM\Entity
+ */
+class Dieta
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="coddieta", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $coddieta;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="semana", type="string", length=100, nullable=false)
+     */
+    private $semana;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Diadieta", inversedBy="coddieta")
+     * @ORM\JoinTable(name="lineadieta",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="coddieta", referencedColumnName="coddieta")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="coddia", referencedColumnName="coddia")
+     *   }
+     * )
+     */
+    private $coddia;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->coddia = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+}
