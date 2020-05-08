@@ -21,13 +21,38 @@
                 {{ botones.botonAmpliarPlan | raw}}
                 {{ botones.botonAdmin | raw}}
                 {{ botones.botonLogout | raw}}
-                
+
             {% endif %}
         </nav>
 
 
-        {% if dietaMostrar is defined and dietaMostrar != "-"%}
-            {{ dietaMostrar }}
-        {% endif %}
+        <br>
+        <div class="row">
+            {% if dietaMostrar is defined and dietaMostrar != "-"%}
+                <h5 class="col-12">Identificador de la dieta: {{ dietaMostrar.coddieta }}</h5>
+                <div class="list-group">
+                    {% for dia in dietaMostrar.coddia %}
+                        <span class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ dia.dia }}</h5>
+                            </div>
+                            <p class="mb-1">Calorias: {{ dia.calorias }}. Macronutrientes: {{ dia.macronutrientes }}.</p>
+                            <div class="list-group">
+                                {% for plato in dia.codplato %}
+                                    <a href="{{ plato.link }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">{{ plato.nombre }}</h5>
+                                            <small>{{ plato.tipocomida }}</small>
+                                        </div>
+                                        <p class="mb-1">Calorias del plato: {{ plato.calorias }}</p>
+                                        <small>Si no sabe cocinar el plato, pulse en el para ver la receta.</small>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
