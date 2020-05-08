@@ -18,7 +18,6 @@ class DietaType extends AbstractType
             ->add('semana', 'text', array(
                 'label' => 'Nombre de la dieta:'
             ))
-            ->add('coddia')
         ;
     }
     

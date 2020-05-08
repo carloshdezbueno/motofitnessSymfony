@@ -12,7 +12,14 @@
         <br>
         <form action = "{{ path('crear_dieta') }}" method="POST">
             {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary">Guardar dieta</button>
+            <button type="button" class="btn btn-primary">Crear dia de la dieta</button>
+            {% if diasInsertados < 7 %}
+                <button type="submit" class="btn btn-secondary" disabled>Guardar dieta</button>
+                <small class="alert alert-info" role="alert">Debes crear los 7 dias de la dieta, dias creados: {{ diasInsertados }}</small>
+            {% else %}
+                <button type="submit" class="btn btn-primary">Guardar dieta</button>
+            {% endif %}
+
         </form>
         <br>
         {% if error != "-" %}

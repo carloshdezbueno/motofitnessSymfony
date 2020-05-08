@@ -124,6 +124,8 @@ class AdministracionController extends Controller {
         if(!$session->has("dias")){
             $session->set("dias", array());
         }
+        
+        $diasInsertados = $session->get("dias");
 
         $dieta = new Dieta();
         $form = $this->createForm(new DietaType(), $dieta);
@@ -139,7 +141,7 @@ class AdministracionController extends Controller {
                     $em->flush();
                 } catch (Exception $ex) {
                     $error = "Error al crear dieta";
-                    return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error));
+                    return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error, 'diasInsertados' => count($diasInsertados)));
                 }
                 
                 
@@ -149,7 +151,7 @@ class AdministracionController extends Controller {
             }
         }
 
-        return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error));
+        return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error, 'diasInsertados' => count($diasInsertados)));
     }
     
     public function crearPlatoAction(){
