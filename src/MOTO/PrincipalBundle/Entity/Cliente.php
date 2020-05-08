@@ -33,7 +33,7 @@ class Cliente {
      * @ORM\Id
      * 
      * @Assert\NotNull
-     * @Assert\MaxLenght(9)
+     * @Assert\MaxLength(9)
      */
     private $dni;
 
@@ -42,7 +42,7 @@ class Cliente {
      *
      * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
      * 
-     * @Assert\MaxLenght(20)
+     * @Assert\MaxLength(20)
      */
     private $nombre;
 
@@ -51,7 +51,7 @@ class Cliente {
      *
      * @ORM\Column(name="email", type="string", length=20, nullable=false)
      * 
-     * @Assert\MaxLenght(20)
+     * @Assert\MaxLength(20)
      */
     private $email;
 
@@ -60,7 +60,7 @@ class Cliente {
      *
      * @ORM\Column(name="direccion", type="string", length=50, nullable=false)
      * 
-     * @Assert\MaxLenght(50)
+     * @Assert\MaxLength(50)
      */
     private $direccion;
 
@@ -69,7 +69,7 @@ class Cliente {
      *
      * @ORM\Column(name="telefono", type="string", length=9, nullable=false)
      * 
-     * @Assert\MaxLenght(9)
+     * @Assert\MaxLength(9)
      */
     private $telefono;
 
