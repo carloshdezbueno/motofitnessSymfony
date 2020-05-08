@@ -37,6 +37,8 @@ class Progreso
      *
      * @ORM\Column(name="imagen", type="string", length=100, nullable=true)
      * 
+     * @Assert\Length(max=100)
+     * @Assert\Type("string")
      */
     private $imagen;
 
@@ -52,6 +54,9 @@ class Progreso
      *
      * @ORM\Column(name="medidas", type="string", length=20, nullable=false)
      * 
+     * 
+     * @Assert\Length(max=20)
+     * @Assert\Type("string")
      */
     private $medidas;
 

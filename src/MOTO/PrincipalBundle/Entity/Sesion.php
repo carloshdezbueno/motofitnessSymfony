@@ -27,6 +27,8 @@ class Sesion
      *
      * @ORM\Column(name="dia", type="string", length=20, nullable=false)
      * 
+     * @Assert\Length(max=20)
+     * @Assert\Type("string")
      */
     private $dia;
 
