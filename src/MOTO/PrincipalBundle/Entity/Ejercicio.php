@@ -3,6 +3,7 @@
 namespace MOTO\PrincipalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ejercicio
@@ -27,6 +28,8 @@ class Ejercicio
      *
      * @ORM\Column(name="nombre", type="string", length=20, nullable=false)
      * 
+     * @Assert\Length(max=20)
+     * @Assert\Type("string")
      */
     private $nombre;
 
@@ -58,6 +61,8 @@ class Ejercicio
      *
      * @ORM\Column(name="link", type="string", length=50, nullable=false)
      * 
+     * @Assert\Length(max=20)
+     * @Assert\Type("string")
      */
     private $link;
 
