@@ -10,10 +10,15 @@
             <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
         </nav>
         <br>
-        <form action = "{{ path('crear_dia_dieta') }}" method="POST">
-            {{ form_widget(form) }}
-            <br>
+        <form action = "{{ path('crear_dia_dieta') }}" method="POST" class="px-4 py-3">
 
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Macronutrientes del dia</label>
+                {{form_widget(form.macronutrientes, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Macronutrientes del dia'}})}}
+            </div>
+            <br>
+            {{ form_rest(form) }}
             {% if platosInsertados < 2 %}
                 <button type="submit" class="btn btn-secondary" disabled>Guardar dia de la dieta</button>&nbsp;
             {% else %}

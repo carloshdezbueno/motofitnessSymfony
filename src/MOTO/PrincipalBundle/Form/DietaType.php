@@ -15,9 +15,7 @@ class DietaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('semana', 'text', array(
-                'label' => 'Nombre de la dieta:'
-            ))
+            ->add('semana', 'text')
         ;
     }
     
