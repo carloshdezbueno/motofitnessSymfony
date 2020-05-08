@@ -18,6 +18,7 @@ class PlatoType extends AbstractType {
                 ->add('calorias')
                 ->add('tipocomida')
                 ->add('link')
+                
         ;
     }
 

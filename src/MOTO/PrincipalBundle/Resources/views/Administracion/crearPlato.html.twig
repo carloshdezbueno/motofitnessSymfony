@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}MOTOPrincipalBundle:Administracion:crearDieta{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav class='navbar navbar-light bg-light row'>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+        </nav>
+        <br>
+        <form action = "{{ path('crear_plato') }}" method="POST">
+            {{ form_widget(form) }}
+            <br>
+            <button type="submit" class="btn btn-primary">Guardar plato</button>
+
+        </form>
+        <br>
+        {% if error != "-" %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

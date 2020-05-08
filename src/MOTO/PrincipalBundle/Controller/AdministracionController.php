@@ -11,6 +11,9 @@ use MOTO\PrincipalBundle\Form\DietaType;
 use MOTO\PrincipalBundle\Entity\Dieta;
 use MOTO\PrincipalBundle\Form\TablaType;
 use MOTO\PrincipalBundle\Entity\Tablaejercicios;
+use MOTO\PrincipalBundle\Form\PlatoType;
+use MOTO\PrincipalBundle\Entity\Plato;
+use MOTO\PrincipalBundle\Entity\Diadieta;
 
 //use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -118,13 +121,13 @@ class AdministracionController extends Controller {
 
         $error = "-";
         $request = $this->getRequest();
-        
+
         $session = $request->getSession();
-        
-        if(!$session->has("dias")){
+
+        if (!$session->has("dias")) {
             $session->set("dias", array());
         }
-        
+
         $diasInsertados = $session->get("dias");
 
         $dieta = new Dieta();
@@ -143,8 +146,8 @@ class AdministracionController extends Controller {
                     $error = "Error al crear dieta";
                     return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error, 'diasInsertados' => count($diasInsertados)));
                 }
-                
-                
+
+
                 //Acaba la insercion
                 $session->remove("dias");
                 return $this->redirect($this->generateUrl('moto_principal_homepage'));
@@ -153,9 +156,176 @@ class AdministracionController extends Controller {
 
         return $this->render('MOTOPrincipalBundle:Administracion:crearDieta.html.twig', array('form' => $form->createView(), 'error' => $error, 'diasInsertados' => count($diasInsertados)));
     }
-    
-    public function crearPlatoAction(){
-        
+
+    public function crearDiaDietaAction() {
+
+        $diasSemana = array(
+            0 => 'Lunes',
+            1 => 'Martes',
+            2 => 'Miercoles',
+            3 => 'Jueves',
+            4 => 'Viernes',
+            5 => 'Sabado',
+            6 => 'Domingo'
+        );
+
+        $error = "-";
+        $request = $this->getRequest();
+
+        $session = $request->getSession();
+
+        if (!$session->has("platos")) {
+            $session->set("platos", array());
+        }
+
+        $platosInsertados = $session->get("platos");
+
+        if (!$session->has("nomDias")) {
+            $session->set("nomDias", array());
+        }
+        $caloriasTotales = $session->get("calorias", 0);
+
+        $form = $this->createFormBuilder()
+                ->add('macronutrientes', 'text')
+//                ->add('diasExistentes', 'entity', array('class' => 'MOTOPrincipalBundle:Diadieta',
+//                    'required' => false,
+//                    'empty_value' => 'Selecciona uno si quieres añadirlo a la dieta'))
+                ->getForm();
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $diaDieta = new Diadieta();
+
+
+
+//                $diaExistente = $form->get("diasExistentes")->getData();
+//
+//                if ($diaExistente) {
+//                    $diaDieta = $diaExistente;
+//                } else {
+                //Añade los platos insertados en la otra pag
+                foreach ($platosInsertados as $codplato) {
+                    $consultaPlato = "select p from MOTOPrincipalBundle:Plato p where p.codplato=" . $codplato;
+                    $queryPlato = $em->createQuery($consultaPlato);
+                    $plato = $queryPlato->getResult();
+                    
+
+                    $diaDieta->addCodplato($plato[0]);
+                }
+
+                $diaDieta->setMacronutrientes($form->get("macronutrientes")->getData());
+
+
+                $diaDieta->setCalorias($session->get("calorias", 2000));
+                $session->remove("calorias");
+
+                $diaDieta->setDia($diasSemana[count($session->get("dias"))]);
+
+
+//                }
+
+                try {
+
+                    $em->persist($diaDieta);
+                    $em->flush();
+
+                    $diasInsert = $session->get("dias");
+                    $diasInsert[] = $diaDieta->getCoddia();
+                    $session->set("dias", $diasInsert);
+                } catch (Exception $ex) {
+                    $error = "Error al crear el dia";
+                }
+
+                if ($error != "-") {
+                    return $this->render('MOTOPrincipalBundle:Administracion:crearDiadieta.html.twig', array('form' => $form->createView(), 'error' => $error, 'platosInsertados' => count($platosInsertados), 'calorias' => $caloriasTotales));
+                }
+
+                //Acaba la insercion
+                $session->remove("platos");
+                return $this->redirect($this->generateUrl('crear_dieta'));
+            }
+        }
+
+        return $this->render('MOTOPrincipalBundle:Administracion:crearDiadieta.html.twig', array('form' => $form->createView(), 'error' => $error, 'platosInsertados' => count($platosInsertados), 'calorias' => $caloriasTotales));
+    }
+
+    public function crearPlatoAction() {
+        $error = "-";
+        $request = $this->getRequest();
+
+        $session = $request->getSession();
+
+        $caloriasTotales = $session->get("calorias", 0);
+
+        $plato = new Plato();
+
+//        $form = $this->createForm(new PlatoType(), $plato);
+
+        $form = $this->createFormBuilder()
+                ->add('nombre', 'text', array('required' => false))
+                ->add('calorias', 'number', array('required' => false))
+                ->add('tipocomida', 'text', array('required' => false))
+                ->add('link', 'text', array('required' => false))
+                ->add('platosExistentes', 'entity', array('class' => 'MOTOPrincipalBundle:Plato',
+                    'required' => false,
+                    'empty_value' => 'Selecciona uno si quieres añadirlo al dia'))
+                ->getForm();
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+
+                $platoExistente = $form->get('platosExistentes')->getData();
+
+                if ($platoExistente) {
+
+
+                    $caloriasTotales = $caloriasTotales + $platoExistente->getCalorias();
+                    $session->set("calorias", $caloriasTotales);
+
+
+                    $platosInsertados = $session->get("platos");
+                    $platosInsertados[] = $platoExistente->getCodplato();
+                    $session->set("platos", $platosInsertados);
+                } else {
+                    $plato = new Plato();
+
+                    $plato->setNombre($form->get('nombre')->getData());
+                    $plato->setCalorias($form->get('calorias')->getData());
+                    $plato->setTipocomida($form->get('tipocomida')->getData());
+                    $plato->setLink($form->get('link')->getData());
+
+
+                    try {
+
+                        $em->persist($plato);
+                        $em->flush();
+                        $caloriasTotales = $caloriasTotales + $plato->getCalorias();
+                        $session->set("calorias", $caloriasTotales);
+
+
+                        $platosInsertados = $session->get("platos");
+                        $platosInsertados[] = $plato->getCodplato();
+                        $session->set("platos", $platosInsertados);
+                    } catch (Exception $ex) {
+                        $error = "Error al crear el dia";
+                    }
+
+                    if ($error != "-") {
+                        return $this->render('MOTOPrincipalBundle:Administracion:crearPlato.html.twig', array('form' => $form->createView(), 'error' => $error));
+                    }
+                }
+
+                //Acaba la insercion
+                return $this->redirect($this->generateUrl('crear_dia_dieta'));
+            }
+        }
+
+        return $this->render('MOTOPrincipalBundle:Administracion:crearPlato.html.twig', array('form' => $form->createView(), 'error' => $error));
     }
 
     public function verDietaAction() {

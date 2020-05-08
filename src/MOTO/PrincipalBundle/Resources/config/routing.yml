@@ -25,6 +25,13 @@ asignar_dieta:
 crear_dieta:
     pattern: /crearDieta
     defaults: { _controller: MOTOPrincipalBundle:Administracion:crearDieta }
+crear_dia_dieta:
+    pattern: /crearDiaDieta
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:crearDiaDieta }
+    
+crear_plato:
+    pattern: /crearPlato
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:crearPlato }
 
 ver_dieta:
     pattern: /verDietaAdmin

@@ -23,7 +23,7 @@ class Cliente {
 
         
         
-        $this->vencimiento = new \DateTime();
+        $this->vencimiento = new \DateTime('+1 month');
     }
 
     /**

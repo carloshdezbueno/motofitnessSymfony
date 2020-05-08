@@ -205,4 +205,8 @@ class Plato
     {
         return $this->coddia;
     }
+    
+    public function __toString() {
+        return $this->nombre . ", Calorias:" . $this->calorias;
+    }
 }
