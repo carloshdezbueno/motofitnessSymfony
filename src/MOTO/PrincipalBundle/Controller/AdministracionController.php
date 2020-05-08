@@ -21,6 +21,12 @@ class AdministracionController extends Controller {
 
     public function principalAdministracionAction() {
         session_start();
+        
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        
+        $session->remove("dias");
+        $session->remove("platos");
         if ($_SESSION['resLogin'] == "empleado") {
 
             $em = $this->getDoctrine()->getEntityManager();
@@ -138,6 +144,15 @@ class AdministracionController extends Controller {
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
+                
+                foreach ($diasInsertados as $codDia) {
+                    $consultaDia = "select d from MOTOPrincipalBundle:Diadieta d where d.coddia=" . $codDia;
+                    $queryDia = $em->createQuery($consultaDia);
+                    $dia = $queryDia->getResult();
+                    
+
+                    $dieta->addCoddia($dia[0]);
+                }
 
                 try {
                     $em->persist($dieta);
@@ -180,16 +195,10 @@ class AdministracionController extends Controller {
 
         $platosInsertados = $session->get("platos");
 
-        if (!$session->has("nomDias")) {
-            $session->set("nomDias", array());
-        }
         $caloriasTotales = $session->get("calorias", 0);
 
         $form = $this->createFormBuilder()
                 ->add('macronutrientes', 'text')
-//                ->add('diasExistentes', 'entity', array('class' => 'MOTOPrincipalBundle:Diadieta',
-//                    'required' => false,
-//                    'empty_value' => 'Selecciona uno si quieres añadirlo a la dieta'))
                 ->getForm();
 
         if ($request->getMethod() == 'POST') {
@@ -201,11 +210,6 @@ class AdministracionController extends Controller {
 
 
 
-//                $diaExistente = $form->get("diasExistentes")->getData();
-//
-//                if ($diaExistente) {
-//                    $diaDieta = $diaExistente;
-//                } else {
                 //Añade los platos insertados en la otra pag
                 foreach ($platosInsertados as $codplato) {
                     $consultaPlato = "select p from MOTOPrincipalBundle:Plato p where p.codplato=" . $codplato;
@@ -225,7 +229,6 @@ class AdministracionController extends Controller {
                 $diaDieta->setDia($diasSemana[count($session->get("dias"))]);
 
 
-//                }
 
                 try {
 
