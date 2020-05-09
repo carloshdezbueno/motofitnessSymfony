@@ -19,49 +19,40 @@
                     {{form_widget(form.cliente, {'attr': {'class': 'form-control'}})}}
                 </div>
                 {{ form_rest(form) }}
-            <button type="submit" class="btn btn-primary">Ver cliente</button>
+                <button type="submit" class="btn btn-primary">Ver cliente</button>
             </form>
         {% endif %}
 
         {% if clienteobtenido is defined %}
-            <table class="table table-bordered table-sm">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">DNI</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Dirección</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Objetivo</th>
-                        <th scope="col">Dieta</th>
-                        <th scope="col">Tabla</th>
-                        <th scope="col">Plan</th>
-                        <th scope="col">Disponibilidad</th>
-                        <th scope="col">Observaciones</th>
-                    </tr>
-                </thead>
-                <tr>
-                    <td>{{ clienteobtenido.dni }}</td>
-                    <td>{{ clienteobtenido.nombre }}</td>
-                    <td>{{ clienteobtenido.email }}</td>
-                    <td>{{ clienteobtenido.direccion }}</td>
-                    <td>{{ clienteobtenido.telefono }}</td>
-                    <td>{{ clienteobtenido.objetivo }}</td>
-                    {% if clienteobtenido.coddieta != null %}
-                        <td>{{ clienteobtenido.coddieta.semana }}</td>
-                    {% else %}
-                        <td><b>Sin dieta asignada</b></td>
-                    {% endif %}
-                    {% if clienteobtenido.codtabla != null %}
-                        <td>{{ clienteobtenido.codtabla.tipo }}</td>
-                    {% else %}
-                        <td><b>Sin tabla asignada</b></td>
-                    {% endif %}
-                    <td>{{ clienteobtenido.codplan }}</td>
-                    <td>{{ clienteobtenido.disponibilidad }}</td>
-                    <td>{{ clienteobtenido.observaciones }}</td>
-                <tr>
-            </table>
+
+            
+            <div class="jumbotron">
+                <h1 class="display-4">{{ clienteobtenido.nombre }}</h1>
+                <p class="lead">Plan del cliente: {{ clienteobtenido.codplan }}</p>
+                <hr class="my-4">
+                <p>Informacion de contacto:</p>
+                <p class="ml-5">Direccion: {{ clienteobtenido.direccion }}</p>
+                <p class="ml-5">Telefono: {{ clienteobtenido.telefono }}</p>
+                <p class="ml-5">Email: {{ clienteobtenido.email }}</p>
+
+
+                {% if clienteobtenido.coddieta != null %}
+                    <p>Dieta asignada al cliente:</p>
+                    <p class="ml-5">{{ clienteobtenido.coddieta.semana }} <a class="btn btn-primary" href="{{ path('ver_dieta_param', {'codDieta': clienteobtenido.coddieta.coddieta}) }}" role="button">Ver dieta del cliente</a></p> 
+                {% else %}
+                    <p><b>Sin dieta asignada</b> <a class="btn btn-primary" href="{{ path('asignar_dieta') }}" role="button">Asignar dieta al cliente</a></p> 
+                {% endif %}
+                {% if clienteobtenido.codtabla != null %}
+                    <p >Tabla asignada al cliente:</p>
+                    <p class="ml-5">{{ clienteobtenido.codtabla.tipo }} <a class="btn btn-primary" href="{{ path('ver_tabla_param', {'codTabla': clienteobtenido.coddieta.coddieta}) }}" role="button">Ver dieta del cliente</a></p>
+                {% else %}
+                    <p><b>Sin tabla asignada</b></p> <a class="btn btn-primary" href="{{ path('asignar_tabla_cliente') }}" role="button">Asignar tabla al cliente</a>
+                {% endif %}
+                <p>Objetivos del cliente: {{ clienteobtenido.objetivo }}</p>
+                <p>Disponibilidad del cliente: {{ clienteobtenido.disponibilidad }} dias</p>
+                <p>Observaciones del cliente: {{ clienteobtenido.observaciones }}</p>
+            </div>
+
         {% endif %}
 
         {#

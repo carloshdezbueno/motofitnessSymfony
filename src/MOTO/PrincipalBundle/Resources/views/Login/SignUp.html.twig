@@ -77,16 +77,12 @@
 
         {% if error != null %}
             <div class="alert alert-danger dropdown-item" role="alert">
-                <script>
-                    console.log('Entra ')
-                </script>
+                
 
                 {% for errorSimple in error %}
                     <p>{{ errorSimple }}</p>
                 {% endfor %}
             </div>
-        {% else %}
-            <p>hola</p>
         {% endif %}
     </div>
 {% endblock %}

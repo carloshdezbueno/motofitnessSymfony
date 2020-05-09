@@ -19,7 +19,7 @@
                 {{ botones.botonAmpliarPlan | raw}}
                 {{ botones.botonAdmin | raw}}
                 {{ botones.botonLogout | raw}}
-                
+
             {% endif %}
         </nav>
         <br>
@@ -39,7 +39,7 @@
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{ sesion.dia }}</h5>
                         </div>
-                        
+
                         <div class="list-group">
                             {% for ejercicio in sesion.codigoejercicio %}
                                 <a href="{{ ejercicio.link }}" class="list-group-item list-group-item-action flex-column align-items-start ">
@@ -54,6 +54,11 @@
                         </div>
                     </span>
                 {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-danger col-12" role="alert">
+
+                <p>Dieta no encontrada</p>
             </div>
         {% endif %}
 

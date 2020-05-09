@@ -36,6 +36,10 @@ crear_plato:
 ver_dieta:
     pattern: /verDietaAdmin
     defaults: { _controller: MOTOPrincipalBundle:Administracion:verDieta }
+    
+ver_dieta_param:
+    pattern: /verDieta/{codDieta}
+    defaults: { _controller: MOTOPrincipalBundle:Default:verDietaCodigo }
 
 asignar_tabla_cliente:
     pattern: /asignarTablaCliente
@@ -72,6 +76,10 @@ verDietas:
 verTablas:
     pattern: /verTabla
     defaults: { _controller: MOTOPrincipalBundle:Default:verTabla }   
+
+ver_tabla_param:
+    pattern: /verTabla/{codTabla}
+    defaults: { _controller: MOTOPrincipalBundle:Default:verTablaParam } 
 
 modificarPlan:
     pattern: /modificarPlan

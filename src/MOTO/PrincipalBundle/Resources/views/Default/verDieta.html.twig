@@ -14,7 +14,8 @@
                 {{ botones.botonSignUp | raw }}
             {% else %}
                 {# Si la sesión SI está iniciada #}
-                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Inicio'>Inicio</a>
+                
+                {{ botones.botonInicio | raw }}
                 {{ botones.botonProgreso | raw }}
                 {{ botones.botonResumen | raw }}
                 {{ botones.botonTablas | raw}}
@@ -51,6 +52,11 @@
                             </div>
                         </span>
                     {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-danger col-12" role="alert">
+
+                    <p>Dieta no encontrada</p>
                 </div>
             {% endif %}
         </div>
