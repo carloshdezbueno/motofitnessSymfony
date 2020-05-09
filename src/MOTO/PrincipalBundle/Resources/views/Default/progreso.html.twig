@@ -26,10 +26,13 @@
         <br>
         <form action ="{{path('insertProgreso')}}" method="post" enctype="multipart/form-data">
 
-            <div class="form-group">
-                <label for="exampleFormControlFile1">Imagen</label>
-                {{form_widget(form.imagen, {'attr': {'class': 'form-control-file',
-                                                    'placeholder': 'Contraseña'}})}}
+            <label for="exampleInputEmail1">Introduzca una imagen</label>
+            <div class="custom-file">
+
+                {{form_widget(form.imagen, {'attr': {'class': 'custom-file-input',
+                                                    'placeholder': 'Contraseña', 
+                                                    'lang':'es'}})}}
+                <label class="custom-file-label" for="customFileLang">Introduzca una imagen de su progreso</label>
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Peso actual</label>
@@ -41,7 +44,7 @@
                 {{form_widget(form.medidas, {'attr': {'class': 'form-control',
                                                     'placeholder': 'Medidas actuales'}})}}
             </div>
-{{ form_rest(form) }}
+            {{ form_rest(form) }}
             <br>
             <button type="submit" class="btn btn-primary">Registrar progreso</button>
 

@@ -5,9 +5,9 @@
 {% block body %}
     <div class="container">
         <nav class='navbar navbar-light bg-light row'>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+            <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>
+            <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
         </nav>
         <br>
         <form action = "{{ path('nueva_sesion') }}" method="POST" class="px-4 py-3">
@@ -23,7 +23,7 @@
             </div>
             <br>
             {{ form_rest(form) }}
-            {% if ejeciciosInsertados < 1 %}
+            {% if ejeciciosInsertados < 0 %}
                 <button type="submit" class="btn btn-secondary" disabled>Guardar la sesion</button>&nbsp;
             {% else %}
                 <button type="submit" class="btn btn-primary">Guardar la sesion</button>
@@ -36,6 +36,7 @@
         {% else %}
             <small class="alert alert-info" role="alert">Ejercicios añadidos: {{ ejeciciosInsertados }}</small>
         {% endif %}
+        <br>
         <br>
         {% if error != "-" %}
             <div class="alert alert-danger" role="alert">

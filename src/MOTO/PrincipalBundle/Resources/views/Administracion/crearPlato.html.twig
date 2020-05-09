@@ -5,13 +5,13 @@
 {% block body %}
     <div class="container">
         <nav class='navbar navbar-light bg-light row'>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+            <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>
+            <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
         </nav>
         <br>
         <form action = "{{ path('crear_plato') }}" method="POST" class="px-4 py-3">
-            
+
             <div class="form-group">
                 <label for="exampleDropdownFormEmail1">Nombre del plato</label>
                 {{form_widget(form.nombre, {'attr': {'class': 'form-control',
@@ -32,11 +32,11 @@
                 {{form_widget(form.link, {'attr': {'class': 'form-control',
                                                     'placeholder': 'Link a la receta'}})}}
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label for="exampleDropdownFormEmail1">Platos ya creados</label>
                 {{form_widget(form.platosExistentes, {'attr': {'class': 'form-control'}})}}
             </div>
-            
+
             {{ form_rest(form) }}
             <br>
             <button type="submit" class="btn btn-primary">Guardar plato</button>

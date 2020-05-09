@@ -4,22 +4,27 @@
     <div class="container">
         {% if administrador is defined and administrador == "true"%}
             <nav class='navbar navbar-light bg-light row'>
-                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
-                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
-                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+                <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+                <a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>
+                <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
             </nav>
             <br>
         {% endif %}
 
         {% if form is defined %}
             <form action ="{{path('buscar_cliente')}}" method="post">
-                {{form_widget(form)}}
-                <input type="submit" value="Ver cliente"/>
+
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Tus clientes</label>
+                    {{form_widget(form.cliente, {'attr': {'class': 'form-control'}})}}
+                </div>
+                {{ form_rest(form) }}
+            <button type="submit" class="btn btn-primary">Ver cliente</button>
             </form>
         {% endif %}
 
         {% if clienteobtenido is defined %}
-            <table class="table table-bordered table-hover table-sm">
+            <table class="table table-bordered table-sm">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">DNI</th>
@@ -29,6 +34,7 @@
                         <th scope="col">Teléfono</th>
                         <th scope="col">Objetivo</th>
                         <th scope="col">Dieta</th>
+                        <th scope="col">Tabla</th>
                         <th scope="col">Plan</th>
                         <th scope="col">Disponibilidad</th>
                         <th scope="col">Observaciones</th>
@@ -41,7 +47,16 @@
                     <td>{{ clienteobtenido.direccion }}</td>
                     <td>{{ clienteobtenido.telefono }}</td>
                     <td>{{ clienteobtenido.objetivo }}</td>
-                    <td>{{ clienteobtenido.coddieta }}</td>
+                    {% if clienteobtenido.coddieta != null %}
+                        <td>{{ clienteobtenido.coddieta.semana }}</td>
+                    {% else %}
+                        <td><b>Sin dieta asignada</b></td>
+                    {% endif %}
+                    {% if clienteobtenido.codtabla != null %}
+                        <td>{{ clienteobtenido.codtabla.tipo }}</td>
+                    {% else %}
+                        <td><b>Sin tabla asignada</b></td>
+                    {% endif %}
                     <td>{{ clienteobtenido.codplan }}</td>
                     <td>{{ clienteobtenido.disponibilidad }}</td>
                     <td>{{ clienteobtenido.observaciones }}</td>

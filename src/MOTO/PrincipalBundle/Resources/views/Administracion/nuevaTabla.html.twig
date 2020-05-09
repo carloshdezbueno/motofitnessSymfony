@@ -5,16 +5,37 @@
 {% block body %}
     <div class="container">
         <nav class='navbar navbar-light bg-light row'>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+            <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>
+            <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
         </nav>
         <br>
         <form action = "{{ path('nueva_tabla') }}" method="POST">
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary">Guardar Tabla Ejercicios</button>
+
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Fecha de inicio de la tabla</label>
+                {{form_widget(form.fecha, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Fecha de inicio de la tabla'}})}}
+            </div>
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Nombre de la tabla</label>
+                {{form_widget(form.tipo, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Nombre de la tabla'}})}}
+            </div>
+            {{ form_rest(form) }}
+            {% if sesionesInsertadas < 1 %}
+                <button type="submit" class="btn btn-primary" disabled>Guardar Tabla Ejercicios</button>
+            {% else %}
+                <button type="submit" class="btn btn-primary">Guardar Tabla Ejercicios</button>
+            {% endif %}
             <a href="{{ path('nueva_sesion') }}"><button type="button" class="btn btn-primary" style="margin-right: 20px">Crear una sesion</button></a>
         </form>
+        <br>
+        {% if sesionesInsertadas < 1 %}
+            <small class="alert alert-info" role="alert">Debes crear al menos 1 sesion por tabla, Sesiones añadidas: {{ sesionesInsertadas }}</small>
+        {% else %}
+            <small class="alert alert-info" role="alert">Sesiones añadidas: {{ sesionesInsertadas }}</small>
+        {% endif %}
         <br>
         {% if error != "-" %}
             <div class="alert alert-danger" role="alert">

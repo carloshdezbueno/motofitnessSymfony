@@ -5,9 +5,9 @@
 {% block body %}
     <div class="container">
         <nav class='navbar navbar-light bg-light row'>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
-            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+            <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>
+            <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
         </nav>
         <br>
         <form action = "{{ path('nuevo_ejercicio') }}" method="POST">
@@ -40,7 +40,7 @@
                 {{form_widget(form.link, {'attr': {'class': 'form-control',
                                                     'placeholder': 'Link al ejercicio'}})}}
             </div>
-            
+
             <div class="form-group" {{ sesion }}>
                 <label for="exampleDropdownFormEmail1">Ejercicios ya creados</label>
                 {{form_widget(form.ejExistentes, {'attr': {'class': 'form-control'}})}}

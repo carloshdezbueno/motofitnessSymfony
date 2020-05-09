@@ -28,7 +28,10 @@ class AdministracionController extends Controller {
         $session->remove("platos");
         $session->remove("vengoTabla");
         $session->remove("ejercicios");
-                
+        $session->remove("sesiones");
+        $session->remove("vengoSesion");
+        $session->remove("calorias");
+
         if ($session->get('resLogin') == "empleado") {
 
             $em = $this->getDoctrine()->getEntityManager();
@@ -312,8 +315,8 @@ class AdministracionController extends Controller {
                         $platosInsertados = $session->get("platos");
                         $platosInsertados[] = $plato->getCodplato();
                         $session->set("platos", $platosInsertados);
-                    } catch (Exception $ex) {
-                        $error = "Error al crear el dia";
+                    } catch (\Exception $ex) {
+                        $error = "Error al crear el plato, tienes que rellenar los campos o elegir un plato ya creado";
                     }
 
                     if ($error != "-") {
@@ -413,7 +416,16 @@ class AdministracionController extends Controller {
 
     public function nuevaTablaAction() {
         $error = "-";
+
         $request = $this->getRequest();
+        $session = $request->getSession();
+
+
+        if (!$session->has("sesiones")) {
+            $session->set("sesiones", array());
+        }
+
+        $sesionesInsertados = $session->get("sesiones");
 
         $tabla = new Tablaejercicios();
         $form = $this->createForm(new TablaType(), $tabla);
@@ -424,31 +436,41 @@ class AdministracionController extends Controller {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
 
+                foreach ($sesionesInsertados as $codSes) {
+                    $consultaSesion = "select s from MOTOPrincipalBundle:Sesion s where s.codsesion=" . $codSes;
+                    $querySesion = $em->createQuery($consultaSesion);
+                    $sesion = $querySesion->getResult();
+
+                    $tabla->addCodsesion($sesion[0]);
+                }
+
                 try {
                     $em->persist($tabla);
                     $em->flush();
                 } catch (Exception $ex) {
                     $error = "Error al crear tabla de ejercicios";
-                    return $this->render('MOTOPrincipalBundle:Administracion:nuevaTabla.html.twig', array('form' => $form->createView(), 'error' => $error));
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevaTabla.html.twig', array('sesionesInsertadas' => count($sesionesInsertados), 'form' => $form->createView(), 'error' => $error));
                 }
-                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+
+                $session->remove("sesiones");
+                return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
 
-        return $this->render('MOTOPrincipalBundle:Administracion:nuevaTabla.html.twig', array('form' => $form->createView(), 'error' => $error));
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevaTabla.html.twig', array('sesionesInsertadas' => count($sesionesInsertados), 'form' => $form->createView(), 'error' => $error));
     }
 
     public function nuevaSesionAction() {
 
         $error = "-";
-        
+
         $ant = $this->getRequest()->headers->get('referer');
 
         $hidd = "";
         $request = $this->getRequest();
         $session = $request->getSession();
-        
-        
+
+
         if (!$session->has("vengoTabla")) {
             if (strpos($ant, $this->generateUrl('nueva_tabla')) !== false) {
                 $this->console_log("Vengo de tabla");
@@ -471,7 +493,8 @@ class AdministracionController extends Controller {
 
 
         $form = $this->createFormBuilder()
-                ->add('dia', 'text')
+                ->add('dia', 'text', array(
+                    'required' => false))
                 ->add('sesionesExistentes', 'entity', array('class' => 'MOTOPrincipalBundle:Sesion',
                     'required' => false,
                     'empty_value' => 'Selecciona uno si quieres añadirlo a la sesion'))
@@ -503,24 +526,43 @@ class AdministracionController extends Controller {
 
                         $em->persist($sesionEj);
                         $em->flush();
-                    } catch (Exception $ex) {
-                        $error = "Error al crear el dia";
+                    } catch (\Exception $ex) {
+                        $error = "Error al crear la sesion, prueba anadir ejercicios";
+                        if ($hidd == "") {
+                            $error .= " o elegir una existente";
+                        }
                     }
                 }
 
 
 
                 if ($error != "-") {
-                    return $this->render('MOTOPrincipalBundle:Administracion:nuevaSesion.html.twig', array('form' => $form->createView(), 'error' => $error,'sesion' => $hidd, 'ejeciciosInsertados' => count($ejerciciosInsertados)));
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevaSesion.html.twig', array('form' => $form->createView(), 'error' => $error, 'sesion' => $hidd, 'ejeciciosInsertados' => count($ejerciciosInsertados)));
                 }
 
+
+
+                if ($session->get("vengoTabla")) {
+                    $sesInsertados = $session->get("sesiones");
+                    $sesInsertados[] = $sesionEj->getCodsesion();
+                    $session->set("sesiones", $sesInsertados);
+
+                    $session->remove("vengoTabla");
+                    $session->remove("ejercicios");
+                    return $this->redirect($this->generateUrl('nueva_tabla'));
+                } else {
+                    $session->remove("vengoTabla");
+                    $session->remove("ejercicios");
+                    return $this->redirect($this->generateUrl('principal_administracion'));
+                }
+
+
                 //Acaba la insercion
-                $session->remove("ejercicios");
-                return $this->redirect($this->generateUrl('principal_administracion'));
+                //return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
 
-        return $this->render('MOTOPrincipalBundle:Administracion:nuevaSesion.html.twig', array('form' => $form->createView(), 'error' => $error,'sesion' => $hidd, 'ejeciciosInsertados' => count($ejerciciosInsertados)));
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevaSesion.html.twig', array('form' => $form->createView(), 'error' => $error, 'sesion' => $hidd, 'ejeciciosInsertados' => count($ejerciciosInsertados)));
     }
 
     public function nuevoEjercicioAction() {
@@ -530,7 +572,7 @@ class AdministracionController extends Controller {
         $hidd = "";
         $request = $this->getRequest();
         $session = $request->getSession();
-        
+
         if (!$session->has("vengoSesion")) {
             if (strpos($ant, $this->generateUrl('nueva_sesion')) !== false) {
                 $this->console_log("Vengo de sesion");
@@ -563,8 +605,13 @@ class AdministracionController extends Controller {
                     try {
                         $em->persist($ejercicio);
                         $em->flush();
-                    } catch (Exception $ex) {
-                        $error = "Error al guardar en base de datos";
+                    } catch (\Exception $ex) {
+                        $error = "Error al crear el ejercicio, tienes que rellenar los campos";
+
+                        if ($hidd == "") {
+                            $error .= " o elegir uno existente";
+                        }
+
                         return $this->render('MOTOPrincipalBundle:Administracion:nuevoEjercicio.html.twig', array('form' => $form->createView(), 'error' => $error, 'sesion' => $hidd));
                     }
                 }
@@ -624,10 +671,26 @@ class AdministracionController extends Controller {
     }
 
     public function buscarClienteAction() {
+
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.numeroempleado=" . $session->get('dni');
+        $queryEmpleado = $em->createQuery($consultaEmpleado);
+        $empleados = $queryEmpleado->getResult();
+
+        $clientesEmpleado = array();
+
+
+        foreach ($empleados[0]->getDni() as $cli) {
+            $clientesEmpleado[$cli->getDni()] = $cli;
+        }
+
         // Desplegable de clientes
         $formClientes = $this->createFormBuilder()
-                ->add('cliente', 'entity', array(
-                    'class' => 'MOTOPrincipalBundle:Cliente'
+                ->add('cliente', 'choice', array(
+                    'choices' => $clientesEmpleado
                 ))
                 ->getForm();
 
@@ -637,28 +700,18 @@ class AdministracionController extends Controller {
         if ($request->getMethod() == 'POST') {
             $formClientes->bind($request);
 
-            if ($formClientes->isValid()) {
-                $cliSelect = $formClientes->get("cliente")->getData();
+            $cliSelect = $formClientes->get("cliente")->getData();
 
-                $clienteObtenido = array(
-                    'dni' => $cliSelect->getDni(),
-                    'nombre' => $cliSelect->getNombre(),
-                    'email' => $cliSelect->getEmail(),
-                    'direccion' => $cliSelect->getDireccion(),
-                    'telefono' => $cliSelect->getTelefono(),
-                    'objetivo' => $cliSelect->getObjetivo(),
-                    'coddieta' => $cliSelect->getCoddieta(),
-                    'codplan' => $cliSelect->getCodplan(),
-                    'disponibilidad' => $cliSelect->getDisponibilidad(),
-                    'observaciones' => $cliSelect->getObservaciones(),
-                    'vencimiento' => $cliSelect->getVencimiento() // NO -> Convertir Date a String
-                );
+            $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $cliSelect;
+            $queryCliente = $em->createQuery($consultaCliente);
+            $cliente = $queryCliente->getResult();
 
-                return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador' => 'true', 'cliente' => $cliSelect, 'clienteobtenido' => $clienteObtenido));
-            }
+            $clienteElegido = $cliente[0];
 
-            // Si el cliente no se encuentra mensaje
-            return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador' => 'true', 'error' => 'Cliente no encontrado'));
+
+            
+
+            return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador' => 'true', 'cliente' => $clienteElegido, 'clienteobtenido' => $clienteElegido));
         }
 
         return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador' => 'true', 'form' => $formClientes->createView(), 'error' => '-'));
