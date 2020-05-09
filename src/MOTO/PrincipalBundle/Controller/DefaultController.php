@@ -51,9 +51,9 @@ class DefaultController extends Controller {
                     $dni = $session->get('dni');
                     $em = $this->getDoctrine()->getEntityManager();
                     $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $dni . "";
-                    
+
                     $queryCliente = $em->createQuery($consultaCliente);
-                    
+
                     $cliente = $queryCliente->getResult();
                     $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
 
@@ -216,59 +216,135 @@ class DefaultController extends Controller {
     }
 
     public function verTablaAction() {
-        
+
         $request = $this->getRequest();
         $session = $request->getSession();
         $error = "-";
+
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+
+        // BOTONES CLIENTE
+        $botonProgreso = "";
+        $botonDietas = "";
+        $botonAmpliarPlan = "";
+
+        // BOTONES EMPLEADO
+        $resumen = "-";
+        $botonResumen = "-";
+        $botonAdmin = "";
+
+        // BOTONES DE LOGIN Y SIGNUP
+        $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
+        $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
+
+        $botonTablas = "";
+
+        $botonLogout = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>";
+
+        // Preparador y mail
+        $preparadorAsignado = "";
+        $mailRegistrado = "";
+
+
+        if (null !== $session->get('dni')) {
+
+            $botonLogin = "-";
+
+            if ($session->get('resLogin') == "cliente" || $session->get('resLogin') == "empleado") {
+
+                // Coger el plan del usuario
+
+                if ($session->get('resLogin') == "cliente") {
+                    $dni = $session->get('dni');
+                    $em = $this->getDoctrine()->getEntityManager();
+                    $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $dni . "";
+
+                    $queryCliente = $em->createQuery($consultaCliente);
+
+                    $cliente = $queryCliente->getResult();
+                    $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
+
+                    $preparadores = $cliente[0]->getNumeroempleado();
+                } else {
+                    $plan = null;
+                }
+                $resumen = ""; //Para evitar fallos
+
+                if ($plan != null && ($plan == "pro" || $plan == "entrenamiento")) {
+                    $botonTablas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verTabla'>Tabla de ejercicios</a>";
+                }
+
+                if ($session->get('resLogin') == "cliente") {
+                    $botonProgreso = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/insertProgreso'>Progreso</a>";
+                    $botonDietas = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verDieta'>Dietas</a>";
+                    $botonAmpliarPlan = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/modificarPlan'>Modificar plan</a>";
+                }
+
+                if ($session->get('resLogin') == "empleado") {
+                    $resumen = "de mis clientes";
+                    $botonAdmin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>";
+                }
+
+                // Botón resumen está en empleado y cliente
+                $botonResumen = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen $resumen</a>";
+            }
+        } else {
+            $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
+            $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
+        }
+
+        $arrayBotones = array(
+            "botonProgreso" => $botonProgreso,
+            "botonLogin" => $botonLogin,
+            "botonDietas" => $botonDietas,
+            "botonAmpliarPlan" => $botonAmpliarPlan,
+            "botonAdmin" => $botonAdmin,
+            "botonSignUp" => $botonSignUp,
+            "botonTablas" => $botonTablas,
+            "botonResumen" => $botonResumen,
+            "botonLogout" => $botonLogout
+        );
         
         // Si es admin mostrar un desplegable con todas las tablas
-        if($session->get('resLogin') == "empleado"){
+        if ($session->get('resLogin') == "empleado") {
             $em = $this->getDoctrine()->getEntityManager();
-            
+
             // Desplegable de tablas
             $formTablas = $this->createFormBuilder()
                     ->add('tabla', 'entity', array(
                         'class' => 'MOTOPrincipalBundle:Tablaejercicios'
                     ))
                     ->getForm();
-            
-            if($request->getMethod() == 'POST'){
+
+            if ($request->getMethod() == 'POST') {
                 $formTablas->bind($request);
-                if($formTablas->isValid()){
+                if ($formTablas->isValid()) {
                     $tablaSelec = $formTablas->get('tabla')->getData();
-                    return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array("tablaMostrar" => $tablaSelec, 'error' => $error));
+                    return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array('botones' => $arrayBotones, "tablaMostrar" => $tablaSelec, 'error' => $error));
                 }
                 $error = "Tabla no encontrada";
-                return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array("error" => $error));
+                return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array('botones' => $arrayBotones, "error" => $error));
             }
-            return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array("error" => $error, "form" => $formTablas->createView()));
+            return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array('botones' => $arrayBotones, "error" => $error, "form" => $formTablas->createView()));
         }
-        
+
         // Si es cliente mostrar su tabla
-        if($session->get('resLogin') == "cliente"){
+        if ($session->get('resLogin') == "cliente") {
             // Buscar su tabla
             $em = $this->getDoctrine()->getEntityManager();
             $consultaTablaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $session->get('dni');
             $queryTablaCliente = $em->createQuery($consultaTablaCliente);
             $tablaBuscadaArray = $queryTablaCliente->getResult();
-            
-            echo "<script>";
-            echo "console.log(".$tablaBuscadaArray.");";
-            echo "<script>";
-            
-            // Coger datos de su tabla
-            $codTablaBuscada = strtolower($tablaBuscadaArray[0]->getCodTabla());
-            $consultaTablaBuscada = "select t from MOTOPrincipalBundle:Tablaejercicios t where t.codtabla=" . $codTablaBuscada;
-            $queryTablaBuscada = $em->createQuery($consultaTablaBuscada);
-            $tablaEncontradaArray = $queryTablaBuscada->getResult();
-            
-            $tabla = $tablaEncontradaArray[0];
-            
-            return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array("tablaMostrar" => $tabla, 'error' => $error));
+
+            $tabla = $tablaBuscadaArray[0]->getCodtabla();
+
+            return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array('botones' => $arrayBotones, "tablaMostrar" => $tabla, 'error' => $error));
         }
-        
+
         $error = "No tienes permiso para estar aquí";
-        return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array("error" => $error));
+        return $this->render('MOTOPrincipalBundle:Default:verTabla.html.twig', array('botones' => $arrayBotones, "error" => $error));
     }
 
     public function verResumenAction() {
