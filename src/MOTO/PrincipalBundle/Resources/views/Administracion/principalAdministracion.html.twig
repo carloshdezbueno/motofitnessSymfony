@@ -5,32 +5,31 @@
         
     {% if administrador is defined and administrador == "true"%}
          <nav class='navbar navbar-light bg-light row'>
-              <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Inicio'>Inicio</a>
-             <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
-            
-             <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+             <a class='navbar-brand' href='{{path('moto_principal_homepage')}}'>Inicio</a>
+             <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+             <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
          </nav>
         {% if dietas is defined and dietas == "true" %}
             <h2>Gestión de dietas</h2>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/asignarDieta">Asignar dieta a cliente</a></p>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/crearDieta">Crear nueva dieta</a></p>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/verDietaAdmin">Ver una dieta</a></p>
+            <p><a href='{{path('asignar_dieta')}}'>Asignar dieta a cliente</a></p>
+            <p><a href='{{path('crear_dieta')}}'>Crear nueva dieta</a></p>
+            <p><a href='{{path('ver_dieta')}}'>Ver una dieta</a></p>
         {% endif %}
 
         {% if tablas is defined and tablas == "true" %}
             <h2>Gestión de tablas</h2>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/asignarTablaCliente">Asignar tablas a cliente</a></p>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/nuevaTabla">Crear nueva tabla</a></p>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/nuevaSesion">Nueva sesión</a></p>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/nuevoEjercicio">Nuevo ejercicio</a></p>
+            <p><a href='{{path('asignar_tabla_cliente')}}'>Asignar tablas a cliente</a></p>
+            <p><a href='{{path('nueva_tabla')}}'>Crear nueva tabla</a></p>
+            <p><a href='{{path('nueva_sesion')}}'>Nueva sesión</a></p>
+            <p><a href='{{path('nuevo_ejercicio')}}'>Nuevo ejercicio</a></p>
         {% endif %}
 
         {% if empleados is defined and empleados == "true" %}
             <h2>Gestión de empleados</h2>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/nuevoEmpleado">Añadir nuevo empleado</a></p>
-            <p><a href="/motofitnessSymfony/web/app_dev.php/gestionarEmpleados">Gestionar empleados existentes</a></p>
+            <p><a href='{{path('nuevo_empleado')}}'>Añadir nuevo empleado</a></p>
+            <p><a href='{{path('gestionar_empleados')}}'>Gestionar empleados existentes</a></p>
         {% endif %}
-        <p><a href="/motofitnessSymfony/web/app_dev.php/buscarCliente">Buscar cliente</a></p>
+        <p><a href='{{path('buscar_cliente')}}'>Buscar cliente</a></p>
     {% endif %}
     
     {% if nota is defined %}
