@@ -4,30 +4,31 @@
 {% block title %}MOTOPrincipalBundle:Administracion:verDieta{% endblock %}
 
 {% block body %}
-
-
     <div class="container">
         <nav class='navbar navbar-light bg-light row'>
-            {% if botones.botonLogin != "-" %}
-                {# Si la sesión NO está iniciada #}
-                {{ botones.botonLogin | raw }}
-                {{ botones.botonSignUp | raw }}
-            {% else %}
-                {# Si la sesión SI está iniciada #}
-                <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Inicio'>Inicio</a>
-                {{ botones.botonProgreso | raw }}
-                {{ botones.botonResumen | raw }}
-                {{ botones.botonDietas | raw }}
-                {{ botones.botonAmpliarPlan | raw}}
-                {{ botones.botonAdmin | raw}}
-                {{ botones.botonLogout | raw}}
-                
-            {% endif %}
+            <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>
+            <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
         </nav>
-
-
-        {% if tablaMostrar != null and tablaMostrar != "-"%}
+        <br>
+        
+         {% if form is defined %}
+            <form action ="{{path('verTablas')}}" method="post">
+                {{ form_rest(form) }}
+                <button type="submit" class="btn btn-primary">Ver tabla</button>
+            </form>
+        {% endif %}
+        
+        {% if tablaMostrar is defined %}
             {{ tablaMostrar }}
         {% endif %}
+
+        {% if error != "-" %}
+            {{ error }}
+        {% endif %}
+
+        {#{% if tablaMostrar != null and tablaMostrar != "-"%}
+            {{ tablaMostrar }}
+        {% endif %}#}
     </div>
 {% endblock %}
