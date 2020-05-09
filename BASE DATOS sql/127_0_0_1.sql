@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-05-2020 a las 13:15:36
+-- Tiempo de generación: 09-05-2020 a las 20:02:35
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -31,9 +31,9 @@ USE `motofitness`;
 --
 
 CREATE TABLE `cliente` (
-  `dni` varchar(9) COLLATE latin1_spanish_ci NOT NULL,
+  `dni` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
   `nombre` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `email` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `email` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `direccion` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `telefono` varchar(9) COLLATE latin1_spanish_ci NOT NULL,
   `objetivo` text COLLATE latin1_spanish_ci NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `cliente` (
   `codtabla` int(10) DEFAULT NULL,
   `codplan` varchar(10) COLLATE latin1_spanish_ci DEFAULT NULL,
   `disponibilidad` varchar(30) COLLATE latin1_spanish_ci NOT NULL,
-  `observaciones` text COLLATE latin1_spanish_ci NOT NULL,
+  `observaciones` text COLLATE latin1_spanish_ci DEFAULT NULL,
   `vencimiento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -52,8 +52,19 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`dni`, `nombre`, `email`, `direccion`, `telefono`, `objetivo`, `clave`, `coddieta`, `codtabla`, `codplan`, `disponibilidad`, `observaciones`, `vencimiento`) VALUES
 ('1111', 'Prueba2', 'asdasd', 'asdasd', '12131', 'asdasd', 'a', NULL, 1, '1', '1', 'adasdasd', '2020-05-04'),
-('123', 'asdad', 'asdas', 'sdad', '1212', 'sadas', 'a', 12, 6, '2', '1', 'sadasd', '2020-04-29'),
-('1232', 'asdasd', 'asdasd', 'asdasd', '12321', 'asdada', 'a', 12, 6, '2', '1', 'asd', '2020-04-30');
+('123', 'asdad', 'asdas', 'sdad', '1212', 'sadas', 'a', 19, 6, '2', '1', 'sadasd', '2020-04-29'),
+('1232', 'asdasd', 'asdasd', 'asdasd', '12321', 'asdada', 'a', 12, 6, '2', '1', 'asd', '2020-04-30'),
+('132313213', 'adasd', 'asdads', 'adasda', '131231231', 'sadasd', 'a', 12, 1, '1', 'adsadas', 'asdasdasd', '2020-06-09'),
+('23122343', 'asdasd', 'chernandezre.inf@upsa.es', 'asdasd', '123123123', 'adasdas', 'a', NULL, NULL, '1', '1', 'asdasdasd', '2020-06-09'),
+('23123221', 'asdasdasd', 'asdasdasd', 'asdasdasd', '132131231', 'adasdasd', 'a', NULL, NULL, '1', '1', 'adasdas', '2020-06-09'),
+('23322312', 'asdasd', 'chernandezre.inf@upsa.es', 'adsas', '132312312', 'ad', 'a', NULL, NULL, '1', '1', NULL, '2020-06-09'),
+('23322512', 'asdasd', 'chernandezre.inf@upsa.es', 'adsas', '132312312', 'ad', 'a', NULL, NULL, '1', '1', NULL, '2020-06-09'),
+('23322712', 'asdasd', 'chernandezre.inf@upsa.es', 'adsas', '132312312', 'ad', 'a', NULL, NULL, '1', '1', NULL, '2020-06-09'),
+('23322742', 'asdasd', 'chernandezre.inf@upsa.es', 'adsas', '132312312', 'ad', 'a', NULL, 9, '1', '1', NULL, '2020-06-09'),
+('70914881', 'Pedro', 'chernandezre.inf@upsa.es', 'asdasdasd', '675834734', 'adasd', 'a', NULL, 12, '3', '1', 'adasd', '2020-06-09'),
+('89988767', 'adasd', 'asdadasd', 'asdasdasd', '123131231', 'adadsasd', 'a', NULL, NULL, '1', '1', 'asdasdas', '2020-06-09'),
+('90988778', 'sadasdasd', 'chernandezre.inf@upsa.es', 'asdasdasd', '133123221', 'adasdasd', 'a', 19, 8, '3', '1', 'a', '2020-06-09'),
+('91988778', 'sadasdasd', 'chernandezre.inf@upsa.es', 'asdasdasd', '133123221', 'adasdasd', 'a', NULL, NULL, '1', '1', 'a', '2020-06-09');
 
 -- --------------------------------------------------------
 
@@ -131,7 +142,14 @@ CREATE TABLE `ejercicio` (
 --
 
 INSERT INTO `ejercicio` (`codejercicio`, `nombre`, `series`, `repeticiones`, `peso`, `link`) VALUES
-(7, 'Pull up', 10, 20, 10, 'asdasdasd');
+(7, 'Pull up', 10, 20, 10, 'asdasdasd'),
+(8, 'Sentado', 12, 21, 12, 'http://google.es'),
+(9, 'aadsas', 12, 12, 12, 'asd'),
+(10, 'asdasd', 12, 12, 12, 'asd'),
+(11, 'Prueba', 12, 12, 12, 'sdads'),
+(12, 'Prueba1', 12, 12, 12, 'asdad'),
+(13, 'Prueba2', 12, 12, 12, 'qasdads'),
+(14, 'Prueba222', 12, 12, 12, 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -159,7 +177,7 @@ INSERT INTO `empleado` (`numeroempleado`, `especialidad`, `nombre`, `dniEmpleado
 (19, 1, 'Pedro', '19823712A', '678789876', 'pepe@gmail.com', 'calle falsa 123', '1', 1),
 (20, 3, 'Andres', '12321234P', '324234423', 'asdasd@gmail.com', 'asdad', '1', 0),
 (21, 2, 'Juan', '123123', '698857434', 'email@email.com', 'asdaasd', '1', 0),
-(22, 1, 'Juanito', '2121312', '123123', 'asdasd@prueba', 'sdasd', '1', 1);
+(22, 3, 'Juanito', '2121312', '123123', 'asdasd@prueba', 'sdasd', '1', 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +195,18 @@ CREATE TABLE `entrenamiento` (
 --
 
 INSERT INTO `entrenamiento` (`codigoejercicio`, `codigosesion`) VALUES
-(7, 7);
+(7, 7),
+(9, 15),
+(10, 14),
+(12, 15),
+(9, 16),
+(13, 16),
+(7, 17),
+(8, 17),
+(11, 18),
+(14, 18),
+(9, 19),
+(8, 20);
 
 -- --------------------------------------------------------
 
@@ -260,7 +289,7 @@ INSERT INTO `lineadieta` (`coddieta`, `coddia`) VALUES
 
 CREATE TABLE `lineaempleado` (
   `numeroempleado` int(10) NOT NULL,
-  `dni` varchar(9) COLLATE latin1_spanish_ci NOT NULL
+  `dni` varchar(10) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
@@ -269,8 +298,21 @@ CREATE TABLE `lineaempleado` (
 
 INSERT INTO `lineaempleado` (`numeroempleado`, `dni`) VALUES
 (19, '1111'),
+(19, '23123221'),
+(19, '23322512'),
+(19, '70914881'),
+(19, '90988778'),
 (20, '123'),
-(20, '1232');
+(20, '1232'),
+(20, '23322712'),
+(20, '89988767'),
+(20, '91988778'),
+(21, '90988778'),
+(22, '132313213'),
+(22, '23122343'),
+(22, '23322312'),
+(22, '23322742'),
+(22, '70914881');
 
 -- --------------------------------------------------------
 
@@ -288,7 +330,15 @@ CREATE TABLE `lineatabla` (
 --
 
 INSERT INTO `lineatabla` (`codtabla`, `codsesion`) VALUES
-(8, 7);
+(8, 7),
+(9, 9),
+(9, 11),
+(9, 12),
+(10, 14),
+(11, 11),
+(11, 19),
+(12, 9),
+(12, 20);
 
 -- --------------------------------------------------------
 
@@ -348,7 +398,7 @@ CREATE TABLE `progreso` (
   `peso` float NOT NULL,
   `medidas` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
   `fecha` date NOT NULL,
-  `dni` varchar(9) COLLATE latin1_spanish_ci NOT NULL
+  `dni` varchar(10) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
@@ -358,7 +408,10 @@ CREATE TABLE `progreso` (
 INSERT INTO `progreso` (`codProgreso`, `imagen`, `peso`, `medidas`, `fecha`, `dni`) VALUES
 (44, 'img/1588702956.png', 11, 'a', '2020-05-05', '123'),
 (45, 'img/1588703892.png', 11, 'adsad', '2020-05-05', '123'),
-(46, 'img/1588704869.jpeg', 121, 'sadasd', '2020-05-05', '123');
+(46, 'img/1588704869.jpeg', 121, 'sadasd', '2020-05-05', '123'),
+(47, 'img/1588967225.jpeg', 123, 'aaa', '2020-05-08', '123'),
+(48, 'img/1588975839.jpeg', 123, 'aaasd', '2020-05-09', '123'),
+(49, '/motofitnessSymfony/web/img/img.jpg', 123, 'asda', '2020-05-09', '90988778');
 
 -- --------------------------------------------------------
 
@@ -376,7 +429,19 @@ CREATE TABLE `sesion` (
 --
 
 INSERT INTO `sesion` (`codsesion`, `dia`) VALUES
-(7, 'Lunes');
+(7, 'Lunes'),
+(8, 'Prueba'),
+(9, 'Acc'),
+(10, 'Prueba'),
+(11, 'PRUEBA'),
+(12, 'Prueba'),
+(14, 'Prueba2a'),
+(15, 'asdasd'),
+(16, 'asdasd'),
+(17, 'adasdasd'),
+(18, 'asdasd'),
+(19, 'asd'),
+(20, 'ytdf7itf');
 
 -- --------------------------------------------------------
 
@@ -398,7 +463,11 @@ INSERT INTO `tablaejercicios` (`codtabla`, `fecha`, `tipo`) VALUES
 (1, '2019-12-04', 'cardio'),
 (6, '2019-12-04', 'Musculacion'),
 (7, '2015-01-01', 'Musculacion'),
-(8, '2015-01-01', 'Musculacion');
+(8, '2015-01-01', 'Musculacion'),
+(9, '2020-05-09', 'Prueba'),
+(10, '2020-05-09', 'Prueba'),
+(11, '2020-05-09', 'Prueba'),
+(12, '2020-05-09', 'hghgh');
 
 --
 -- Índices para tablas volcadas
@@ -444,7 +513,6 @@ ALTER TABLE `empleado`
 -- Indices de la tabla `entrenamiento`
 --
 ALTER TABLE `entrenamiento`
-  ADD PRIMARY KEY (`codigoejercicio`,`codigosesion`),
   ADD KEY `codejercicio` (`codigoejercicio`),
   ADD KEY `codsesiontabla` (`codigosesion`);
 
@@ -528,7 +596,7 @@ ALTER TABLE `dieta`
 -- AUTO_INCREMENT de la tabla `ejercicio`
 --
 ALTER TABLE `ejercicio`
-  MODIFY `codejercicio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `codejercicio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
@@ -546,19 +614,19 @@ ALTER TABLE `plato`
 -- AUTO_INCREMENT de la tabla `progreso`
 --
 ALTER TABLE `progreso`
-  MODIFY `codProgreso` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `codProgreso` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de la tabla `sesion`
 --
 ALTER TABLE `sesion`
-  MODIFY `codsesion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `codsesion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `tablaejercicios`
 --
 ALTER TABLE `tablaejercicios`
-  MODIFY `codtabla` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `codtabla` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
