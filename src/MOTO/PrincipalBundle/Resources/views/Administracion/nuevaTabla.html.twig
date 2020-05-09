@@ -13,6 +13,7 @@
         <form action = "{{ path('nueva_tabla') }}" method="POST">
             {{ form_widget(form) }}
             <button type="submit" class="btn btn-primary">Guardar Tabla Ejercicios</button>
+            <a href="{{ path('nueva_sesion') }}"><button type="button" class="btn btn-primary" style="margin-right: 20px">Crear una sesion</button></a>
         </form>
         <br>
         {% if error != "-" %}

@@ -11,22 +11,24 @@ use MOTO\PrincipalBundle\Form\DietaType;
 use MOTO\PrincipalBundle\Entity\Dieta;
 use MOTO\PrincipalBundle\Form\TablaType;
 use MOTO\PrincipalBundle\Entity\Tablaejercicios;
-use MOTO\PrincipalBundle\Form\PlatoType;
 use MOTO\PrincipalBundle\Entity\Plato;
 use MOTO\PrincipalBundle\Entity\Diadieta;
+use MOTO\PrincipalBundle\Entity\Sesion;
 
 //use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class AdministracionController extends Controller {
 
     public function principalAdministracionAction() {
-        session_start();
-        
+
         $request = $this->getRequest();
         $session = $request->getSession();
-        
+
         $session->remove("dias");
         $session->remove("platos");
+        $session->remove("vengoTabla");
+        $session->remove("ejercicios");
+                
         if ($session->get('resLogin') == "empleado") {
 
             $em = $this->getDoctrine()->getEntityManager();
@@ -143,12 +145,12 @@ class AdministracionController extends Controller {
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
-                
+
                 foreach ($diasInsertados as $codDia) {
                     $consultaDia = "select d from MOTOPrincipalBundle:Diadieta d where d.coddia=" . $codDia;
                     $queryDia = $em->createQuery($consultaDia);
                     $dia = $queryDia->getResult();
-                    
+
 
                     $dieta->addCoddia($dia[0]);
                 }
@@ -213,7 +215,7 @@ class AdministracionController extends Controller {
                     $consultaPlato = "select p from MOTOPrincipalBundle:Plato p where p.codplato=" . $codplato;
                     $queryPlato = $em->createQuery($consultaPlato);
                     $plato = $queryPlato->getResult();
-                    
+
 
                     $diaDieta->addCodplato($plato[0]);
                 }
@@ -262,7 +264,6 @@ class AdministracionController extends Controller {
 
         $plato = new Plato();
 
-//        $form = $this->createForm(new PlatoType(), $plato);
 
         $form = $this->createFormBuilder()
                 ->add('nombre', 'text', array('required' => false))
@@ -438,14 +439,114 @@ class AdministracionController extends Controller {
     }
 
     public function nuevaSesionAction() {
+
+        $error = "-";
         
+        $ant = $this->getRequest()->headers->get('referer');
+
+        $hidd = "";
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        
+        
+        if (!$session->has("vengoTabla")) {
+            if (strpos($ant, $this->generateUrl('nueva_tabla')) !== false) {
+                $this->console_log("Vengo de tabla");
+                $session->set("vengoTabla", true);
+            } else {
+                $this->console_log("NO Vengo de tabla");
+                $session->set("vengoTabla", false);
+            }
+        }
+
+        if ($session->get("vengoTabla") == false) {
+            $hidd = "hidden=''";
+        }
+
+        if (!$session->has("ejercicios")) {
+            $session->set("ejercicios", array());
+        }
+
+        $ejerciciosInsertados = $session->get("ejercicios");
+
+
+        $form = $this->createFormBuilder()
+                ->add('dia', 'text')
+                ->add('sesionesExistentes', 'entity', array('class' => 'MOTOPrincipalBundle:Sesion',
+                    'required' => false,
+                    'empty_value' => 'Selecciona uno si quieres añadirlo a la sesion'))
+                ->getForm();
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $sesionEj = new Sesion();
+
+                if ($form->get("sesionesExistentes")->getData() != null) {
+                    $sesionEj = $form->get("sesionesExistentes")->getData();
+                } else {
+                    //Añade los platos insertados en la otra pag
+                    foreach ($ejerciciosInsertados as $codEj) {
+                        $consultaEjercicio = "select e from MOTOPrincipalBundle:Ejercicio e where e.codejercicio=" . $codEj;
+                        $queryEjercicio = $em->createQuery($consultaEjercicio);
+                        $ejercicio = $queryEjercicio->getResult();
+                        $this->console_log($codEj);
+
+                        $sesionEj->addCodigoejercicio($ejercicio[0]);
+                    }
+
+                    $sesionEj->setDia($form->get("dia")->getData());
+
+                    try {
+
+                        $em->persist($sesionEj);
+                        $em->flush();
+                    } catch (Exception $ex) {
+                        $error = "Error al crear el dia";
+                    }
+                }
+
+
+
+                if ($error != "-") {
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevaSesion.html.twig', array('form' => $form->createView(), 'error' => $error,'sesion' => $hidd, 'ejeciciosInsertados' => count($ejerciciosInsertados)));
+                }
+
+                //Acaba la insercion
+                $session->remove("ejercicios");
+                return $this->redirect($this->generateUrl('principal_administracion'));
+            }
+        }
+
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevaSesion.html.twig', array('form' => $form->createView(), 'error' => $error,'sesion' => $hidd, 'ejeciciosInsertados' => count($ejerciciosInsertados)));
     }
 
     public function nuevoEjercicioAction() {
 
-        $error = "-";
+        $ant = $this->getRequest()->headers->get('referer');
+
+        $hidd = "";
         $request = $this->getRequest();
         $session = $request->getSession();
+        
+        if (!$session->has("vengoSesion")) {
+            if (strpos($ant, $this->generateUrl('nueva_sesion')) !== false) {
+                $this->console_log("Vengo de sesion");
+                $session->set("vengoSesion", true);
+            } else {
+                $this->console_log("NO Vengo de sesion");
+                $session->set("vengoSesion", false);
+            }
+        }
+
+        if ($session->get("vengoSesion") == false) {
+            $hidd = "hidden=''";
+        }
+
+        $error = "-";
+
 
         $ejercicio = new Ejercicio();
         $form = $this->createForm(new EjercicioType(), $ejercicio);
@@ -456,18 +557,35 @@ class AdministracionController extends Controller {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
 
-                try {
-                    $em->persist($ejercicio);
-                    $em->flush();
-                } catch (Exception $ex) {
-                    $error = "Error al guardar en base de datos";
-                    return $this->render('MOTOPrincipalBundle:Administracion:nuevoEjercicio.html.twig', array('form' => $form->createView(), 'error' => $error));
+                if ($form->get("ejExistentes")->getData() != null) {
+                    $ejercicio = $form->get("ejExistentes")->getData();
+                } else {
+                    try {
+                        $em->persist($ejercicio);
+                        $em->flush();
+                    } catch (Exception $ex) {
+                        $error = "Error al guardar en base de datos";
+                        return $this->render('MOTOPrincipalBundle:Administracion:nuevoEjercicio.html.twig', array('form' => $form->createView(), 'error' => $error, 'sesion' => $hidd));
+                    }
                 }
-                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+
+
+
+                if ($session->get("vengoSesion")) {
+                    $ejInsertados = $session->get("ejercicios");
+                    $ejInsertados[] = $ejercicio->getCodejercicio();
+                    $session->set("ejercicios", $ejInsertados);
+
+                    $session->remove("vengoSesion");
+                    return $this->redirect($this->generateUrl('nueva_sesion'));
+                } else {
+                    $session->remove("vengoSesion");
+                    return $this->redirect($this->generateUrl('principal_administracion'));
+                }
             }
         }
 
-        return $this->render('MOTOPrincipalBundle:Administracion:nuevoEjercicio.html.twig', array('form' => $form->createView(), 'error' => $error));
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevoEjercicio.html.twig', array('form' => $form->createView(), 'error' => $error, 'sesion' => $hidd));
     }
 
     public function nuevoEmpleadoAction() {
@@ -544,6 +662,12 @@ class AdministracionController extends Controller {
         }
 
         return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador' => 'true', 'form' => $formClientes->createView(), 'error' => '-'));
+    }
+
+    function console_log($data) {
+        echo '<script>';
+        echo "console.log('" . $data . "')";
+        echo '</script>';
     }
 
 }

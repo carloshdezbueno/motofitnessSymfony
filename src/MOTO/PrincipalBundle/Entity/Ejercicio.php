@@ -247,4 +247,8 @@ class Ejercicio
     {
         return $this->codigosesion;
     }
+    
+    public function __toString() {
+        return $this->nombre . " Repeticiones x series" . $this->repeticiones ."x". $this->series;
+    }
 }

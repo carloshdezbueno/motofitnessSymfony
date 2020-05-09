@@ -1,0 +1,46 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}MOTOPrincipalBundle:Administracion:crearDieta{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav class='navbar navbar-light bg-light row'>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/verResumenCliente'>Resumen de mis clientes</a>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Admin'>Administracion</a>
+            <a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Logout'>Logout</a>
+        </nav>
+        <br>
+        <form action = "{{ path('nueva_sesion') }}" method="POST" class="px-4 py-3">
+
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Nombre de la sesion</label>
+                {{form_widget(form.dia, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Nombre de la sesion'}})}}
+            </div>
+            <div class="form-group" {{ sesion }}>
+                <label for="exampleDropdownFormEmail1">Sesiones ya creadas</label>
+                {{form_widget(form.sesionesExistentes, {'attr': {'class': 'form-control'}})}}
+            </div>
+            <br>
+            {{ form_rest(form) }}
+            {% if ejeciciosInsertados < 1 %}
+                <button type="submit" class="btn btn-secondary" disabled>Guardar la sesion</button>&nbsp;
+            {% else %}
+                <button type="submit" class="btn btn-primary">Guardar la sesion</button>
+            {% endif %}
+            <a href="{{ path('nuevo_ejercicio') }}"><button type="button" class="btn btn-primary" style="margin-right: 20px">Crear un ejercicio</button></a>
+        </form>
+        <br>
+        {% if ejeciciosInsertados < 1 %}
+            <small class="alert alert-info" role="alert">Debes crear al menos 1 ejercicio por sesion, Ejercicios añadidos: {{ ejeciciosInsertados }}</small>
+        {% else %}
+            <small class="alert alert-info" role="alert">Ejercicios añadidos: {{ ejeciciosInsertados }}</small>
+        {% endif %}
+        <br>
+        {% if error != "-" %}
+            <div class="alert alert-danger" role="alert">
+                <p>{{ error }}</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -20,8 +20,8 @@ class Cliente {
      */
     public function setValorVencimiento() {
 
-
-        
+        $dniNuevo = $this->dni;
+        $this->dni = substr($dniNuevo, 0, -1);
         
         $this->vencimiento = new \DateTime('+1 month');
     }
@@ -29,12 +29,14 @@ class Cliente {
     /**
      * @var string
      *
-     * @ORM\Column(name="dni", type="string", length=9, nullable=false)
+     * @ORM\Column(name="dni", type="string", length=10, nullable=false)
      * @ORM\Id
      * 
      * @Assert\NotNull
-     * @Assert\Length(max=9)
-     * @Assert\Type("string")
+     * @Assert\Length(max=9, min=9)
+     * @Assert\Regex(
+     *          pattern="/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i", 
+     *          message="El dni no coincide con un dni estandar")
      */
     private $dni;
 
@@ -51,10 +53,10 @@ class Cliente {
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=20, nullable=false)
+     * @ORM\Column(name="email", type="string", length=50, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
+     * @Assert\Length(max=50)
+     * @Assert\Email(message="El email no es valido")
      */
     private $email;
 
@@ -107,7 +109,7 @@ class Cliente {
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones", type="text", nullable=false)
+     * @ORM\Column(name="observaciones", type="text", nullable=true)
      * 
      * @Assert\Type("string")
      */

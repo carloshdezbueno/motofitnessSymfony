@@ -98,6 +98,7 @@ class Sesion
      */
     public function addCodigoejercicio(\MOTO\PrincipalBundle\Entity\Ejercicio $codigoejercicio)
     {
+        $codigoejercicio->addCodigosesion($this);
         $this->codigoejercicio[] = $codigoejercicio;
     
         return $this;
@@ -157,6 +158,6 @@ class Sesion
     }
     
     public function __tostring(){
-        return "Sesión número: " . $this->codsesion . " - Dia: " . $this->dia;
+        return "Sesión número: " . $this->codsesion . " - Nombre de la sesion: " . $this->dia;
     }
 }

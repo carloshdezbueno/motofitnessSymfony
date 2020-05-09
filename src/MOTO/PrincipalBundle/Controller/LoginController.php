@@ -13,7 +13,7 @@ class LoginController extends Controller {
 
         $request = $this->getRequest();
         $session = $request->getSession();
-        
+
         $form = $this->createFormBuilder()
                 ->add('Login', 'text')
                 ->add('Clave', 'password')
@@ -42,7 +42,7 @@ class LoginController extends Controller {
                         //Almacenar datos de que login correcto en la sesion
                         $_SESSION['dni'] = $usuario;
                         $_SESSION['resLogin'] = "empleado";
-                        
+
                         $session->set('dni', $usuario);
                         $session->set('resLogin', "empleado");
 
@@ -56,7 +56,7 @@ class LoginController extends Controller {
                         //Almacenar datos de que login correcto en la sesion
                         $_SESSION['dni'] = $usuario;
                         $_SESSION['resLogin'] = "cliente";
-                        
+
                         $session->set('dni', $usuario);
                         $session->set('resLogin', "cliente");
 
@@ -81,7 +81,7 @@ class LoginController extends Controller {
 
     public function SignUpAction() {
 
-        $error = "-";
+        $error = null;
         $request = $this->getRequest();
 
         $cliente = new Cliente();
@@ -90,13 +90,19 @@ class LoginController extends Controller {
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
 
+            $passrep = $_POST['recpass'];
 
-            if ($form->isValid()) {
+            if ($passrep != $form->get("clave")->getData()) {
+                $error = array(0 => "Las contraseñas no coinciden");
+            }
+
+            if ($form->isValid() && $error == null) {
 
                 $em = $this->getDoctrine()->getEntityManager();
 
-                $passrep = $_POST['recpass'];
-                
+                $this->console_log("Entra");
+
+
                 //Asignacion de empleados
                 if (strtolower($cliente->getCodplan()->getTipoplan()) === "nutricion") {
                     $preparador1 = $this->selectpreparador(1);
@@ -121,9 +127,7 @@ class LoginController extends Controller {
                     $cliente->addNumeroempleado($preparador2);
                 }
 
-                if($error != "-"){
-                    return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
-                }
+
                 try {
 
                     $em->persist($cliente);
@@ -131,19 +135,23 @@ class LoginController extends Controller {
                 } catch (\Exception $e) {
 
                     if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
-                        $error = "Error, el DNI ya existe";
-                    }else{
-                        $error = $e->getMessage();
+                        $error[] = "Error, el DNI ya existe";
+                    } else {
+                        $error[] = $e->getMessage();
                     }
 
                     return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
-                
-                if($error != "-"){
+
+                if ($error != null) {
                     return $this->render('MOTOPrincipalBundle:Login:SignUp.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
 
                 return $this->redirect($this->generateUrl('moto_principal_homepage'));
+            } else if ($error == null) {
+
+
+                $error[] = "El formato del dni no es valido";
             }
         }
 
@@ -296,6 +304,12 @@ class LoginController extends Controller {
         }
 
         return $numeroempleado;
+    }
+
+    function console_log($data) {
+        echo '<script>';
+        echo "console.log('" . $data . "')";
+        echo '</script>';
     }
 
 }

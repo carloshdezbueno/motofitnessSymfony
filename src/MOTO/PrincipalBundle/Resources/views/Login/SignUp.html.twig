@@ -12,6 +12,8 @@
         <br>
 
         <form class="px-4 py-3" action="{{path('_signup')}}" method="post">
+
+            {{ form_errors(form) }}
             <div class="form-group">
                 <label for="exampleDropdownFormEmail1">DNI</label>
                 {{form_widget(form.dni, {'attr': {'class': 'form-control',
@@ -66,17 +68,25 @@
                 <label for="exampleDropdownFormPassword1">Repetir contraseña</label> 
                 <input name="recpass" type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Repetir contraseña">
             </div>
-{{ form_rest(form) }}
+            {{ form_rest(form) }}
 
             <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+
         </form>
         <div class="dropdown-divider"></div>
-        {{ form_errors(form) }}
-        {% if error != '-' %}
+
+        {% if error != null %}
             <div class="alert alert-danger dropdown-item" role="alert">
-                <p>{{ error }}</p>
-                
+                <script>
+                    console.log('Entra ')
+                </script>
+
+                {% for errorSimple in error %}
+                    <p>{{ errorSimple }}</p>
+                {% endfor %}
             </div>
+        {% else %}
+            <p>hola</p>
         {% endif %}
     </div>
 {% endblock %}

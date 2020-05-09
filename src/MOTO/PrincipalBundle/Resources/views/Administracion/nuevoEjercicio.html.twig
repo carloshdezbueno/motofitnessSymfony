@@ -11,7 +11,44 @@
         </nav>
         <br>
         <form action = "{{ path('nuevo_ejercicio') }}" method="POST">
-            {{ form_widget(form) }}
+
+
+            <!-- Ocultar campo de ejercicios existentes si no vengo de sesion-->
+
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Nombre del plato</label>
+                {{form_widget(form.nombre, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Nombre del ejercicio'}})}}
+            </div>
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Series del ejercicio</label>
+                {{form_widget(form.series, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Series del ejercicio'}})}}
+            </div>
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Repeticiones del ejercicio</label>
+                {{form_widget(form.repeticiones, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Repeticiones del ejercicio'}})}}
+            </div>
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Peso para realizar el ejercicio</label>
+                {{form_widget(form.peso, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Peso para realizar el ejercicio'}})}}
+            </div>
+            <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Link al ejercicio</label>
+                {{form_widget(form.link, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Link al ejercicio'}})}}
+            </div>
+            
+            <div class="form-group" {{ sesion }}>
+                <label for="exampleDropdownFormEmail1">Ejercicios ya creados</label>
+                {{form_widget(form.ejExistentes, {'attr': {'class': 'form-control'}})}}
+            </div>
+
+
+            {{ form_rest(form) }}
+
             <button type="submit" class="btn btn-primary">Guardar ejercicio</button>
         </form>
         <br>

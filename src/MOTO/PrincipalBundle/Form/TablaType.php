@@ -16,13 +16,11 @@ class TablaType extends AbstractType
     {
         $builder
             ->add('fecha', null, array(
-                'label' => 'Fecha de inicio de la tabla:'
+                'label' => 'Fecha de inicio de la tabla:',
+                'data' => new \DateTime()
             ))
             ->add('tipo', null, array(
                 'label' => 'Nombre de la tabla:'
-            ))
-            ->add('codsesion', null, array(
-                'label' => 'Sesiones disponibles:'
             ))
         ;
     }

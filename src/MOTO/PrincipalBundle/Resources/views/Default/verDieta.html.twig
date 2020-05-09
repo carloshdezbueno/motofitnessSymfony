@@ -28,7 +28,7 @@
 
         <br>
         <div class="row">
-            {% if dietaMostrar is defined and dietaMostrar != "-"%}
+            {% if dietaMostrar != null and dietaMostrar != "-"%}
                 <h5 class="col-12">{{ dietaMostrar.semana }}</h5>
                 <div class="list-group col-sm-12">
                     {% for dia in dietaMostrar.coddia %}

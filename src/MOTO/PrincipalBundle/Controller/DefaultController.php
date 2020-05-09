@@ -50,8 +50,10 @@ class DefaultController extends Controller {
                 if ($session->get('resLogin') == "cliente") {
                     $dni = $session->get('dni');
                     $em = $this->getDoctrine()->getEntityManager();
-                    $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $dni;
+                    $consultaCliente = "select c from MOTOPrincipalBundle:Cliente c where c.dni=" . $dni . "";
+                    
                     $queryCliente = $em->createQuery($consultaCliente);
+                    
                     $cliente = $queryCliente->getResult();
                     $plan = strtolower($cliente[0]->getCodplan()->getTipoplan());
 
@@ -408,6 +410,7 @@ class DefaultController extends Controller {
         );
 
 
+
         if ($session->get('resLogin') == "cliente") {
             $consultaResumen = "select p from MOTOPrincipalBundle:Progreso p where p.dni=" . $session->get('dni');
             $queryResumen = $em->createQuery($consultaResumen);
@@ -424,7 +427,7 @@ class DefaultController extends Controller {
             $clientesEmp = $empleado[0]->getDni();
             $resumen = array();
             foreach ($clientesEmp as $cliente) {
-
+                $this->console_log($cliente->getDni());
 
                 $consultaResumen = "select p from MOTOPrincipalBundle:Progreso p where p.dni=" . $cliente->getDni();
                 $queryResumen = $em->createQuery($consultaResumen);
@@ -558,8 +561,14 @@ class DefaultController extends Controller {
                 return $this->redirect($this->generateUrl('verResumenCliente'));
             }
         }
-        
+
         return $this->render('MOTOPrincipalBundle:Default:progreso.html.twig', array("botones" => $arrayBotones, 'form' => $form->createView(), 'error' => $error));
+    }
+
+    function console_log($data) {
+        echo '<script>';
+        echo 'console.log(' . json_encode($data) . ')';
+        echo '</script>';
     }
 
 }

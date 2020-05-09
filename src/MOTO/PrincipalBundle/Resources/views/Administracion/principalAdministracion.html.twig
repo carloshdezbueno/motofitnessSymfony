@@ -9,21 +9,20 @@
                 <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
                 <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
             </nav>
-            <div class="btn m-3">
-                <img src="{{ asset('img/iconolupa.png') }}" alt="buscar" class="img-fluid" width="3%" height="auto">
-                <a href='{{path('buscar_cliente')}}'>Buscar cliente</a>
-            </div>
-            {% if dietas is defined and dietas == "true" %}
-                {#<!--<h2>Gestión de dietas</h2>
-                <p><a href='{{path('asignar_dieta')}}'>Asignar dieta a cliente</a></p>
-                <p><a href='{{path('crear_dieta')}}'>Crear nueva dieta</a></p>
-                <p><a href='{{path('ver_dieta')}}'>Ver una dieta</a></p>-->#}
-                <div class="card m-3" style="width: 18rem;">
-                    <div class="card-header font-weight-bold">
-                        Gestión de dietas
-                    </div>
-                    <div class="list-group">
-                        
+            <div class="row">
+                <div class="btn m-3 col-sm-12">
+                    <img src="{{ asset('img/iconolupa.png') }}" alt="buscar" class="img-fluid" width="3%" height="auto">
+                    <a href='{{path('buscar_cliente')}}'>Buscar cliente</a>
+                </div>
+                {% if dietas is defined and dietas == "true" %}
+                    {#<!--<h2>Gestión de dietas</h2>
+                    <p><a href='{{path('asignar_dieta')}}'>Asignar dieta a cliente</a></p>
+                    <p><a href='{{path('crear_dieta')}}'>Crear nueva dieta</a></p>
+                    <p><a href='{{path('ver_dieta')}}'>Ver una dieta</a></p>-->#}
+                    {#<div class="card m-3" style="width: 18rem;">#}
+
+                    <div class="list-group col-sm-12 m-3">
+                        <div class="list-group-item list-group-item-secondary">Gestión de dietas</div>
                         <a href='{{path('asignar_dieta')}}' class="list-group-item list-group-item-action">Asignar dieta</a>
                         <a href="{{path('crear_dieta')}}" class="list-group-item list-group-item-action">Crear nueva dieta</a>
                         <a href="{{path('ver_dieta')}}" class="list-group-item list-group-item-action">Ver una dieta</a>
@@ -33,21 +32,19 @@
                         <li class="list-group-item"><a class="btn" href='{{path('crear_dieta')}}'>Crear nueva dieta</a></li>
                         <li class="list-group-item"><a class="btn" href='{{path('ver_dieta')}}'>Ver una dieta</a></li>
                     </ul>#}
-                </div>
-            {% endif %}
+                    {#</div>#}
+                {% endif %}
+                <br>
+                {% if tablas is defined and tablas == "true" %}
+                    {#<!--<h2>Gestión de tablas</h2>
+                    <p><a href='{{path('asignar_tabla_cliente')}}'>Asignar tablas a cliente</a></p>
+                    <p><a href='{{path('nueva_tabla')}}'>Crear nueva tabla</a></p>
+                    <p><a href='{{path('nueva_sesion')}}'>Nueva sesión</a></p>
+                    <p><a href='{{path('nuevo_ejercicio')}}'>Nuevo ejercicio</a></p>-->#}
+                    {#<div class="card m-3" style="width: 18rem;">#}
 
-            {% if tablas is defined and tablas == "true" %}
-                {#<!--<h2>Gestión de tablas</h2>
-                <p><a href='{{path('asignar_tabla_cliente')}}'>Asignar tablas a cliente</a></p>
-                <p><a href='{{path('nueva_tabla')}}'>Crear nueva tabla</a></p>
-                <p><a href='{{path('nueva_sesion')}}'>Nueva sesión</a></p>
-                <p><a href='{{path('nuevo_ejercicio')}}'>Nuevo ejercicio</a></p>-->#}
-                <div class="card m-3" style="width: 18rem;">
-                    <div class="card-header font-weight-bold">
-                        Gestión de tablas
-                    </div>
-                    <div class="list-group">
-                        
+                    <div class="list-group col-sm-12 m-3">
+                        <div class="list-group-item list-group-item-secondary">Gestión de tablas</div>
                         <a href='{{path('asignar_tabla_cliente')}}' class="list-group-item list-group-item-action">Asignar tablas a cliente</a>
                         <a href="{{path('nueva_tabla')}}" class="list-group-item list-group-item-action">Crear nueva tabla</a>
                         <a href="{{path('nueva_sesion')}}" class="list-group-item list-group-item-action">Nueva sesión</a>
@@ -59,25 +56,32 @@
                         <li class="list-group-item"><a class="btn" href='{{path('nueva_sesion')}}'>Nueva sesión</a></li>
                         <li class="list-group-item"><a class="btn" href='{{path('nuevo_ejercicio')}}'>Nuevo ejercicio</a></li>
                     </ul>#}
-                </div>
-            {% endif %}
+                    {#</div>#}
+                {% endif %}
 
-            {% if empleados is defined and empleados == "true" %}
-                {#<!--<h2>Gestión de empleados</h2>
-                <p><a href='{{path('nuevo_empleado')}}'>Añadir nuevo empleado</a></p>
-                <p><a href='{{path('gestionar_empleados')}}'>Gestionar empleados existentes</a></p>-->#}
-                <div class="card m-3" style="width: 18rem;">
-                    <div class="card-header font-weight-bold">
-                        Gestión de tablas
+                {% if empleados is defined and empleados == "true" %}
+                    {#<!--<h2>Gestión de empleados</h2>
+                    <p><a href='{{path('nuevo_empleado')}}'>Añadir nuevo empleado</a></p>
+                    <p><a href='{{path('gestionar_empleados')}}'>Gestionar empleados existentes</a></p>-->#}
+                    {#<div class="card m-3" style="width: 18rem;">
+                        <div class="list-group-item list-group-item-secondary">
+                            Gestión de tablas
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a class="btn" href='{{path('nuevo_empleado')}}'>Añadir nuevo empleado</a></li>
+                            <li class="list-group-item"><a class="btn" href='{{path('gestionar_empleados')}}'>Gestionar empleados existentes</a></li>
+                        </ul>
+                    </div>#}
+
+                    <div class="list-group col-sm-12 m-3">
+                        <div class="list-group-item list-group-item-secondary">Panel de administracion</div>
+                        <a href='{{path('nuevo_empleado')}}' class="list-group-item list-group-item-action">Añadir nuevo empleado</a>
+                        <a href="{{path('gestionar_empleados')}}" class="list-group-item list-group-item-action">Gestionar empleados existentes</a>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a class="btn" href='{{path('nuevo_empleado')}}'>Añadir nuevo empleado</a></li>
-                        <li class="list-group-item"><a class="btn" href='{{path('gestionar_empleados')}}'>Gestionar empleados existentes</a></li>
-                    </ul>
-                </div>
+                {% endif %}
             {% endif %}
-        {% endif %}
 
+        </div>
         {% if nota is defined %}
             {{ nota }}
         {% endif %}
