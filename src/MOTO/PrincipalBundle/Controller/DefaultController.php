@@ -402,7 +402,7 @@ class DefaultController extends Controller {
             $botonLogin = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Login'>LogIn</a>";
             $botonSignUp = "<a class='navbar-brand' href='/motofitnessSymfony/web/app_dev.php/Signup'>SignUp</a>";
         }
-        
+
         $botonInicio = "";
 
         $arrayBotones = array(
@@ -428,7 +428,7 @@ class DefaultController extends Controller {
 
         if (count($tablaBuscadaArray) == 1) {
             $tabla = $tablaBuscadaArray[0];
-        }else{
+        } else {
             $tabla = null;
         }
 
@@ -668,8 +668,11 @@ class DefaultController extends Controller {
             $consultaResumen = "select p from MOTOPrincipalBundle:Progreso p where p.dni=" . $session->get('dni');
             $queryResumen = $em->createQuery($consultaResumen);
             $resumenCli = $queryResumen->getResult();
-
-            $resumen = array($cliente[0]->getNombre() => $resumenCli);
+            if (count($resumenCli) == 0) {
+                $resumen = null;
+            } else {
+                $resumen = array($cliente[0]->getNombre() => $resumenCli);
+            }
         } else if ($session->get('resLogin') == "empleado") {
 
             $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.numeroempleado=" . $session->get('dni');
@@ -740,7 +743,7 @@ class DefaultController extends Controller {
             "botonLogout" => $botonLogout
         );
 
-        $error = "-";
+        $error = null;
 
 
         $progreso = new Progreso();
@@ -804,7 +807,16 @@ class DefaultController extends Controller {
 
                 $progreso->setDni($cliente[0]);
 
-                if ($error != "-") {
+                $validator = $this->get('validator');
+                $errormedidas = $validator->validate($progreso);
+                
+                $this->console_log($error);
+                
+                if(strpos($errormedidas, "Las medidas no tienen el formato correcto") !== false){
+                    $error[] = "Las medidas no tienen el formato correcto";
+                }
+
+                if ($error != null && $error != array()) {
 
                     return $this->render('MOTOPrincipalBundle:Default:progreso.html.twig', array("botones" => $arrayBotones, 'form' => $form->createView(), 'error' => $error));
                 } else {
@@ -820,7 +832,7 @@ class DefaultController extends Controller {
 
     function console_log($data) {
         echo '<script>';
-        echo 'console.log(' . json_encode($data) . ')';
+        echo 'console.log(' . $data . ')';
         echo '</script>';
     }
 

@@ -42,7 +42,8 @@
             <div class="form-group">
                 <label for="exampleInputPassword1">Medidas actuales</label>
                 {{form_widget(form.medidas, {'attr': {'class': 'form-control',
-                                                    'placeholder': 'Medidas actuales'}})}}
+                                                    'placeholder': 'Medidas actuales: Cuello/Cintura/Cadera'}})}}
+                <small><a href="https://es.wikihow.com/calcular-la-grasa-corporal-con-una-cinta-m%C3%A9trica" target="_blank">¿No sabes como medirte? Aqui tienes una guia de como hacerlo</a></small>
             </div>
             {{ form_rest(form) }}
             <br>
@@ -51,21 +52,12 @@
         </form>
         <br>
 
-        {{ form_errors(form) }}
-        {% if not form.vars.valid %}
-            <ul>
-                {# Loop through every form item #}
-                {% for child in form.children %}
-                    {# Display the errors of the form item #}
-                    {%for error in child.vars.errors%}
-                        <li>{{error.message}}</li>
-                        {%endfor%}
-                    {%endfor%}
-            </ul>
-        {%endif%}
-        {% if error != '-' %}
+        {% if error != null %}
             <div class="alert alert-danger" role="alert">
-                <p>{{ error }}</p>
+
+                {% for errorSimple in error %}
+                    <p>{{ errorSimple }}</p>
+                {% endfor %}
             </div>
         {% endif %}
     </div>

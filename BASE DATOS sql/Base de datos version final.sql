@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2020 a las 12:46:56
+-- Tiempo de generación: 10-05-2020 a las 21:41:22
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `motofitness`
 --
-DROP DATABASE IF EXISTS `motofitness`;
 CREATE DATABASE IF NOT EXISTS `motofitness` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
 USE `motofitness`;
 
@@ -47,7 +46,12 @@ CREATE TABLE `cliente` (
   `vencimiento` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `cliente`
+--
 
+INSERT INTO `cliente` (`dni`, `nombre`, `email`, `direccion`, `telefono`, `objetivo`, `clave`, `coddieta`, `codtabla`, `codplan`, `disponibilidad`, `observaciones`, `vencimiento`) VALUES
+('78675645', 'Alberto', 'alberto@gmail.com', 'Calle garcia campos', '678789876', 'Adelgazar porque estoy gordo', '1', 1, 1, '2', '3', 'Soy alergico a los pistachos', '2020-06-10');
 
 -- --------------------------------------------------------
 
@@ -62,7 +66,18 @@ CREATE TABLE `diadieta` (
   `dia` varchar(20) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `diadieta`
+--
 
+INSERT INTO `diadieta` (`coddia`, `calorias`, `macronutrientes`, `dia`) VALUES
+(1, 170, '100g de carbohidratos y 50g de proteinas', 'Lunes'),
+(2, 700, '100g de proteinas', 'Martes'),
+(3, 270, '150g de proteinas', 'Miercoles'),
+(4, 300, '100g de proteinas', 'Jueves'),
+(5, 1000, '100g de proteinas', 'Viernes'),
+(6, 170, '100g de proteinas', 'Sabado'),
+(7, 700, '100g de proteinas', 'Domingo');
 
 -- --------------------------------------------------------
 
@@ -75,7 +90,12 @@ CREATE TABLE `dieta` (
   `semana` varchar(100) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `dieta`
+--
 
+INSERT INTO `dieta` (`coddieta`, `semana`) VALUES
+(1, 'Dieta de carbohidratos');
 
 -- --------------------------------------------------------
 
@@ -92,6 +112,16 @@ CREATE TABLE `ejercicio` (
   `link` varchar(50) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `ejercicio`
+--
+
+INSERT INTO `ejercicio` (`codejercicio`, `nombre`, `series`, `repeticiones`, `peso`, `link`) VALUES
+(1, 'Pull up', 5, 10, 10, 'https://www.youtube.com/'),
+(2, 'Sentadillas', 5, 10, 0, 'https://www.youtube.com/'),
+(3, 'Press de hombro', 5, 10, 30, 'https://www.youtube.com/'),
+(4, 'Press de banca', 5, 10, 100, 'https://www.youtube.com/'),
+(5, 'Sentadillas pro', 10, 50, 0, 'https://www.youtube.com/');
 
 -- --------------------------------------------------------
 
@@ -116,7 +146,10 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`numeroempleado`, `especialidad`, `nombre`, `dniEmpleado`, `telefono`, `email`, `direccion`, `clave`, `privilegios`) VALUES
-(1, 3, 'Juan', '70967881Q', '698857434', 'email@email.com', 'Calle falsa 22', '1', 1);
+(1, 3, 'Juan', '70967881Q', '698857434', 'email@email.com', 'Calle falsa 22', '1', 1),
+(2, 1, 'Juan Alberto', '79876765Q', '675654345', 'lmdShow@gmail.com', 'Calle falsa 22', 'youtube', 0),
+(3, 1, 'Andres', '98788765Q', '787654543', 'bokeron@gmail.com', 'Calle de madrid 1', 'youtube', 0),
+(4, 3, 'Marcos', '65454345E', '675565454', 'laClasse@gmail.com', 'Fuengirola', 'youtube', 0);
 
 -- --------------------------------------------------------
 
@@ -129,7 +162,20 @@ CREATE TABLE `entrenamiento` (
   `codigosesion` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `entrenamiento`
+--
 
+INSERT INTO `entrenamiento` (`codigoejercicio`, `codigosesion`) VALUES
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 2),
+(1, 2),
+(2, 3),
+(2, 3),
+(2, 3),
+(4, 3);
 
 -- --------------------------------------------------------
 
@@ -142,7 +188,25 @@ CREATE TABLE `lineadia` (
   `codplato` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `lineadia`
+--
 
+INSERT INTO `lineadia` (`coddia`, `codplato`) VALUES
+(1, 1),
+(1, 2),
+(2, 3),
+(2, 4),
+(3, 3),
+(3, 2),
+(4, 1),
+(4, 3),
+(5, 4),
+(5, 4),
+(6, 1),
+(6, 2),
+(7, 3),
+(7, 4);
 
 -- --------------------------------------------------------
 
@@ -155,7 +219,18 @@ CREATE TABLE `lineadieta` (
   `coddia` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `lineadieta`
+--
 
+INSERT INTO `lineadieta` (`coddieta`, `coddia`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7);
 
 -- --------------------------------------------------------
 
@@ -168,6 +243,12 @@ CREATE TABLE `lineaempleado` (
   `dni` varchar(10) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `lineaempleado`
+--
+
+INSERT INTO `lineaempleado` (`numeroempleado`, `dni`) VALUES
+(1, '78675645');
 
 -- --------------------------------------------------------
 
@@ -180,6 +261,13 @@ CREATE TABLE `lineatabla` (
   `codsesion` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `lineatabla`
+--
+
+INSERT INTO `lineatabla` (`codtabla`, `codsesion`) VALUES
+(1, 1),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -216,6 +304,15 @@ CREATE TABLE `plato` (
   `tipoComida` varchar(20) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `plato`
+--
+
+INSERT INTO `plato` (`codplato`, `nombre`, `link`, `calorias`, `tipoComida`) VALUES
+(1, 'Macarrones con tomate', 'https://www.youtube.com/', 100, 'Carbohidratos'),
+(2, 'Pollo con curry', 'https://www.youtube.com/', 70, 'Proteinas'),
+(3, 'Ternera', 'https://www.youtube.com/', 200, 'Proteinas'),
+(4, 'Ensalada de pasta', 'https://www.youtube.com/', 500, 'Carbohidratos y verd');
 
 -- --------------------------------------------------------
 
@@ -232,7 +329,14 @@ CREATE TABLE `progreso` (
   `dni` varchar(10) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `progreso`
+--
 
+INSERT INTO `progreso` (`codProgreso`, `imagen`, `peso`, `medidas`, `fecha`, `dni`) VALUES
+(1, 'img/1589138075.jpeg', 120, '100/20/23', '2020-05-10', '78675645'),
+(4, '/motofitnessSymfony/web/img/img.jpg', 150, '50/100/30', '2020-05-10', '78675645'),
+(5, '/motofitnessSymfony/web/img/img.jpg', 123, '50/32', '2020-05-10', '78675645');
 
 -- --------------------------------------------------------
 
@@ -245,7 +349,14 @@ CREATE TABLE `sesion` (
   `dia` varchar(20) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `sesion`
+--
 
+INSERT INTO `sesion` (`codsesion`, `dia`) VALUES
+(1, 'Full body'),
+(2, 'Tren superior'),
+(3, 'Sesion HITT');
 
 -- --------------------------------------------------------
 
@@ -259,6 +370,12 @@ CREATE TABLE `tablaejercicios` (
   `tipo` varchar(20) COLLATE latin1_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `tablaejercicios`
+--
+
+INSERT INTO `tablaejercicios` (`codtabla`, `fecha`, `tipo`) VALUES
+(1, '2020-05-10', 'Musculacion');
 
 --
 -- Índices para tablas volcadas
@@ -375,49 +492,49 @@ ALTER TABLE `tablaejercicios`
 -- AUTO_INCREMENT de la tabla `diadieta`
 --
 ALTER TABLE `diadieta`
-  MODIFY `coddia` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `coddia` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `dieta`
 --
 ALTER TABLE `dieta`
-  MODIFY `coddieta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `coddieta` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ejercicio`
 --
 ALTER TABLE `ejercicio`
-  MODIFY `codejercicio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `codejercicio` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `numeroempleado` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `numeroempleado` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `plato`
 --
 ALTER TABLE `plato`
-  MODIFY `codplato` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `codplato` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `progreso`
 --
 ALTER TABLE `progreso`
-  MODIFY `codProgreso` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `codProgreso` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `sesion`
 --
 ALTER TABLE `sesion`
-  MODIFY `codsesion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `codsesion` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tablaejercicios`
 --
 ALTER TABLE `tablaejercicios`
-  MODIFY `codtabla` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `codtabla` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

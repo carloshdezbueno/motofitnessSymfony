@@ -44,7 +44,7 @@
                 {% endif %}
                 {% if clienteobtenido.codtabla != null %}
                     <p >Tabla asignada al cliente:</p>
-                    <p class="ml-5">{{ clienteobtenido.codtabla.tipo }} <a class="btn btn-primary" href="{{ path('ver_tabla_param', {'codTabla': clienteobtenido.coddieta.coddieta}) }}" role="button">Ver dieta del cliente</a></p>
+                    <p class="ml-5">{{ clienteobtenido.codtabla.tipo }} <a class="btn btn-primary" href="{{ path('ver_tabla_param', {'codTabla': clienteobtenido.coddieta.coddieta}) }}" role="button">Ver tabla del cliente</a></p>
                 {% else %}
                     <p><b>Sin tabla asignada</b></p> <a class="btn btn-primary" href="{{ path('asignar_tabla_cliente') }}" role="button">Asignar tabla al cliente</a>
                 {% endif %}

@@ -61,7 +61,7 @@ class Ejercicio {
      *
      * @ORM\Column(name="link", type="string", length=50, nullable=false)
      * 
-     * @Assert\Length(max=20)
+     * @Assert\Length(max=50)
      * @Assert\Type("string")
      * @Assert\Regex(
      *          pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/", 

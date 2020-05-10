@@ -97,7 +97,8 @@ class AdministracionController extends Controller {
         // Hacer formulario con dos desplegables
         $formClientes = $this->createFormBuilder()
                 ->add('cliente', 'choice', array(
-                    'choices' => $clientesEmpleado
+                    'choices' => $clientesEmpleado,
+                    'empty_value' => 'No tienes clientes asignados todavia'
                 ))
                 ->add('dieta', 'entity', array(
                     'class' => 'MOTOPrincipalBundle:Dieta'
@@ -566,8 +567,6 @@ class AdministracionController extends Controller {
                     $session->set("despedido", "Sesion de ejercicios creada con exito");
                     return $this->redirect($this->generateUrl('principal_administracion'));
                 }
-
-
             }
         }
 
@@ -669,7 +668,7 @@ class AdministracionController extends Controller {
                     return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
                 // Página principal
-                
+
                 $nempleado = $empleado->getNumeroempleado();
                 $session->set("despedido", "Empleado $nempleado registrado");
                 return $this->redirect($this->generateUrl('principal_administracion'));
@@ -726,7 +725,8 @@ class AdministracionController extends Controller {
         // Desplegable de clientes
         $formClientes = $this->createFormBuilder()
                 ->add('cliente', 'choice', array(
-                    'choices' => $clientesEmpleado
+                    'choices' => $clientesEmpleado,
+                    'empty_value' => 'No tienes clientes asignados todavia'
                 ))
                 ->getForm();
 
@@ -831,19 +831,19 @@ class AdministracionController extends Controller {
         $empleado = $em->getRepository("MOTOPrincipalBundle:Empleado")->find($numEmpleado);
 
         $claveAnt = $empleado->getClave();
-        
-        
+
+
         $form = $this->createForm(new EmpleadoType(), $empleado);
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
 
             if ($form->isValid()) {
-                
-                if($claveAnt != $empleado->getClave()){
+
+                if ($claveAnt != $empleado->getClave()) {
                     return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('mod' => 1, 'numempleado' => $numEmpleado, 'form' => $form->createView(), 'error' => "La clave no coincide con la antigua"));
                 }
-                
+
                 $em = $this->getDoctrine()->getEntityManager();
 
                 try {
@@ -854,7 +854,7 @@ class AdministracionController extends Controller {
                     return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('mod' => 1, 'numempleado' => $numEmpleado, 'form' => $form->createView(), 'error' => $error));
                 }
                 // Página principal
-                $session->set("despedido", "Modificados con exito los datos del empleado $numempleado");
+                $session->set("despedido", "Modificados con exito los datos del empleado $numEmpleado");
                 return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }

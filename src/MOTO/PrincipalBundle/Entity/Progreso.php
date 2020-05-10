@@ -56,6 +56,10 @@ class Progreso
      * 
      * @Assert\Length(max=20)
      * @Assert\Type("string")
+     * @Assert\Regex(
+     *          pattern="/^[0-9][0-9][0-9]?\/[0-9][0-9][0-9]?(\/[0-9][0-9]?[0-9]?)?$/", 
+     *          message="Las medidas no tienen el formato correcto")
+     * 
      */
     private $medidas;
 
