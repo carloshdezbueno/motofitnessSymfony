@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="ejercicio")
  * @ORM\Entity
  */
-class Ejercicio
-{
+class Ejercicio {
+
     /**
      * @var integer
      *
@@ -63,6 +63,9 @@ class Ejercicio
      * 
      * @Assert\Length(max=20)
      * @Assert\Type("string")
+     * @Assert\Regex(
+     *          pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/", 
+     *          message="El dni no coincide con un dni estandar")
      */
     private $link;
 
@@ -84,19 +87,16 @@ class Ejercicio
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->codigosesion = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
 
     /**
      * Get codejercicio
      *
      * @return integer 
      */
-    public function getCodejercicio()
-    {
+    public function getCodejercicio() {
         return $this->codejercicio;
     }
 
@@ -106,10 +106,9 @@ class Ejercicio
      * @param string $nombre
      * @return Ejercicio
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -118,8 +117,7 @@ class Ejercicio
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -129,10 +127,9 @@ class Ejercicio
      * @param integer $series
      * @return Ejercicio
      */
-    public function setSeries($series)
-    {
+    public function setSeries($series) {
         $this->series = $series;
-    
+
         return $this;
     }
 
@@ -141,8 +138,7 @@ class Ejercicio
      *
      * @return integer 
      */
-    public function getSeries()
-    {
+    public function getSeries() {
         return $this->series;
     }
 
@@ -152,10 +148,9 @@ class Ejercicio
      * @param integer $repeticiones
      * @return Ejercicio
      */
-    public function setRepeticiones($repeticiones)
-    {
+    public function setRepeticiones($repeticiones) {
         $this->repeticiones = $repeticiones;
-    
+
         return $this;
     }
 
@@ -164,8 +159,7 @@ class Ejercicio
      *
      * @return integer 
      */
-    public function getRepeticiones()
-    {
+    public function getRepeticiones() {
         return $this->repeticiones;
     }
 
@@ -175,10 +169,9 @@ class Ejercicio
      * @param float $peso
      * @return Ejercicio
      */
-    public function setPeso($peso)
-    {
+    public function setPeso($peso) {
         $this->peso = $peso;
-    
+
         return $this;
     }
 
@@ -187,8 +180,7 @@ class Ejercicio
      *
      * @return float 
      */
-    public function getPeso()
-    {
+    public function getPeso() {
         return $this->peso;
     }
 
@@ -198,10 +190,9 @@ class Ejercicio
      * @param string $link
      * @return Ejercicio
      */
-    public function setLink($link)
-    {
+    public function setLink($link) {
         $this->link = $link;
-    
+
         return $this;
     }
 
@@ -210,8 +201,7 @@ class Ejercicio
      *
      * @return string 
      */
-    public function getLink()
-    {
+    public function getLink() {
         return $this->link;
     }
 
@@ -221,10 +211,9 @@ class Ejercicio
      * @param \MOTO\PrincipalBundle\Entity\Sesion $codigosesion
      * @return Ejercicio
      */
-    public function addCodigosesion(\MOTO\PrincipalBundle\Entity\Sesion $codigosesion)
-    {
+    public function addCodigosesion(\MOTO\PrincipalBundle\Entity\Sesion $codigosesion) {
         $this->codigosesion[] = $codigosesion;
-    
+
         return $this;
     }
 
@@ -233,8 +222,7 @@ class Ejercicio
      *
      * @param \MOTO\PrincipalBundle\Entity\Sesion $codigosesion
      */
-    public function removeCodigosesion(\MOTO\PrincipalBundle\Entity\Sesion $codigosesion)
-    {
+    public function removeCodigosesion(\MOTO\PrincipalBundle\Entity\Sesion $codigosesion) {
         $this->codigosesion->removeElement($codigosesion);
     }
 
@@ -243,12 +231,12 @@ class Ejercicio
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCodigosesion()
-    {
+    public function getCodigosesion() {
         return $this->codigosesion;
     }
-    
+
     public function __toString() {
-        return $this->nombre . " Repeticiones x series " . $this->repeticiones ."x". $this->series;
+        return $this->nombre . " Repeticiones x series " . $this->repeticiones . "x" . $this->series;
     }
+
 }

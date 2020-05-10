@@ -40,6 +40,9 @@ class Plato
      * 
      * @Assert\Length(max=50)
      * @Assert\Type("string")
+     * @Assert\Regex(
+     *          pattern="/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/", 
+     *          message="El dni no coincide con un dni estandar")
      */
     private $link;
 
