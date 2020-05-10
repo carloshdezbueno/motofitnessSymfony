@@ -48,6 +48,9 @@ class Empleado
      * 
      * @Assert\Length(max=9)
      * @Assert\Type("string")
+     * @Assert\Regex(
+     *          pattern="/^[0-9]{8,8}[A-Za-z]$/", 
+     *          message="El dni no coincide con un dni estandar")
      */
     private $dniempleado;
 
@@ -58,6 +61,9 @@ class Empleado
      * 
      * @Assert\Length(max=9)
      * @Assert\Type("string")
+     * @Assert\Regex(
+     *          pattern="/^[9|6|7][0-9]{8}$/", 
+     *          message="El dni no coincide con un dni estandar")
      */
     private $telefono;
 

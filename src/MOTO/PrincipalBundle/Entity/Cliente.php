@@ -35,7 +35,7 @@ class Cliente {
      * @Assert\NotNull
      * @Assert\Length(max=9, min=9)
      * @Assert\Regex(
-     *          pattern="/^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKE]$/i", 
+     *          pattern="/^[0-9]{8,8}[A-Za-z]$/", 
      *          message="El dni no coincide con un dni estandar")
      */
     private $dni;
@@ -76,6 +76,9 @@ class Cliente {
      * @ORM\Column(name="telefono", type="string", length=9, nullable=false)
      * 
      * @Assert\Length(max=9)
+     * @Assert\Regex(
+     *          pattern="/^[9|6|7][0-9]{8}$/", 
+     *          message="El dni no coincide con un dni estandar")
      */
     private $telefono;
 
