@@ -249,6 +249,6 @@ class Ejercicio
     }
     
     public function __toString() {
-        return $this->nombre . " Repeticiones x series" . $this->repeticiones ."x". $this->series;
+        return $this->nombre . " Repeticiones x series " . $this->repeticiones ."x". $this->series;
     }
 }

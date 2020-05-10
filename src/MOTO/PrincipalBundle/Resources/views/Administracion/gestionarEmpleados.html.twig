@@ -3,5 +3,72 @@
 {% block title %}MOTOPrincipalBundle:Administracion:gestionarEmpleados{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Administracion:gestionarEmpleados page</h1>
+
+
+    <div class="container">
+        {% if administrador is defined and administrador == "true"%}
+            <nav class='navbar navbar-light bg-light row'>
+                <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
+                <a class='navbar-brand' href='{{path('principal_administracion')}}'>Administracion</a>
+                <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
+            </nav>
+            <br>
+        {% endif %}
+
+        {% if form is defined %}
+            <form action ="{{path('gestionar_empleados')}}" method="post">
+
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Empleados de la empresa</label>
+                    {{form_widget(form.empleado, {'attr': {'class': 'form-control'}})}}
+                </div>
+                {{ form_rest(form) }}
+                <button type="submit" class="btn btn-primary">Ver empleado</button>
+            </form>
+        {% endif %}
+
+        {% if empleadoobtenido is defined %}
+            <div class="jumbotron">
+                {% if empleadoobtenido.privilegios == '1' %}
+                    <div class="float-right "><span class="badge badge-pill badge-primary">Administrador</span></div>
+                {% endif %}
+                <h1 class="display-4">{{ empleadoobtenido.nombre }}</h1>
+                <p class="lead">Espedialidad del empleado: 
+
+                    {% if empleadoobtenido.especialidad == '1' %}
+                        Nutrición
+
+                    {% elseif empleadoobtenido.especialidad == '2' %}
+                        Entrenamiento
+                    {% else%}
+                        Nutricion y entrenamiento
+                    {% endif %}
+
+                </p>
+                <p class="lead">Empleado número {{ empleadoobtenido.numeroempleado }}</p>
+                <hr class="my-4">
+                <p>Información de contacto:</p>
+                <p class="ml-5">Direccion: {{ empleadoobtenido.direccion }}</p>
+                <p class="ml-5">Telefono: {{ empleadoobtenido.telefono }}</p>
+                <p class="ml-5">Email: {{ empleadoobtenido.email }}</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="{{ path('despedirEmpleado', {'numempleado': empleadoobtenido.numeroempleado}) }}" role="button">Despedir</a>
+                    <a class="btn btn-primary btn-lg float-right" href="{{ path('modEmpleado', {'numEmpleado': empleadoobtenido.numeroempleado}) }}" role="button">Modificar datos del empleado</a>
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+        {#
+        {% if cliente is defined %}
+            {{ cliente }}
+        {% endif %}
+        #}
+
+        {% if error is defined and error != "-" %}
+            {{ error }}
+        {% endif %}
+    </div>
 {% endblock %}

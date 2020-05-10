@@ -32,8 +32,9 @@ class EmpleadoType extends AbstractType
             ->add('clave', 'password')
             ->add('privilegios', 'choice', array(
                 'choices' => array(
-                    "1" => "Administrador",
-                    "0" => "Regular"
+                    "0" => "Regular",
+                    "1" => "Administrador"
+                    
                 )
             ))
         ;

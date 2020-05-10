@@ -92,3 +92,12 @@ insertProgreso:
 verResumenCliente:
     pattern: /verResumenCliente
     defaults: { _controller: MOTOPrincipalBundle:Default:verResumen } 
+    
+despedirEmpleado:
+    pattern: /despedir/{numempleado}
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:despedir } 
+modEmpleado:
+    pattern: /modificar/{numEmpleado}
+    defaults: { _controller: MOTOPrincipalBundle:Administracion:modificarEmpleado } 
+
+

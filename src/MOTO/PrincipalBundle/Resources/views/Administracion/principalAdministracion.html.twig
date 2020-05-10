@@ -9,10 +9,18 @@
                 <a class='navbar-brand' href='{{path('verResumenCliente')}}'>Resumen de mis clientes</a>
                 <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
             </nav>
+
             <div class="row">
-                <div class="btn m-3 col-sm-12">
+
+                {% if despedido != null %}
+                    
+                    <div class="alert alert-info mt-3 col-sm-12 text-center">
+                        <strong>Informacion!</strong> {{ despedido }}
+                    </div>
+                {% endif %}
+                <div class="btn mt-3 col-sm-12">
                     <img src="{{ asset('img/iconolupa.png') }}" alt="buscar" class="img-fluid" width="3%" height="auto">
-                    <a href='{{path('buscar_cliente')}}'>Mis clientes</a>
+                    <a href='{{path('buscar_cliente')}}'><button type="button" class="btn btn-outline-dark">Mis clientes</button></a>
                 </div>
                 {% if dietas is defined and dietas == "true" %}
 
@@ -49,6 +57,10 @@
             {% endif %}
 
         </div>
+
+
+
+
         {% if nota is defined %}
             {{ nota }}
         {% endif %}

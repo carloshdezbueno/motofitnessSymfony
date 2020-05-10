@@ -32,6 +32,12 @@ class AdministracionController extends Controller {
         $session->remove("vengoSesion");
         $session->remove("calorias");
 
+        $despedido = null;
+        if ($session->has("despedido")) {
+            $despedido = $session->get("despedido");
+            $session->remove("despedido");
+        }
+
         if ($session->get('resLogin') == "empleado") {
 
             $em = $this->getDoctrine()->getEntityManager();
@@ -62,7 +68,7 @@ class AdministracionController extends Controller {
                 }
             }
 
-            return $this->render('MOTOPrincipalBundle:Administracion:principalAdministracion.html.twig', array("administrador" => "true", "dietas" => $dietas, "tablas" => $tablas, "empleados" => $empleadosAdmin));
+            return $this->render('MOTOPrincipalBundle:Administracion:principalAdministracion.html.twig', array('despedido' => $despedido, "administrador" => "true", "dietas" => $dietas, "tablas" => $tablas, "empleados" => $empleadosAdmin));
         }
 
         // Si no es un empleado
@@ -120,6 +126,7 @@ class AdministracionController extends Controller {
 
                 $em->persist($clienteAModificar);
                 $em->flush();
+                $session->set("despedido", "Dieta asignada con exito");
 
                 return $this->redirect($this->generateUrl('principal_administracion'));
             }
@@ -169,7 +176,8 @@ class AdministracionController extends Controller {
 
                 //Acaba la insercion
                 $session->remove("dias");
-                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+                $session->set("despedido", "Dieta creada con exito");
+                return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
 
@@ -407,6 +415,7 @@ class AdministracionController extends Controller {
                 $em->persist($clienteAModificar);
                 $em->flush();
 
+                $session->set("despedido", "Tabla asignada con exito");
                 return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
@@ -453,6 +462,7 @@ class AdministracionController extends Controller {
                 }
 
                 $session->remove("sesiones");
+                $session->set("despedido", "Tabla creada con exito");
                 return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
@@ -553,12 +563,11 @@ class AdministracionController extends Controller {
                 } else {
                     $session->remove("vengoTabla");
                     $session->remove("ejercicios");
+                    $session->set("despedido", "Sesion de ejercicios creada con exito");
                     return $this->redirect($this->generateUrl('principal_administracion'));
                 }
 
 
-                //Acaba la insercion
-                //return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
 
@@ -627,6 +636,7 @@ class AdministracionController extends Controller {
                     return $this->redirect($this->generateUrl('nueva_sesion'));
                 } else {
                     $session->remove("vengoSesion");
+                    $session->set("despedido", "Ejercicio creado con exito");
                     return $this->redirect($this->generateUrl('principal_administracion'));
                 }
             }
@@ -659,7 +669,10 @@ class AdministracionController extends Controller {
                     return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('form' => $form->createView(), 'error' => $error));
                 }
                 // Página principal
-                return $this->redirect($this->generateUrl('moto_principal_homepage'));
+                
+                $nempleado = $empleado->getNumeroempleado();
+                $session->set("despedido", "Empleado $nempleado registrado");
+                return $this->redirect($this->generateUrl('principal_administracion'));
             }
         }
         // Renderizar formulario
@@ -667,7 +680,30 @@ class AdministracionController extends Controller {
     }
 
     public function gestionarEmpleadosAction() {
-        
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        // Desplegable de clientes
+        $formEmpleado = $this->createFormBuilder()
+                ->add('empleado', 'entity', array(
+                    'class' => 'MOTOPrincipalBundle:Empleado'
+                ))
+                ->getForm();
+
+
+        if ($request->getMethod() == 'POST') {
+            $formEmpleado->bind($request);
+
+
+            $empleadoElegido = $formEmpleado->get("empleado")->getData();
+
+
+
+
+            return $this->render('MOTOPrincipalBundle:Administracion:gestionarEmpleados.html.twig', array('administrador' => 'true', 'empleado' => $empleadoElegido, 'empleadoobtenido' => $empleadoElegido));
+        }
+
+        return $this->render('MOTOPrincipalBundle:Administracion:gestionarEmpleados.html.twig', array('administrador' => 'true', 'form' => $formEmpleado->createView(), 'error' => '-'));
     }
 
     public function buscarClienteAction() {
@@ -694,8 +730,6 @@ class AdministracionController extends Controller {
                 ))
                 ->getForm();
 
-        $request = $this->getRequest();
-        $session = $request->getSession();
 
         if ($request->getMethod() == 'POST') {
             $formClientes->bind($request);
@@ -709,12 +743,148 @@ class AdministracionController extends Controller {
             $clienteElegido = $cliente[0];
 
 
-            
+
 
             return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador' => 'true', 'cliente' => $clienteElegido, 'clienteobtenido' => $clienteElegido));
         }
 
         return $this->render('MOTOPrincipalBundle:Administracion:buscarCliente.html.twig', array('administrador' => 'true', 'form' => $formClientes->createView(), 'error' => '-'));
+    }
+
+    public function despedirAction($numempleado) {
+
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $empleado = $em->getRepository("MOTOPrincipalBundle:Empleado")->find($numempleado);
+
+
+        //Asignacion de empleados
+
+        $clientesEmpleado = $empleado->getDni();
+        $cliarray = array();
+
+        foreach ($clientesEmpleado as $cliente) {
+            $cliarray[] = $cliente;
+        }
+
+        $em->remove($empleado);
+        $flush = $em->flush();
+
+
+        $em = $this->getDoctrine()->getEntityManager();
+
+        foreach ($cliarray as $cliente) {
+            $this->console_log($cliente);
+            if (strtolower($cliente->getCodplan()->getTipoplan()) === "nutricion") {
+                $preparador1 = $this->selectpreparador(1);
+            }
+            if (strtolower($cliente->getCodplan()->getTipoplan()) === "entrenamiento" || strtolower($cliente->getCodplan()->getTipoplan()) === "pro") {
+                $preparador1 = $this->selectpreparador(1);
+                $preparador2 = $this->selectpreparador(2);
+
+                if ($preparador1->getEspecialidad() == "3") {
+                    unset($preparador2);
+                } else if ($preparador2->getEspecialidad() == "3" || $preparador2->getNumeroempleado() == $preparador1->getNumeroempleado()) {
+                    $preparador1 = $preparador2;
+                    unset($preparador2);
+                }
+            }
+
+            if (isset($preparador1)) {
+                $cliente->addNumeroempleado($preparador1);
+            }
+
+            if (isset($preparador2)) {
+                $cliente->addNumeroempleado($preparador2);
+            }
+
+            try {
+                $em->persist($cliente);
+                $em->flush();
+            } catch (\Exception $e) {
+                $this->console_log($e->getMessage());
+            }
+        }
+
+
+
+
+        if ($flush == null) {
+
+            $session->set("despedido", "Has despedido al empleado numero $numempleado");
+        } else {
+            $session->set("despedido", "Ha habido algun error al despedir al empleado numero $numempleado");
+        }
+
+        return $this->redirect($this->generateUrl('principal_administracion'));
+    }
+
+    public function modificarEmpleadoAction($numEmpleado) {
+        $error = "-";
+        $request = $this->getRequest();
+        $session = $request->getSession();
+
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $empleado = $em->getRepository("MOTOPrincipalBundle:Empleado")->find($numEmpleado);
+
+        $claveAnt = $empleado->getClave();
+        
+        
+        $form = $this->createForm(new EmpleadoType(), $empleado);
+
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                
+                if($claveAnt != $empleado->getClave()){
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('mod' => 1, 'numempleado' => $numEmpleado, 'form' => $form->createView(), 'error' => "La clave no coincide con la antigua"));
+                }
+                
+                $em = $this->getDoctrine()->getEntityManager();
+
+                try {
+                    $em->flush();
+                } catch (Exception $ex) {
+                    $error = "Ha habido un problema. ¿El DNI introducido ya existe?";
+                    // Mostrar error
+                    return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('mod' => 1, 'numempleado' => $numEmpleado, 'form' => $form->createView(), 'error' => $error));
+                }
+                // Página principal
+                $session->set("despedido", "Modificados con exito los datos del empleado $numempleado");
+                return $this->redirect($this->generateUrl('principal_administracion'));
+            }
+        }
+        // Renderizar formulario
+        return $this->render('MOTOPrincipalBundle:Administracion:nuevoEmpleado.html.twig', array('mod' => 1, 'numempleado' => $numEmpleado, 'form' => $form->createView(), 'error' => $error));
+    }
+
+    private function selectpreparador($especialidad) {
+        //Recuperas todos los empleados
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $consultaEmpleado = "select e from MOTOPrincipalBundle:Empleado e where e.especialidad=" . $especialidad . " OR e.especialidad = '3'";
+        $queryEmpleado = $em->createQuery($consultaEmpleado);
+        $empleados = $queryEmpleado->getResult();
+
+        $numeroempleado = "";
+        $antit = 99999999999999999999;
+
+        foreach ($empleados as $empleado) {
+            //Consultas la logitud de sus clientes asociados
+            $long = count($empleado->getDni()); //Provisional
+
+            if ($long <= $antit) {
+
+                $numeroempleado = $empleado;
+                $antit = $long;
+            }
+        }
+
+        return $numeroempleado;
     }
 
     function console_log($data) {

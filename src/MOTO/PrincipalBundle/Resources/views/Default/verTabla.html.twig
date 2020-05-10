@@ -31,7 +31,7 @@
             </form>
         {% endif %}
 
-        {% if tablaMostrar is defined %}
+        {% if tablaMostrar is defined%}
             <h5 class="col-12">{{ tablaMostrar.tipo }}</h5>
             <div class="list-group col-sm-12">
                 {% for sesion in tablaMostrar.codsesion %}
@@ -55,10 +55,11 @@
                     </span>
                 {% endfor %}
             </div>
-        {% else %}
+        {% elseif form is not defined%}
+            <br>
             <div class="alert alert-danger col-12" role="alert">
 
-                <p>Dieta no encontrada</p>
+                <p>Tabla no encontrada</p>
             </div>
         {% endif %}
 

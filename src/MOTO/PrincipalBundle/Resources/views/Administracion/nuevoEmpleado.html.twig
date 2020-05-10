@@ -10,15 +10,69 @@
             <a class='navbar-brand' href='{{path('_logout')}}'>Logout</a>
         </nav>
         <br>
-        <form action = "{{ path('nuevo_empleado') }}" method="POST">
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary">Registrar</button>
-        </form>
-        <br>
-        {% if error != "-" %}
-            <div class="alert alert-danger" role="alert">
-                <p>{{ error }}</p>
-            </div>
-        {% endif %}
+        {% if  mod is defined and mod == 1%}
+            <form action = "{{ path('modEmpleado', {'numEmpleado': numempleado}) }}" method="POST">
+            {% else %}
+                <form action = "{{ path('nuevo_empleado') }}" method="POST">
+                {% endif %}
+
+
+                <div class="form-group">
+                    <label for="exampleDropdownFormPassword1">Especialidad del empleado</label>
+                    {{form_widget(form.especialidad, {'attr': {'class': 'form-control'}})}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Nombre del empleado</label>
+                    {{form_widget(form.nombre, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Nombre del empleado'}})}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">DNI del empleado</label>
+                    {{form_widget(form.dniempleado, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'DNI del empleado'}})}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Telefono del empleado</label>
+                    {{form_widget(form.telefono, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Telefono del empleado'}})}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Email del empleado</label>
+                    {{form_widget(form.email, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Email del empleado'}})}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Direccion del empleado</label>
+                    {{form_widget(form.direccion, {'attr': {'class': 'form-control',
+                                                    'placeholder': 'Direccion del empleado'}})}}
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Contraseña</label>
+                    {{form_widget(form.clave, {'attr': {'class': 'form-control',
+                                                'placeholder': 'Contraseña'}})}}
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleDropdownFormEmail1">Privilegios del empleado</label>
+                    {{form_widget(form.privilegios, {'attr': {'class': 'form-control'}})}}
+                </div>
+
+
+                {{ form_rest(form) }}
+
+                {% if  mod is defined and mod == 1%}
+                    <button type="submit" class="btn btn-primary">Modificar empleado</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                {% endif %}
+
+            </form>
+            <br>
+            {% if error != "-" %}
+                <div class="alert alert-danger" role="alert">
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
     </div>
 {% endblock %}

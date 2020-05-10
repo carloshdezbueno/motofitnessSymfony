@@ -342,4 +342,8 @@ class Empleado
     {
         return $this->dni;
     }
+    
+    public function __toString() {
+        return 'Numero de empleado: ' . $this->numeroempleado . '. Nombre: ' . $this->nombre;
+    }
 }
