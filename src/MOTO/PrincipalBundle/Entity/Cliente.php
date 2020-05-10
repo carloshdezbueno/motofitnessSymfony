@@ -56,7 +56,9 @@ class Cliente {
      * @ORM\Column(name="email", type="string", length=50, nullable=false)
      * 
      * @Assert\Length(max=50)
-     * @Assert\Email(message="El email no es valido")
+     * @Assert\Regex(
+     *          pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", 
+     *          message="El email no coincide con un email estandar")
      */
     private $email;
 
@@ -78,7 +80,7 @@ class Cliente {
      * @Assert\Length(max=9)
      * @Assert\Regex(
      *          pattern="/^[9|6|7][0-9]{8}$/", 
-     *          message="El dni no coincide con un dni estandar")
+     *          message="El telefono no coincide con un telefono estandar")
      */
     private $telefono;
 

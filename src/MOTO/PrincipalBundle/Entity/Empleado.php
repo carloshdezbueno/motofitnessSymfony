@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="empleado")
  * @ORM\Entity
  */
-class Empleado
-{
+class Empleado {
+
     /**
      * @var integer
      *
@@ -63,17 +63,19 @@ class Empleado
      * @Assert\Type("string")
      * @Assert\Regex(
      *          pattern="/^[9|6|7][0-9]{8}$/", 
-     *          message="El dni no coincide con un dni estandar")
+     *          message="El telefono no coincide con un telefono estandar")
      */
     private $telefono;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=20, nullable=false)
+     * @ORM\Column(name="email", type="string", length=500, nullable=false)
      * 
-     * @Assert\Length(max=20)
-     * @Assert\Type("string")
+     * @Assert\Length(max=50)
+     * @Assert\Type("string")@Assert\Regex(
+     *          pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/", 
+     *          message="El email no coincide con un email estandar")
      */
     private $email;
 
@@ -116,19 +118,16 @@ class Empleado
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->dni = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
 
     /**
      * Get numeroempleado
      *
      * @return integer 
      */
-    public function getNumeroempleado()
-    {
+    public function getNumeroempleado() {
         return $this->numeroempleado;
     }
 
@@ -138,10 +137,9 @@ class Empleado
      * @param integer $especialidad
      * @return Empleado
      */
-    public function setEspecialidad($especialidad)
-    {
+    public function setEspecialidad($especialidad) {
         $this->especialidad = $especialidad;
-    
+
         return $this;
     }
 
@@ -150,8 +148,7 @@ class Empleado
      *
      * @return integer 
      */
-    public function getEspecialidad()
-    {
+    public function getEspecialidad() {
         return $this->especialidad;
     }
 
@@ -161,10 +158,9 @@ class Empleado
      * @param string $nombre
      * @return Empleado
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -173,8 +169,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -184,10 +179,9 @@ class Empleado
      * @param string $dniempleado
      * @return Empleado
      */
-    public function setDniempleado($dniempleado)
-    {
+    public function setDniempleado($dniempleado) {
         $this->dniempleado = $dniempleado;
-    
+
         return $this;
     }
 
@@ -196,8 +190,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getDniempleado()
-    {
+    public function getDniempleado() {
         return $this->dniempleado;
     }
 
@@ -207,10 +200,9 @@ class Empleado
      * @param string $telefono
      * @return Empleado
      */
-    public function setTelefono($telefono)
-    {
+    public function setTelefono($telefono) {
         $this->telefono = $telefono;
-    
+
         return $this;
     }
 
@@ -219,8 +211,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getTelefono()
-    {
+    public function getTelefono() {
         return $this->telefono;
     }
 
@@ -230,10 +221,9 @@ class Empleado
      * @param string $email
      * @return Empleado
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
-    
+
         return $this;
     }
 
@@ -242,8 +232,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -253,10 +242,9 @@ class Empleado
      * @param string $direccion
      * @return Empleado
      */
-    public function setDireccion($direccion)
-    {
+    public function setDireccion($direccion) {
         $this->direccion = $direccion;
-    
+
         return $this;
     }
 
@@ -265,8 +253,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getDireccion()
-    {
+    public function getDireccion() {
         return $this->direccion;
     }
 
@@ -276,10 +263,9 @@ class Empleado
      * @param string $clave
      * @return Empleado
      */
-    public function setClave($clave)
-    {
+    public function setClave($clave) {
         $this->clave = $clave;
-    
+
         return $this;
     }
 
@@ -288,8 +274,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getClave()
-    {
+    public function getClave() {
         return $this->clave;
     }
 
@@ -299,10 +284,9 @@ class Empleado
      * @param integer $privilegios
      * @return Empleado
      */
-    public function setPrivilegios($privilegios)
-    {
+    public function setPrivilegios($privilegios) {
         $this->privilegios = $privilegios;
-    
+
         return $this;
     }
 
@@ -311,8 +295,7 @@ class Empleado
      *
      * @return integer 
      */
-    public function getPrivilegios()
-    {
+    public function getPrivilegios() {
         return $this->privilegios;
     }
 
@@ -322,10 +305,9 @@ class Empleado
      * @param \MOTO\PrincipalBundle\Entity\Cliente $dni
      * @return Empleado
      */
-    public function addDni(\MOTO\PrincipalBundle\Entity\Cliente $dni)
-    {
+    public function addDni(\MOTO\PrincipalBundle\Entity\Cliente $dni) {
         $this->dni[] = $dni;
-    
+
         return $this;
     }
 
@@ -334,8 +316,7 @@ class Empleado
      *
      * @param \MOTO\PrincipalBundle\Entity\Cliente $dni
      */
-    public function removeDni(\MOTO\PrincipalBundle\Entity\Cliente $dni)
-    {
+    public function removeDni(\MOTO\PrincipalBundle\Entity\Cliente $dni) {
         $this->dni->removeElement($dni);
     }
 
@@ -344,12 +325,12 @@ class Empleado
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDni()
-    {
+    public function getDni() {
         return $this->dni;
     }
-    
+
     public function __toString() {
         return 'Numero de empleado: ' . $this->numeroempleado . '. Nombre: ' . $this->nombre;
     }
+
 }
